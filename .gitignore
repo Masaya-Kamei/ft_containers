@@ -1,2 +1,5 @@
 objs
 *.o
+unit_test
+test.cpp
+a.out
