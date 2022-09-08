@@ -66,7 +66,7 @@ class	vector
 			: alloc_(rhs.alloc_), begin_(NULL), end_(NULL), end_cap_(NULL)
 		{
 			size_type size = rhs.size();
-			if (size == 0)   // TODO(mkamei)
+			if (size == 0)
 				return;
 			begin_ = alloc_.allocate(size);
 			end_ = begin_ + size;
