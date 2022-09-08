@@ -21,8 +21,9 @@ class random_access_iterator : public std::iterator<std::random_access_iterator_
 			: ptr_(NULL)
 		{
 		}
-		random_access_iterator(const random_access_iterator<T>& rhs)
-			: ptr_(rhs.ptr_)
+		template <class T2>
+		random_access_iterator(const random_access_iterator<T2>& rhs)
+			: ptr_(rhs.base())
 		{
 		}
 		explicit random_access_iterator(pointer ptr)
@@ -99,12 +100,6 @@ class random_access_iterator : public std::iterator<std::random_access_iterator_
 		{
 			random_access_iterator<T> tmp(*this);
 			tmp -= n;
-			return (tmp);
-		}
-
-		operator random_access_iterator<const T>() const
-		{
-			random_access_iterator<const T>	tmp(ptr_);
 			return (tmp);
 		}
 
