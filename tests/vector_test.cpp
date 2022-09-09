@@ -81,6 +81,7 @@ TEST_F(VectorTest, RangeConstructorTest)
 	std::vector<int> std_vec(a, a + 3);
 	ft::vector<int> ft_vec(a, a + 3);
 	CompareSizeCapElem(std_vec, ft_vec);
+	EXPECT_NE(&(*a), &(*ft_vec.begin()));
 }
 
 TEST_F(VectorTest, RangeConstructorInvalidTest)
@@ -96,4 +97,15 @@ TEST_F(VectorTest, RangeConstructorZeroTest)
 	std::vector<int> std_vec(a, a);
 	ft::vector<int> ft_vec(a, a);
 	CompareSizeCapElem(std_vec, ft_vec);
+}
+
+TEST_F(VectorTest, CopyConstructorTest)
+{
+	int a[3] = {1, 2, 3};
+	std::vector<int>	std_vec(a, a + 3);
+	ft::vector<int>		ft_vec(a, a + 3);
+	std::vector<int>	std_vec_copy(std_vec);
+	ft::vector<int>		ft_vec_copy(ft_vec);
+	CompareSizeCapElem(std_vec_copy, ft_vec_copy);
+	EXPECT_NE(ft_vec.begin(), ft_vec_copy.begin());
 }

@@ -72,7 +72,7 @@ class	vector
 			begin_ = alloc_.allocate(size);
 			end_ = begin_ + size;
 			end_cap_ = end_;
-			std::uninitialized_copy(rhs.begin_, rhs.last, begin_);
+			std::uninitialized_copy(rhs.begin_, rhs.end_, begin_);
 		}
 
 		~vector()
