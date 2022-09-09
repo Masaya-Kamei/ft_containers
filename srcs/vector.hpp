@@ -77,8 +77,7 @@ class	vector
 
 		~vector()
 		{
-			for (pointer p = begin_; p < end_; p++)
-				alloc_.destroy(p);
+			clear();
 			alloc_.deallocate(begin_, capacity());
 		}
 
@@ -156,7 +155,14 @@ class	vector
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 		void swap(vector& x);
-		void clear();
+
+		void clear()
+		{
+			for (pointer p = begin_; p < end_; p++)
+				alloc_.destroy(p);
+			end_ = begin_;
+		}
+
 		allocator_type get_allocator() const;
 
 	private:

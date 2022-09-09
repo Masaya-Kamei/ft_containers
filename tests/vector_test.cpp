@@ -14,6 +14,8 @@ class VectorTest : public ::testing::Test
 		}
 		virtual void SetUp()
 		{
+			std_vec_.assign(nums, nums + 3);
+			// ft_vec_.assign(nums, nums + 3);
 		}
 		virtual void TearDown()
 		{
@@ -32,7 +34,13 @@ class VectorTest : public ::testing::Test
 			for (; std_itr < std_end; std_itr++, ft_itr++)
 				EXPECT_EQ(*std_itr, *ft_itr);
 		}
+
+		static const int	nums[3];
+		std::vector<int>	std_vec_;
+		ft::vector<int>		ft_vec_;
 };
+
+const int VectorTest::nums[3] = {1, 2, 3};
 
 TEST_F(VectorTest, DefaultConstructorIntTest)
 {
@@ -50,22 +58,22 @@ TEST_F(VectorTest, DefaultConstructorStringTest)
 
 TEST_F(VectorTest, FillConstructorTest)
 {
-	std::vector<int> std_vec(5, 5);
-	ft::vector<int> ft_vec(5, 5);
+	std::vector<int>	std_vec(5, 5);
+	ft::vector<int>		ft_vec(5, 5);
 	CompareSizeCapElem(std_vec, ft_vec);
 }
 
 TEST_F(VectorTest, FillConstructorOnlySizeTest)
 {
-	std::vector<int> std_vec(5);
-	ft::vector<int> ft_vec(5);
+	std::vector<int>	std_vec(5);
+	ft::vector<int>		ft_vec(5);
 	CompareSizeCapElem(std_vec, ft_vec);
 }
 
 TEST_F(VectorTest, FillConstructorZeroSizeTest)
 {
-	std::vector<int> std_vec(0);
-	ft::vector<int> ft_vec(0);
+	std::vector<int>	std_vec(0);
+	ft::vector<int>		ft_vec(0);
 	CompareSizeCapElem(std_vec, ft_vec);
 }
 
@@ -77,35 +85,40 @@ TEST_F(VectorTest, FillConstructorInvalidSizeTest)
 
 TEST_F(VectorTest, RangeConstructorTest)
 {
-	int a[3] = {1, 2, 3};
-	std::vector<int> std_vec(a, a + 3);
-	ft::vector<int> ft_vec(a, a + 3);
+	std::vector<int>	std_vec(nums, nums + 3);
+	ft::vector<int>		ft_vec(nums, nums + 3);
 	CompareSizeCapElem(std_vec, ft_vec);
-	EXPECT_NE(&(*a), &(*ft_vec.begin()));
+	EXPECT_NE(&(*nums), &(*ft_vec.begin()));
 }
 
 TEST_F(VectorTest, RangeConstructorInvalidTest)
 {
-	int a[3] = {1, 2, 3};
-	EXPECT_THROW(std::vector<int> std_vec(a, a - 1), std::length_error);
-	EXPECT_THROW(ft::vector<int> ft_vec(a, a - 1), std::length_error);
+	EXPECT_THROW(std::vector<int> std_vec(nums, nums - 1), std::length_error);
+	EXPECT_THROW(ft::vector<int> ft_vec(nums, nums - 1), std::length_error);
 }
 
 TEST_F(VectorTest, RangeConstructorZeroTest)
 {
-	int a[3] = {1, 2, 3};
-	std::vector<int> std_vec(a, a);
-	ft::vector<int> ft_vec(a, a);
+	std::vector<int>	std_vec(nums, nums);
+	ft::vector<int>		ft_vec(nums, nums);
 	CompareSizeCapElem(std_vec, ft_vec);
 }
 
 TEST_F(VectorTest, CopyConstructorTest)
 {
-	int a[3] = {1, 2, 3};
-	std::vector<int>	std_vec(a, a + 3);
-	ft::vector<int>		ft_vec(a, a + 3);
+	std::vector<int>	std_vec(nums, nums + 3);
+	ft::vector<int>		ft_vec(nums, nums + 3);
 	std::vector<int>	std_vec_copy(std_vec);
 	ft::vector<int>		ft_vec_copy(ft_vec);
 	CompareSizeCapElem(std_vec_copy, ft_vec_copy);
 	EXPECT_NE(ft_vec.begin(), ft_vec_copy.begin());
+}
+
+TEST_F(VectorTest, ClearTest)
+{
+	std::vector<int>	std_vec(nums, nums + 3);
+	ft::vector<int>		ft_vec(nums, nums + 3);
+	std_vec_.clear();
+	ft_vec_.clear();
+	CompareSizeCapElem(std_vec, ft_vec);
 }
