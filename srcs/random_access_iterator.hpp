@@ -36,7 +36,7 @@ class random_access_iterator : public std::iterator<std::random_access_iterator_
 				ptr_ = rhs.ptr_;
 			return (*this);
 		}
-		~random_access_iterator()
+		virtual ~random_access_iterator()
 		{
 		}
 
@@ -92,15 +92,11 @@ class random_access_iterator : public std::iterator<std::random_access_iterator_
 		}
 		random_access_iterator<T> operator+(difference_type n) const
 		{
-			random_access_iterator<T> tmp(*this);
-			tmp += n;
-			return (tmp);
+			return (random_access_iterator<T>(ptr_ + n));
 		}
 		random_access_iterator<T> operator-(difference_type n) const
 		{
-			random_access_iterator<T> tmp(*this);
-			tmp -= n;
-			return (tmp);
+			return (random_access_iterator<T>(ptr_ - n));
 		}
 
 	private:
@@ -147,7 +143,7 @@ template <class T>
 random_access_iterator<T> operator+
 	(typename random_access_iterator<T>::difference_type n, const random_access_iterator<T>& x)
 {
-	return (x + n);
+	return (random_access_iterator<T>(n + x.base()));
 }
 
 template <class T1, class T2>

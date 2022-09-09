@@ -104,7 +104,7 @@ TEST_F(RandomAccessIteratorTest, OpeAddSubTest)
 	EXPECT_EQ(*(std_itr + 1), *(ft_itr + 1));
 	EXPECT_EQ(*(std_itr - 1 + 1), *(ft_itr - 1 + 1));
 	EXPECT_EQ(*(1 + std_itr), *(1 + ft_itr));
-	EXPECT_EQ(std_itr - std_begin, ft_itr - ft_begin);
+	EXPECT_EQ((std_itr + 1) - std_begin, (ft_itr + 1) - ft_begin);
 
 	EXPECT_EQ(*std_itr, *ft_itr);
 	EXPECT_EQ(std_itr, std_begin);
@@ -114,16 +114,19 @@ TEST_F(RandomAccessIteratorTest, OpeAddSubTest)
 TEST_F(RandomAccessIteratorTest, OpeRelationalTest)
 {
 	int		a[3] = {1, 2, 3};
-	ft::vector<int>				vec(a, a + 3);
-	ft::vector<int>::iterator	first_itr = vec.begin();
-	ft::vector<int>::iterator	second_itr = first_itr + 1;
+	std::vector<int>			std_vec(a, a + 3);
+	ft::vector<int>				ft_vec(a, a + 3);
+	std::vector<int>::iterator	std_first_itr = std_vec.begin();
+	ft::vector<int>::iterator	ft_first_itr = ft_vec.begin();
+	std::vector<int>::iterator	std_second_itr = std_first_itr + 1;
+	ft::vector<int>::iterator	ft_second_itr = ft_first_itr + 1;
 
-	EXPECT_EQ(first_itr == second_itr, false);
-	EXPECT_EQ(first_itr != second_itr, true);
-	EXPECT_EQ(first_itr < second_itr, true);
-	EXPECT_EQ(first_itr <= second_itr, true);
-	EXPECT_EQ(first_itr > second_itr, false);
-	EXPECT_EQ(first_itr >= second_itr, false);
+	EXPECT_EQ(std_first_itr == std_second_itr,	ft_first_itr == ft_second_itr);
+	EXPECT_EQ(std_first_itr != std_second_itr,	ft_first_itr != ft_second_itr);
+	EXPECT_EQ(std_first_itr < std_second_itr,	ft_first_itr < ft_second_itr);
+	EXPECT_EQ(std_first_itr <= std_second_itr,	ft_first_itr <= ft_second_itr);
+	EXPECT_EQ(std_first_itr > std_second_itr,	ft_first_itr > ft_second_itr);
+	EXPECT_EQ(std_first_itr >= std_second_itr,	ft_first_itr >= ft_second_itr);
 }
 
 TEST_F(RandomAccessIteratorTest, OpeOthersTest)
