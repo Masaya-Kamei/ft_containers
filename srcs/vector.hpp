@@ -4,6 +4,7 @@
 #include <memory>
 #include "type_traits.hpp"
 #include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -22,8 +23,8 @@ class	vector
 		typedef typename Allocator::const_pointer				const_pointer;
 		typedef	ft::random_access_iterator<value_type>			iterator;
 		typedef ft::random_access_iterator<const value_type>	const_iterator;
-		// typedef reverse_iterator;
-		// typedef const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator> 					reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
 		explicit vector(const allocator_type& alloc = allocator_type())
 			: alloc_(alloc), begin_(NULL), end_(NULL), end_cap_(NULL)
@@ -99,10 +100,22 @@ class	vector
 		{
 			return (const_iterator(end_));
 		}
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		reverse_iterator rbegin()
+		{
+			return (reverse_iterator(iterator(end_)));
+		}
+		const_reverse_iterator rbegin() const
+		{
+			return (const_reverse_iterator(const_iterator(end_)));
+		}
+		reverse_iterator rend()
+		{
+			return (reverse_iterator(begin_));
+		}
+		const_reverse_iterator rend() const
+		{
+			return (const_reverse_iterator(begin_));
+		}
 		size_type size() const
 		{
 			return (end_ - begin_);
