@@ -135,8 +135,34 @@ class	vector
 		{
 			return (begin_ == end_);
 		}
-		void resize(size_type n, value_type val = value_type());
-		void reserve(size_type n);
+
+		void resize(size_type n, value_type val = value_type())
+		{
+			if (n < size())
+			{
+				pointer	new_end = begin_ + n;
+				destroy_range(new_end, end_);
+				end_ = new_end;
+			}
+			else
+				insert(end(), n - size(), val);
+		}
+
+		void reserve(size_type n)
+		{
+			if (n <= capacity())
+				return;
+			pointer 	old_begin = begin_;
+			pointer		old_end = end_;
+			size_type	old_size = size();
+			size_type	old_capacity = capacity();
+			allocate(n);
+			end_ = begin_ + old_size;
+			std::uninitialized_copy(old_begin, old_end, begin_);
+			destroy_range(old_begin, old_end);
+			alloc_.deallocate(old_begin, old_capacity);
+		}
+
 		reference operator[] (size_type n);
 		const_reference operator[] (size_type n) const;
 		reference at(size_type n);
@@ -147,6 +173,7 @@ class	vector
 		const_reference back() const;
 		value_type* data();
 		const value_type* data() const;
+
 		template <class InputIterator>
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
 			assign(InputIterator first, InputIterator last)
@@ -190,12 +217,50 @@ class	vector
 				std::uninitialized_fill(begin_, end_, val);
 			}
 		}
+
 		void push_back(const value_type& val);
 		void pop_back();
-		iterator insert(iterator position, const value_type& val);
-		void insert(iterator position, size_type n, const value_type& val);
+
+		iterator insert(iterator position, const value_type& val)
+		{
+			difference_type	dist = std::distance(begin(), position);
+			insert(position, 1, val);
+			return (begin() + dist);
+		}
+		void insert(iterator position, size_type n, const value_type& val)
+		{
+			difference_type	dist = std::distance(begin(), position);
+			size_type		new_size = size() + n;
+			if (capacity() < new_size)
+			{
+				reserve(recommend_size(new_size));
+				position = begin() + dist;
+			}
+			pointer		new_end = end_ + n;
+			construct_range(end_, new_end);
+			std::copy_backward(position, end(), new_end);
+			std::fill(position, position + n, val);
+			end_ = new_end;
+		}
 		template <class InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last);
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
+			insert(iterator position, InputIterator first, InputIterator last)
+		{
+			size_type		n = std::distance(first, last);
+			difference_type	dist = std::distance(begin(), position);
+			size_type		new_size = size() + n;
+			if (capacity() < new_size)
+			{
+				reserve(recommend_size(new_size));
+				position = begin() + dist;
+			}
+			pointer		new_end = end_ + n;
+			construct_range(end_, new_end);
+			std::copy_backward(position, end(), new_end);
+			std::copy(first, last, position);
+			end_ = new_end;
+		}
+
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 		void swap(vector& x);
@@ -240,6 +305,16 @@ class	vector
 			begin_ = NULL;
 			end_ = NULL;
 			end_cap_ = NULL;
+		}
+		size_type	recommend_size(size_type new_size) const
+		{
+			size_type	maxsize = max_size();
+			 if (maxsize < new_size)
+				throw std::length_error("ft::vector");
+			size_type	cap = capacity();
+			if (maxsize / 2 <= cap)
+				return (maxsize);
+			return (std::max<size_type>(new_size, cap * 2));
 		}
 };
 

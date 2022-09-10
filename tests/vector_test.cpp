@@ -31,6 +31,7 @@ class VectorTest : public ::testing::Test
 			EXPECT_EQ(std_vec.size(), ft_vec.size());
 			EXPECT_EQ(std_vec.max_size(), ft_vec.max_size());
 			EXPECT_EQ(std_vec.capacity(), ft_vec.capacity());
+			EXPECT_EQ(std_vec.empty(), ft_vec.empty());
 			for (; std_itr < std_end; std_itr++, ft_itr++)
 				EXPECT_EQ(*std_itr, *ft_itr);
 		}
@@ -165,6 +166,90 @@ TEST_F(VectorTest, OpeEqualTest)
 
 	CompareSizeCapElem(std_vec_copy, ft_vec_copy);
 	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
+}
+
+TEST_F(VectorTest, ReserveTest)
+{
+	std_vec_.reserve(1);
+	ft_vec_.reserve(1);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.reserve(3);
+	ft_vec_.reserve(3);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.reserve(5);
+	ft_vec_.reserve(5);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	EXPECT_THROW(std_vec_.reserve(-1), std::length_error);
+	EXPECT_THROW(ft_vec_.reserve(-1), std::length_error);
+}
+
+TEST_F(VectorTest, InsertSingleTest)
+{
+	EXPECT_EQ(*(std_vec_.insert(std_vec_.begin(), 42)), *(ft_vec_.insert(ft_vec_.begin(), 42)));
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	EXPECT_EQ(*(std_vec_.insert(std_vec_.begin() + 1, 43)), *(ft_vec_.insert(ft_vec_.begin() + 1, 43)));
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	EXPECT_EQ(*(std_vec_.insert(std_vec_.begin() + 2, 43)), *(ft_vec_.insert(ft_vec_.begin() + 2, 43)));
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	EXPECT_EQ(*(std_vec_.insert(std_vec_.end(), 43)), *(ft_vec_.insert(ft_vec_.end(), 43)));
+	CompareSizeCapElem(std_vec_, ft_vec_);
+}
+
+TEST_F(VectorTest, InsertFillTest)
+{
+	std_vec_.insert(std_vec_.begin(), 2, 42);
+	ft_vec_.insert(ft_vec_.begin(), 2, 42);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.insert(std_vec_.begin() + 1, 5, 43);
+	ft_vec_.insert(ft_vec_.begin() + 1, 5, 43);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.insert(std_vec_.begin() + 2, 8, 44);
+	ft_vec_.insert(ft_vec_.begin() + 2, 8, 44);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.insert(std_vec_.end(), 100, 45);
+	ft_vec_.insert(ft_vec_.end(), 100, 45);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	// EXPECT_THROW(std_vec_.insert(std_vec_.begin(), -1, 42), std::length_error);
+	// EXPECT_THROW(ft_vec_.insert(ft_vec_.begin(), -1, 42), std::length_error);
+}
+
+TEST_F(VectorTest, InsertRangeTest)
+{
+	std_vec_.insert(std_vec_.begin(), nums, nums + 3);
+	ft_vec_.insert(ft_vec_.begin(), nums, nums + 3);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.insert(std_vec_.begin() + 1, nums, nums + 1);
+	ft_vec_.insert(ft_vec_.begin() + 1, nums, nums + 1);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.insert(std_vec_.begin() + 2, nums, nums);
+	ft_vec_.insert(ft_vec_.begin() + 2, nums, nums);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.insert(std_vec_.end(), nums, nums + 2);
+	ft_vec_.insert(ft_vec_.end(), nums, nums + 2);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	// EXPECT_THROW(std_vec_.insert(std_vec_.begin(), nums, nums - 1), std::length_error);
+	// EXPECT_THROW(ft_vec_.insert(ft_vec_.begin(), nums, nums - 1), std::length_error);
+}
+
+TEST_F(VectorTest, ResizeTest)
+{
+	std_vec_.resize(1, 42);
+	ft_vec_.resize(1, 42);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.resize(2, 43);
+	ft_vec_.resize(2, 43);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.resize(3, 44);
+	ft_vec_.resize(3, 44);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.resize(5, 45);
+	ft_vec_.resize(5, 45);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	std_vec_.resize(0, 46);
+	ft_vec_.resize(0, 46);
+	CompareSizeCapElem(std_vec_, ft_vec_);
+	EXPECT_THROW(std_vec_.resize(-1, 42), std::length_error);
+	EXPECT_THROW(ft_vec_.resize(-1, 42), std::length_error);
 }
 
 TEST_F(VectorTest, ClearTest)
