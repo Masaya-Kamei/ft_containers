@@ -156,6 +156,17 @@ TEST_F(VectorTest, AssignRangeTest)
 	EXPECT_THROW(ft_vec.assign(nums, nums - 1), std::length_error);
 }
 
+TEST_F(VectorTest, OpeEqualTest)
+{
+	std::vector<int>	std_vec_copy;
+	std_vec_copy = std_vec_;
+	ft::vector<int>	ft_vec_copy;
+	ft_vec_copy = ft_vec_;
+
+	CompareSizeCapElem(std_vec_copy, ft_vec_copy);
+	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
+}
+
 TEST_F(VectorTest, ClearTest)
 {
 	std_vec_.clear();

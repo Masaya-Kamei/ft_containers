@@ -1,8 +1,10 @@
 SRCSDIR	= ../srcs
 vpath	%.cpp	../srcs
 
-SRCS	=	vector_test.cpp type_traits_test.cpp random_access_iterator_test.cpp \
-			reverse_iterator_test.cpp
+SRCS	=	type_traits_test.cpp \
+			random_access_iterator_test.cpp \
+			reverse_iterator_test.cpp \
+			vector_test.cpp
 
 OBJSDIR	=	objs
 OBJS	=	$(addprefix $(OBJSDIR)/, $(SRCS:.cpp=.o))

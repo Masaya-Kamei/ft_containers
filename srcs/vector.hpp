@@ -72,7 +72,20 @@ class	vector
 			deallocate();
 		}
 
-		vector& operator=(const vector& x);
+		vector& operator=(const vector& rhs)
+		{
+			if (this != &rhs)
+			{
+				if (alloc_ != rhs.alloc_)
+				{
+					clear();
+					deallocate();
+				}
+				alloc_ = rhs.alloc_;
+				assign(rhs.begin_, rhs.end_);
+			}
+			return (*this);
+		}
 
 		iterator begin()
 		{
