@@ -2,6 +2,7 @@
 # define VECTOR_HPP
 
 #include <memory>
+#include <iterator>
 #include "type_traits.hpp"
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
@@ -38,11 +39,7 @@ class	vector
 		{
 			if (n == 0)
 				return;
-			else if (n > max_size())
-				throw std::length_error("ft::vector");
-			begin_ = alloc_.allocate(n);
-			end_ = begin_ + n;
-			end_cap_ = end_;
+			allocate(n);
 			std::uninitialized_fill(begin_, end_, val);
 		}
 
@@ -52,14 +49,10 @@ class	vector
 			, const allocator_type& alloc = allocator_type())
 			: alloc_(alloc), begin_(NULL), end_(NULL), end_cap_(NULL)
 		{
-			size_type	size = last - first;
+			size_type	size = std::distance(first, last);
 			if (size == 0)
 				return;
-			else if (size > max_size())
-				throw std::length_error("ft::vector");
-			begin_ = alloc_.allocate(size);
-			end_ = begin_ + size;
-			end_cap_ = end_;
+			allocate(size);
 			std::uninitialized_copy(first, last, begin_);
 		}
 
@@ -69,16 +62,14 @@ class	vector
 			size_type size = rhs.size();
 			if (size == 0)
 				return;
-			begin_ = alloc_.allocate(size);
-			end_ = begin_ + size;
-			end_cap_ = end_;
+			allocate(size);
 			std::uninitialized_copy(rhs.begin_, rhs.end_, begin_);
 		}
 
 		~vector()
 		{
 			clear();
-			alloc_.deallocate(begin_, capacity());
+			deallocate();
 		}
 
 		vector& operator=(const vector& x);
@@ -144,8 +135,48 @@ class	vector
 		value_type* data();
 		const value_type* data() const;
 		template <class InputIterator>
-		void assign(InputIterator first, InputIterator last);
-		void assign(size_type n, const value_type& val);
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
+			assign(InputIterator first, InputIterator last)
+		{
+			size_type	new_size = std::distance(first, last);
+			if (new_size <= capacity())
+			{
+				pointer	new_end = begin_ + new_size;
+				if (end_ < new_end)
+					construct_range(end_, new_end);
+				std::copy(first, last, begin_);
+				if (new_end < end_)
+					destroy_range(new_end, end_);
+				end_ = new_end;
+			}
+			else
+			{
+				clear();
+				deallocate();
+				allocate(new_size);
+				std::uninitialized_copy(first, last, begin_);
+			}
+		}
+		void assign(size_type n, const value_type& val)
+		{
+			if (n <= capacity())
+			{
+				pointer new_end = begin_ + n;
+				if (end_ < new_end)
+					construct_range(end_, new_end);
+				std::fill(begin_, new_end, val);
+				if (new_end < end_)
+					destroy_range(new_end, end_);
+				end_ = new_end;
+			}
+			else
+			{
+				clear();
+				deallocate();
+				allocate(n);
+				std::uninitialized_fill(begin_, end_, val);
+			}
+		}
 		void push_back(const value_type& val);
 		void pop_back();
 		iterator insert(iterator position, const value_type& val);
@@ -158,8 +189,7 @@ class	vector
 
 		void clear()
 		{
-			for (pointer p = begin_; p < end_; p++)
-				alloc_.destroy(p);
+			destroy_range(begin_, end_);
 			end_ = begin_;
 		}
 
@@ -170,6 +200,34 @@ class	vector
 		pointer			begin_;
 		pointer			end_;
 		pointer			end_cap_;
+
+		 void	construct_range(pointer first, pointer last)
+		 {
+			for (pointer p = first; p < last; p++)
+				alloc_.construct(p);
+		 }
+		 void	destroy_range(pointer first, pointer last)
+		 {
+			for (pointer p = first; p < last; p++)
+				alloc_.destroy(p);
+		 }
+		void	allocate(size_type size)
+		{
+			if (size > max_size())
+				throw std::length_error("ft::vector");
+			begin_ = alloc_.allocate(size);
+			end_ = begin_ + size;
+			end_cap_ = end_;
+		}
+		void	deallocate()
+		{
+			if (begin_ == NULL)
+				return;
+			alloc_.deallocate(begin_, capacity());
+			begin_ = NULL;
+			end_ = NULL;
+			end_cap_ = NULL;
+		}
 };
 
 }  // namespace ft

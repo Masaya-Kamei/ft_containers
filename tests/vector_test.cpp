@@ -15,7 +15,7 @@ class VectorTest : public ::testing::Test
 		virtual void SetUp()
 		{
 			std_vec_.assign(nums, nums + 3);
-			// ft_vec_.assign(nums, nums + 3);
+			ft_vec_.assign(nums, nums + 3);
 		}
 		virtual void TearDown()
 		{
@@ -114,11 +114,51 @@ TEST_F(VectorTest, CopyConstructorTest)
 	EXPECT_NE(ft_vec.begin(), ft_vec_copy.begin());
 }
 
+TEST_F(VectorTest, AssignFillTest)
+{
+	std::vector<int>	std_vec(nums, nums + 2);
+	ft::vector<int>		ft_vec(nums, nums + 2);
+
+	std_vec.assign(3, 42);
+	ft_vec.assign(3, 42);
+	CompareSizeCapElem(std_vec, ft_vec);
+	std_vec.assign(1, 42);
+	ft_vec.assign(1, 42);
+	CompareSizeCapElem(std_vec, ft_vec);
+	std_vec.assign(2, 42);
+	ft_vec.assign(2, 42);
+	CompareSizeCapElem(std_vec, ft_vec);
+	std_vec.assign(0, 42);
+	ft_vec.assign(0, 42);
+	CompareSizeCapElem(std_vec, ft_vec);
+	EXPECT_THROW(std_vec.assign(-1, 42), std::length_error);
+	EXPECT_THROW(ft_vec.assign(-1, 42), std::length_error);
+}
+
+TEST_F(VectorTest, AssignRangeTest)
+{
+	std::vector<int>	std_vec(nums, nums + 2);
+	ft::vector<int>		ft_vec(nums, nums + 2);
+
+	std_vec.assign(nums, nums + 3);
+	ft_vec.assign(nums, nums + 3);
+	CompareSizeCapElem(std_vec, ft_vec);
+	std_vec.assign(nums, nums + 1);
+	ft_vec.assign(nums, nums + 1);
+	CompareSizeCapElem(std_vec, ft_vec);
+	std_vec.assign(nums, nums + 2);
+	ft_vec.assign(nums, nums + 2);
+	CompareSizeCapElem(std_vec, ft_vec);
+	std_vec.assign(nums, nums);
+	ft_vec.assign(nums, nums);
+	CompareSizeCapElem(std_vec, ft_vec);
+	EXPECT_THROW(std_vec.assign(nums, nums - 1), std::length_error);
+	EXPECT_THROW(ft_vec.assign(nums, nums - 1), std::length_error);
+}
+
 TEST_F(VectorTest, ClearTest)
 {
-	std::vector<int>	std_vec(nums, nums + 3);
-	ft::vector<int>		ft_vec(nums, nums + 3);
 	std_vec_.clear();
 	ft_vec_.clear();
-	CompareSizeCapElem(std_vec, ft_vec);
+	CompareSizeCapElem(std_vec_, ft_vec_);
 }
