@@ -208,6 +208,46 @@ TEST_F(VectorTest, RendTest)
 	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
 }
 
+TEST_F(VectorTest, SizeTest)
+{
+	EXPECT_EQ(st_vec_.size(), ft_vec_.size());
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	EXPECT_EQ(st_zero_vec.size(), ft_zero_vec.size());
+}
+
+TEST_F(VectorTest, MaxSizeTest)
+{
+	EXPECT_EQ(st_vec_.max_size(), ft_vec_.max_size());
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	EXPECT_EQ(st_zero_vec.max_size(), ft_zero_vec.max_size());
+}
+
+TEST_F(VectorTest, CapacityTest)
+{
+	EXPECT_EQ(st_vec_.capacity(), ft_vec_.capacity());
+
+	st_vec_.push_back(42);
+	ft_vec_.push_back(42);
+	EXPECT_EQ(st_vec_.capacity(), ft_vec_.capacity());
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	EXPECT_EQ(st_zero_vec.capacity(), ft_zero_vec.capacity());
+}
+
+TEST_F(VectorTest, EmptyTest)
+{
+	EXPECT_EQ(st_vec_.empty(), ft_vec_.empty());
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	EXPECT_EQ(st_zero_vec.empty(), ft_zero_vec.empty());
+}
+
 TEST_F(VectorTest, ResizeTest)
 {
 	st_vec_.resize(1, 42);
