@@ -36,6 +36,22 @@ class VectorTest : public ::testing::Test
 				EXPECT_EQ(*st_itr, *ft_itr);
 		}
 
+		template <class Vector>
+		void PrintVector(const Vector& vec)
+		{
+			typename Vector::const_iterator	itr = vec.begin();
+			typename Vector::const_iterator	end = vec.end();
+
+			std::cout << "size:     "	<< vec.size() << std::endl;
+			std::cout << "max_size: "	<< vec.max_size() << std::endl;
+			std::cout << "capacity: "	<< vec.capacity() << std::endl;
+			std::cout << "empty:    "	<< vec.empty() << std::endl;
+			std::cout << "elem:     [";
+			for (; itr < end; itr++)
+				std::cout << *itr << ", ";
+			std::cout << "]" << std::endl;
+		}
+
 		static const int	nums[3];
 		std::vector<int>	st_vec_;
 		ft::vector<int>		ft_vec_;
@@ -267,6 +283,50 @@ TEST_F(VectorTest, ResizeTest)
 	EXPECT_THROW(st_vec_.resize(-1, 42), std::length_error);
 	EXPECT_THROW(ft_vec_.resize(-1, 42), std::length_error);
 	CompareSizeCapElem(st_vec_, ft_vec_);
+}
+
+TEST_F(VectorTest, EraseSingleTest)
+{
+	std::vector<int>::iterator	st_begin = st_vec_.begin();
+	ft::vector<int>::iterator	ft_begin = ft_vec_.begin();
+	std::vector<int>::iterator	st_itr;
+	ft::vector<int>::iterator	ft_itr;
+
+	st_itr = st_vec_.erase(st_begin + 1);
+	ft_itr = ft_vec_.erase(ft_begin + 1);
+	EXPECT_EQ(*st_itr, *ft_itr);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_itr = st_vec_.erase(st_begin + 1);
+	ft_itr = ft_vec_.erase(ft_begin + 1);
+	EXPECT_EQ(st_itr == st_vec_.end(), ft_itr == ft_vec_.end());
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_itr = st_vec_.erase(st_begin);
+	ft_itr = ft_vec_.erase(ft_begin);
+	EXPECT_EQ(st_itr == st_vec_.end(), ft_itr == ft_vec_.end());
+	CompareSizeCapElem(st_vec_, ft_vec_);
+}
+
+TEST_F(VectorTest, EraseRangeTest)
+{
+	std::vector<int>			st_vec2(st_vec_);
+	std::vector<int>			st_vec3(st_vec_);
+	ft::vector<int>				ft_vec2(ft_vec_);
+	ft::vector<int>				ft_vec3(ft_vec_);
+	std::vector<int>::iterator	st_itr;
+	ft::vector<int>::iterator	ft_itr;
+
+	st_itr = st_vec_.erase(st_vec_.begin(), st_vec_.begin() + 2);
+	ft_itr = ft_vec_.erase(ft_vec_.begin(), ft_vec_.begin() + 2);
+	EXPECT_EQ(*st_itr, *ft_itr);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_itr = st_vec2.erase(st_vec2.begin() + 1, st_vec2.begin() + 3);
+	ft_itr = ft_vec2.erase(ft_vec2.begin() + 1, ft_vec2.begin() + 3);
+	EXPECT_EQ(st_itr == st_vec2.end(), ft_itr == ft_vec2.end());
+	CompareSizeCapElem(st_vec2, ft_vec2);
+	st_itr = st_vec3.erase(st_vec3.begin(), st_vec3.end());
+	ft_itr = ft_vec3.erase(ft_vec3.begin(), ft_vec3.end());
+	EXPECT_EQ(st_itr == st_vec3.end(), ft_itr == ft_vec3.end());
+	CompareSizeCapElem(st_vec3, ft_vec3);
 }
 
 TEST_F(VectorTest, ClearTest)

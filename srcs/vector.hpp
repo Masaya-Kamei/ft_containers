@@ -139,11 +139,7 @@ class	vector
 		void resize(size_type n, value_type val = value_type())
 		{
 			if (n < size())
-			{
-				pointer	new_end = begin_ + n;
-				destroy_range(new_end, end_);
-				end_ = new_end;
-			}
+				erase(begin() + n, end());
 			else
 				insert(end(), n - size(), val);
 		}
@@ -223,18 +219,18 @@ class	vector
 
 		iterator insert(iterator position, const value_type& val)
 		{
-			difference_type	dist = std::distance(begin(), position);
+			difference_type	pos_dist = std::distance(begin(), position);
 			insert(position, 1, val);
-			return (begin() + dist);
+			return (begin() + pos_dist);
 		}
 		void insert(iterator position, size_type n, const value_type& val)
 		{
-			difference_type	dist = std::distance(begin(), position);
+			difference_type	pos_dist = std::distance(begin(), position);
 			size_type		new_size = size() + n;
 			if (capacity() < new_size)
 			{
 				reserve(recommend_size(new_size));
-				position = begin() + dist;
+				position = begin() + pos_dist;
 			}
 			pointer		new_end = end_ + n;
 			construct_range(end_, new_end);
@@ -247,12 +243,12 @@ class	vector
 			insert(iterator position, InputIterator first, InputIterator last)
 		{
 			size_type		n = std::distance(first, last);
-			difference_type	dist = std::distance(begin(), position);
+			difference_type	pos_dist = std::distance(begin(), position);
 			size_type		new_size = size() + n;
 			if (capacity() < new_size)
 			{
 				reserve(recommend_size(new_size));
-				position = begin() + dist;
+				position = begin() + pos_dist;
 			}
 			pointer		new_end = end_ + n;
 			construct_range(end_, new_end);
@@ -261,8 +257,20 @@ class	vector
 			end_ = new_end;
 		}
 
-		iterator erase(iterator position);
-		iterator erase(iterator first, iterator last);
+		iterator erase(iterator position)
+		{
+			return (erase(position, position + 1));
+		}
+		iterator erase(iterator first, iterator last)
+		{
+			size_type	erase_size = std::distance(first, last);
+			pointer		new_end = end_ - erase_size;
+			std::copy(last, end(), first);
+			destroy_range(new_end, end_);
+			end_ = new_end;
+			return (first);
+		}
+
 		void swap(vector& x);
 
 		void clear()
