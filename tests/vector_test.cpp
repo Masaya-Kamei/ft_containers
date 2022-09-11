@@ -124,6 +124,90 @@ TEST_F(VectorTest, OpeEqualTest)
 	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
 }
 
+TEST_F(VectorTest, BeginTest)
+{
+	std::vector<int>::iterator			st_itr;
+	ft::vector<int>::iterator			ft_itr;
+	std::vector<int>::const_iterator	st_const_itr;
+	ft::vector<int>::const_iterator		ft_const_itr;
+
+	st_itr = st_vec_.begin();
+	ft_itr = ft_vec_.begin();
+	EXPECT_EQ(*st_itr, *ft_itr);
+	st_const_itr = st_vec_.begin();
+	ft_const_itr = ft_vec_.begin();
+	EXPECT_EQ(*st_const_itr, *ft_const_itr);
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	st_const_itr = st_const_vec.begin();
+	ft_const_itr = ft_const_vec.begin();
+	EXPECT_EQ(*st_const_itr, *ft_const_itr);
+}
+
+TEST_F(VectorTest, EndTest)
+{
+	std::vector<int>::iterator			st_itr;
+	ft::vector<int>::iterator			ft_itr;
+	std::vector<int>::const_iterator	st_const_itr;
+	ft::vector<int>::const_iterator		ft_const_itr;
+
+	st_itr = st_vec_.end() - 1;
+	ft_itr = ft_vec_.end() - 1;
+	EXPECT_EQ(*st_itr, *ft_itr);
+	st_const_itr = st_vec_.end() - 1;
+	ft_const_itr = ft_vec_.end() - 1;
+	EXPECT_EQ(*st_const_itr, *ft_const_itr);
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	st_const_itr = st_const_vec.end() - 1;
+	ft_const_itr = ft_const_vec.end() - 1;
+	EXPECT_EQ(*st_const_itr, *ft_const_itr);
+}
+
+TEST_F(VectorTest, RbeginTest)
+{
+	std::vector<int>::reverse_iterator			st_ritr;
+	ft::vector<int>::reverse_iterator			ft_ritr;
+	std::vector<int>::const_reverse_iterator	st_const_ritr;
+	ft::vector<int>::const_reverse_iterator		ft_const_ritr;
+
+	st_ritr = st_vec_.rbegin();
+	ft_ritr = ft_vec_.rbegin();
+	EXPECT_EQ(*st_ritr, *ft_ritr);
+	st_const_ritr = st_vec_.rbegin();
+	ft_const_ritr = ft_vec_.rbegin();
+	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	st_const_ritr = st_const_vec.rbegin();
+	ft_const_ritr = ft_const_vec.rbegin();
+	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
+}
+
+TEST_F(VectorTest, RendTest)
+{
+	std::vector<int>::reverse_iterator			st_ritr;
+	ft::vector<int>::reverse_iterator			ft_ritr;
+	std::vector<int>::const_reverse_iterator	st_const_ritr;
+	ft::vector<int>::const_reverse_iterator		ft_const_ritr;
+
+	st_ritr = st_vec_.rend() - 1;
+	ft_ritr = ft_vec_.rend() - 1;
+	EXPECT_EQ(*st_ritr, *ft_ritr);
+	st_const_ritr = st_vec_.rend() - 1;
+	ft_const_ritr = ft_vec_.rend() - 1;
+	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	st_const_ritr = st_const_vec.rend() - 1;
+	ft_const_ritr = ft_const_vec.rend() - 1;
+	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
+}
+
 TEST_F(VectorTest, ResizeTest)
 {
 	st_vec_.resize(1, 42);

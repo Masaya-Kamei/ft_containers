@@ -93,8 +93,8 @@ class	vector
 		const_iterator			end() const		{ return (const_iterator(end_)); }
 		reverse_iterator		rbegin()		{ return (reverse_iterator(iterator(end_))); }
 		const_reverse_iterator	rbegin() const	{ return (const_reverse_iterator(const_iterator(end_))); }
-		reverse_iterator		rend()			{ return (reverse_iterator(begin_)); }
-		const_reverse_iterator	rend() const	{ return (const_reverse_iterator(begin_)); }
+		reverse_iterator		rend()			{ return (reverse_iterator(iterator(begin_))); }
+		const_reverse_iterator	rend() const	{ return (const_reverse_iterator(const_iterator(begin_))); }
 
 		size_type	size() const
 		{
