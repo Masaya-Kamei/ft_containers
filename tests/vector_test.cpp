@@ -59,18 +59,15 @@ class VectorTest : public ::testing::Test
 
 const int VectorTest::nums[3] = {1, 2, 3};
 
-TEST_F(VectorTest, DefaultConstructorIntTest)
+TEST_F(VectorTest, DefaultConstructorTest)
 {
-	std::vector<int>	st_vec;
-	ft::vector<int>		ft_vec;
-	CompareSizeCapElem(st_vec, ft_vec);
-}
+	std::vector<int>	st_int_vec;
+	ft::vector<int>		ft_int_vec;
+	CompareSizeCapElem(st_int_vec, ft_int_vec);
 
-TEST_F(VectorTest, DefaultConstructorStringTest)
-{
-	std::vector<std::string>	st_vec;
-	ft::vector<std::string>		ft_vec;
-	CompareSizeCapElem(st_vec, ft_vec);
+	std::vector<std::string>	st_str_vec;
+	ft::vector<std::string>		ft_str_vec;
+	CompareSizeCapElem(st_str_vec, ft_str_vec);
 }
 
 TEST_F(VectorTest, FillConstructorTest)
@@ -78,26 +75,17 @@ TEST_F(VectorTest, FillConstructorTest)
 	std::vector<int>	st_vec(5, 5);
 	ft::vector<int>		ft_vec(5, 5);
 	CompareSizeCapElem(st_vec, ft_vec);
-}
 
-TEST_F(VectorTest, FillConstructorOnlySizeTest)
-{
-	std::vector<int>	st_vec(5);
-	ft::vector<int>		ft_vec(5);
-	CompareSizeCapElem(st_vec, ft_vec);
-}
+	std::vector<int>	st_size_vec(5);
+	ft::vector<int>		ft_size_vec(5);
+	CompareSizeCapElem(st_size_vec, ft_size_vec);
 
-TEST_F(VectorTest, FillConstructorZeroSizeTest)
-{
-	std::vector<int>	st_vec(0);
-	ft::vector<int>		ft_vec(0);
-	CompareSizeCapElem(st_vec, ft_vec);
-}
+	std::vector<int>	st_zero_vec(0);
+	ft::vector<int>		ft_zero_vec(0);
+	CompareSizeCapElem(st_zero_vec, ft_zero_vec);
 
-TEST_F(VectorTest, FillConstructorInvalidSizeTest)
-{
-	EXPECT_THROW(std::vector<int> st_vec(-1),	std::length_error);
-	EXPECT_THROW(ft::vector<int> ft_vec(-1),	std::length_error);
+	EXPECT_THROW(std::vector<int>	st_invalid_vec(-1),	std::length_error);
+	EXPECT_THROW(ft::vector<int>	ft_invalid_vec(-1),	std::length_error);
 }
 
 TEST_F(VectorTest, RangeConstructorTest)
@@ -106,19 +94,13 @@ TEST_F(VectorTest, RangeConstructorTest)
 	ft::vector<int>		ft_vec(nums, nums + 3);
 	CompareSizeCapElem(st_vec, ft_vec);
 	EXPECT_NE(&(*nums), &(*ft_vec.begin()));
-}
 
-TEST_F(VectorTest, RangeConstructorInvalidTest)
-{
-	EXPECT_THROW(std::vector<int> st_vec(nums, nums - 1),	std::length_error);
-	EXPECT_THROW(ft::vector<int> ft_vec(nums, nums - 1),	std::length_error);
-}
+	EXPECT_THROW(std::vector<int> st_invalid_vec(nums, nums - 1),	std::length_error);
+	EXPECT_THROW(ft::vector<int>  ft_invalid_vec(nums, nums - 1),	std::length_error);
 
-TEST_F(VectorTest, RangeConstructorZeroTest)
-{
-	std::vector<int>	st_vec(nums, nums);
-	ft::vector<int>		ft_vec(nums, nums);
-	CompareSizeCapElem(st_vec, ft_vec);
+	std::vector<int>	st_zero_vec(nums, nums);
+	ft::vector<int>		ft_zero_vec(nums, nums);
+	CompareSizeCapElem(st_zero_vec, ft_zero_vec);
 }
 
 TEST_F(VectorTest, CopyConstructorTest)
@@ -404,20 +386,20 @@ TEST_F(VectorTest, SwapTest)
 {
 	std::vector<int>::iterator	st_begin = st_vec_.begin();
 	ft::vector<int>::iterator	ft_begin = ft_vec_.begin();
-	std::vector<int>			st_vec2(5, 42);
-	ft::vector<int>				ft_vec2(5, 42);
-	st_vec_.swap(st_vec2);
-	ft_vec_.swap(ft_vec2);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	CompareSizeCapElem(st_vec2, ft_vec2);
-	EXPECT_EQ(st_begin == st_vec2.begin(), ft_begin == ft_vec2.begin());
+	std::vector<int>			st_fill_vec(5, 42);
+	ft::vector<int>				ft_fill_vec(5, 42);
+	st_vec_.swap(st_fill_vec);
+	ft_vec_.swap(ft_fill_vec);
+	CompareSizeCapElem(st_vec_,		ft_vec_);
+	CompareSizeCapElem(st_fill_vec,	ft_fill_vec);
+	EXPECT_EQ(st_begin == st_fill_vec.begin(), ft_begin == ft_fill_vec.begin());
 
-	std::vector<int>			st_vec3;
-	ft::vector<int>				ft_vec3;
-	st_vec_.swap(st_vec3);
-	ft_vec_.swap(ft_vec3);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	CompareSizeCapElem(st_vec3, ft_vec3);
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	st_vec_.swap(st_zero_vec);
+	ft_vec_.swap(ft_zero_vec);
+	CompareSizeCapElem(st_vec_,		ft_vec_);
+	CompareSizeCapElem(st_zero_vec,	ft_zero_vec);
 }
 
 TEST_F(VectorTest, ClearTest)
@@ -425,4 +407,10 @@ TEST_F(VectorTest, ClearTest)
 	st_vec_.clear();
 	ft_vec_.clear();
 	CompareSizeCapElem(st_vec_, ft_vec_);
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	st_zero_vec.clear();
+	ft_zero_vec.clear();
+	CompareSizeCapElem(st_zero_vec, ft_zero_vec);
 }
