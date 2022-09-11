@@ -113,50 +113,6 @@ TEST_F(VectorTest, CopyConstructorTest)
 	EXPECT_NE(ft_vec.begin(), ft_vec_copy.begin());
 }
 
-TEST_F(VectorTest, AssignFillTest)
-{
-	std::vector<int>	st_vec(nums, nums + 2);
-	ft::vector<int>		ft_vec(nums, nums + 2);
-
-	st_vec.assign(3, 42);
-	ft_vec.assign(3, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(1, 42);
-	ft_vec.assign(1, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(2, 42);
-	ft_vec.assign(2, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(0, 42);
-	ft_vec.assign(0, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	EXPECT_THROW(st_vec.assign(-1, 42), std::length_error);
-	EXPECT_THROW(ft_vec.assign(-1, 42), std::length_error);
-	CompareSizeCapElem(st_vec, ft_vec);
-}
-
-TEST_F(VectorTest, AssignRangeTest)
-{
-	std::vector<int>	st_vec(nums, nums + 2);
-	ft::vector<int>		ft_vec(nums, nums + 2);
-
-	st_vec.assign(nums, nums + 3);
-	ft_vec.assign(nums, nums + 3);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(nums, nums + 1);
-	ft_vec.assign(nums, nums + 1);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(nums, nums + 2);
-	ft_vec.assign(nums, nums + 2);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(nums, nums);
-	ft_vec.assign(nums, nums);
-	CompareSizeCapElem(st_vec, ft_vec);
-	EXPECT_THROW(st_vec.assign(nums, nums - 1), std::length_error);
-	EXPECT_THROW(ft_vec.assign(nums, nums - 1), std::length_error);
-	CompareSizeCapElem(st_vec, ft_vec);
-}
-
 TEST_F(VectorTest, OpeEqualTest)
 {
 	std::vector<int>	st_vec_copy;
@@ -166,6 +122,44 @@ TEST_F(VectorTest, OpeEqualTest)
 
 	CompareSizeCapElem(st_vec_copy, ft_vec_copy);
 	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
+}
+
+TEST_F(VectorTest, ResizeTest)
+{
+	st_vec_.resize(1, 42);
+	ft_vec_.resize(1, 42);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.resize(2, 43);
+	ft_vec_.resize(2, 43);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.resize(3, 44);
+	ft_vec_.resize(3, 44);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.resize(5, 45);
+	ft_vec_.resize(5, 45);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.resize(0, 46);
+	ft_vec_.resize(0, 46);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	EXPECT_THROW(st_vec_.resize(-1, 42), std::length_error);
+	EXPECT_THROW(ft_vec_.resize(-1, 42), std::length_error);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+}
+
+TEST_F(VectorTest, ReserveTest)
+{
+	st_vec_.reserve(1);
+	ft_vec_.reserve(1);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.reserve(3);
+	ft_vec_.reserve(3);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.reserve(5);
+	ft_vec_.reserve(5);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	EXPECT_THROW(st_vec_.reserve(-1), std::length_error);
+	EXPECT_THROW(ft_vec_.reserve(-1), std::length_error);
+	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
 TEST_F(VectorTest, OpeBracketsTest)
@@ -239,20 +233,48 @@ TEST_F(VectorTest, DataTest)
 	EXPECT_EQ(st_zero_vec.data(), ft_zero_vec.data());
 }
 
-TEST_F(VectorTest, ReserveTest)
+TEST_F(VectorTest, AssignFillTest)
 {
-	st_vec_.reserve(1);
-	ft_vec_.reserve(1);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.reserve(3);
-	ft_vec_.reserve(3);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.reserve(5);
-	ft_vec_.reserve(5);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	EXPECT_THROW(st_vec_.reserve(-1), std::length_error);
-	EXPECT_THROW(ft_vec_.reserve(-1), std::length_error);
-	CompareSizeCapElem(st_vec_, ft_vec_);
+	std::vector<int>	st_vec(nums, nums + 2);
+	ft::vector<int>		ft_vec(nums, nums + 2);
+
+	st_vec.assign(3, 42);
+	ft_vec.assign(3, 42);
+	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec.assign(1, 42);
+	ft_vec.assign(1, 42);
+	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec.assign(2, 42);
+	ft_vec.assign(2, 42);
+	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec.assign(0, 42);
+	ft_vec.assign(0, 42);
+	CompareSizeCapElem(st_vec, ft_vec);
+	EXPECT_THROW(st_vec.assign(-1, 42), std::length_error);
+	EXPECT_THROW(ft_vec.assign(-1, 42), std::length_error);
+	CompareSizeCapElem(st_vec, ft_vec);
+}
+
+TEST_F(VectorTest, AssignRangeTest)
+{
+	std::vector<int>	st_vec(nums, nums + 2);
+	ft::vector<int>		ft_vec(nums, nums + 2);
+
+	st_vec.assign(nums, nums + 3);
+	ft_vec.assign(nums, nums + 3);
+	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec.assign(nums, nums + 1);
+	ft_vec.assign(nums, nums + 1);
+	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec.assign(nums, nums + 2);
+	ft_vec.assign(nums, nums + 2);
+	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec.assign(nums, nums);
+	ft_vec.assign(nums, nums);
+	CompareSizeCapElem(st_vec, ft_vec);
+	EXPECT_THROW(st_vec.assign(nums, nums - 1), std::length_error);
+	EXPECT_THROW(ft_vec.assign(nums, nums - 1), std::length_error);
+	CompareSizeCapElem(st_vec, ft_vec);
 }
 
 TEST_F(VectorTest, PushBackTest)
@@ -342,28 +364,6 @@ TEST_F(VectorTest, InsertRangeTest)
 	// EXPECT_THROW(st_vec_.insert(st_vec_.begin(), nums, nums - 1), std::length_error);
 	// EXPECT_THROW(ft_vec_.insert(ft_vec_.begin(), nums, nums - 1), std::length_error);
 	// CompareSizeCapElem(st_vec_, ft_vec_);
-}
-
-TEST_F(VectorTest, ResizeTest)
-{
-	st_vec_.resize(1, 42);
-	ft_vec_.resize(1, 42);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.resize(2, 43);
-	ft_vec_.resize(2, 43);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.resize(3, 44);
-	ft_vec_.resize(3, 44);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.resize(5, 45);
-	ft_vec_.resize(5, 45);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.resize(0, 46);
-	ft_vec_.resize(0, 46);
-	CompareSizeCapElem(st_vec_, ft_vec_);
-	EXPECT_THROW(st_vec_.resize(-1, 42), std::length_error);
-	EXPECT_THROW(ft_vec_.resize(-1, 42), std::length_error);
-	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
 TEST_F(VectorTest, EraseSingleTest)
