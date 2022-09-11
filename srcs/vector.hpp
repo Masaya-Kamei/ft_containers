@@ -87,50 +87,30 @@ class	vector
 			return (*this);
 		}
 
-		iterator begin()
-		{
-			return (iterator(begin_));
-		}
-		const_iterator begin() const
-		{
-			return (const_iterator(begin_));
-		}
-		iterator end()
-		{
-			return (iterator(end_));
-		}
-		const_iterator end() const
-		{
-			return (const_iterator(end_));
-		}
-		reverse_iterator rbegin()
-		{
-			return (reverse_iterator(iterator(end_)));
-		}
-		const_reverse_iterator rbegin() const
-		{
-			return (const_reverse_iterator(const_iterator(end_)));
-		}
-		reverse_iterator rend()
-		{
-			return (reverse_iterator(begin_));
-		}
-		const_reverse_iterator rend() const
-		{
-			return (const_reverse_iterator(begin_));
-		}
+		iterator				begin()			{ return (iterator(begin_)); }
+		const_iterator			begin() const	{ return (const_iterator(begin_)); }
+		iterator				end()			{ return (iterator(end_)); }
+		const_iterator			end() const		{ return (const_iterator(end_)); }
+		reverse_iterator		rbegin()		{ return (reverse_iterator(iterator(end_))); }
+		const_reverse_iterator	rbegin() const	{ return (const_reverse_iterator(const_iterator(end_))); }
+		reverse_iterator		rend()			{ return (reverse_iterator(begin_)); }
+		const_reverse_iterator	rend() const	{ return (const_reverse_iterator(begin_)); }
+
 		size_type size() const
 		{
 			return (end_ - begin_);
 		}
+
 		size_type max_size() const
 		{
 			return (std::min<size_type>(alloc_.max_size(), std::numeric_limits<difference_type>::max()));
 		}
+
 		size_type capacity() const
 		{
 			return (end_cap_ - begin_);
 		}
+
 		bool empty() const
 		{
 			return (begin_ == end_);
@@ -193,6 +173,7 @@ class	vector
 				std::uninitialized_copy(first, last, begin_);
 			}
 		}
+
 		void assign(size_type n, const value_type& val)
 		{
 			if (n <= capacity())
@@ -223,6 +204,7 @@ class	vector
 			insert(position, 1, val);
 			return (begin() + pos_dist);
 		}
+
 		void insert(iterator position, size_type n, const value_type& val)
 		{
 			difference_type	pos_dist = std::distance(begin(), position);
@@ -238,6 +220,7 @@ class	vector
 			std::fill(position, position + n, val);
 			end_ = new_end;
 		}
+
 		template <class InputIterator>
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
 			insert(iterator position, InputIterator first, InputIterator last)
@@ -261,6 +244,7 @@ class	vector
 		{
 			return (erase(position, position + 1));
 		}
+
 		iterator erase(iterator first, iterator last)
 		{
 			size_type	erase_size = std::distance(first, last);
@@ -292,11 +276,13 @@ class	vector
 			for (pointer p = first; p < last; p++)
 				alloc_.construct(p);
 		 }
+
 		 void	destroy_range(pointer first, pointer last)
 		 {
 			for (pointer p = first; p < last; p++)
 				alloc_.destroy(p);
 		 }
+
 		void	allocate(size_type size)
 		{
 			if (size > max_size())
@@ -305,6 +291,7 @@ class	vector
 			end_ = begin_ + size;
 			end_cap_ = end_;
 		}
+
 		void	deallocate()
 		{
 			if (begin_ == NULL)
@@ -314,6 +301,7 @@ class	vector
 			end_ = NULL;
 			end_cap_ = NULL;
 		}
+
 		size_type	recommend_size(size_type new_size) const
 		{
 			size_type	maxsize = max_size();
