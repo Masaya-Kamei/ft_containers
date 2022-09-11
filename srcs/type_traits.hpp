@@ -10,11 +10,15 @@ template<class T>					struct enable_if<true, T>	{ typedef T type; };
 template <class T, T v>
 struct integral_constant
 {
-	static const T value = v;
+	static const T value;
 	typedef T						value_type;
 	typedef integral_constant<T, v>	type;
 	operator T() const { return (v); }
 };
+
+template <class T, T v>
+const T	integral_constant<T, v>::value = v;
+
 typedef integral_constant<bool, true>	true_type;
 typedef integral_constant<bool, false>	false_type;
 
