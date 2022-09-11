@@ -72,7 +72,7 @@ class	vector
 			deallocate();
 		}
 
-		vector& operator=(const vector& rhs)
+		vector&	operator=(const vector& rhs)
 		{
 			if (this != &rhs)
 			{
@@ -96,27 +96,27 @@ class	vector
 		reverse_iterator		rend()			{ return (reverse_iterator(begin_)); }
 		const_reverse_iterator	rend() const	{ return (const_reverse_iterator(begin_)); }
 
-		size_type size() const
+		size_type	size() const
 		{
 			return (end_ - begin_);
 		}
 
-		size_type max_size() const
+		size_type	max_size() const
 		{
 			return (std::min<size_type>(alloc_.max_size(), std::numeric_limits<difference_type>::max()));
 		}
 
-		size_type capacity() const
+		size_type	capacity() const
 		{
 			return (end_cap_ - begin_);
 		}
 
-		bool empty() const
+		bool	empty() const
 		{
 			return (begin_ == end_);
 		}
 
-		void resize(size_type n, value_type val = value_type())
+		void	resize(size_type n, value_type val = value_type())
 		{
 			if (n < size())
 				erase(begin() + n, end());
@@ -124,7 +124,7 @@ class	vector
 				insert(end(), n - size(), val);
 		}
 
-		void reserve(size_type n)
+		void	reserve(size_type n)
 		{
 			if (n <= capacity())
 				return;
@@ -139,16 +139,16 @@ class	vector
 			alloc_.deallocate(old_begin, old_capacity);
 		}
 
-		reference operator[] (size_type n);
-		const_reference operator[] (size_type n) const;
-		reference at(size_type n);
-		const_reference at(size_type n) const;
-		reference front();
-		const_reference front() const;
-		reference back();
-		const_reference back() const;
-		value_type* data();
-		const value_type* data() const;
+		reference	operator[] (size_type n);
+		const_reference	operator[] (size_type n) const;
+		reference	at(size_type n);
+		const_reference	at(size_type n) const;
+		reference	front();
+		const_reference	front() const;
+		reference	back();
+		const_reference	back() const;
+		value_type*	data();
+		const value_type*	data() const;
 
 		template <class InputIterator>
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
@@ -174,7 +174,7 @@ class	vector
 			}
 		}
 
-		void assign(size_type n, const value_type& val)
+		void	assign(size_type n, const value_type& val)
 		{
 			if (n <= capacity())
 			{
@@ -195,17 +195,17 @@ class	vector
 			}
 		}
 
-		void push_back(const value_type& val);
-		void pop_back();
+		void	push_back(const value_type& val);
+		void	pop_back();
 
-		iterator insert(iterator position, const value_type& val)
+		iterator	insert(iterator position, const value_type& val)
 		{
 			difference_type	pos_dist = std::distance(begin(), position);
 			insert(position, 1, val);
 			return (begin() + pos_dist);
 		}
 
-		void insert(iterator position, size_type n, const value_type& val)
+		void	insert(iterator position, size_type n, const value_type& val)
 		{
 			difference_type	pos_dist = std::distance(begin(), position);
 			size_type		new_size = size() + n;
@@ -240,12 +240,12 @@ class	vector
 			end_ = new_end;
 		}
 
-		iterator erase(iterator position)
+		iterator	erase(iterator position)
 		{
 			return (erase(position, position + 1));
 		}
 
-		iterator erase(iterator first, iterator last)
+		iterator	erase(iterator first, iterator last)
 		{
 			size_type	erase_size = std::distance(first, last);
 			pointer		new_end = end_ - erase_size;
@@ -255,15 +255,15 @@ class	vector
 			return (first);
 		}
 
-		void swap(vector& x);
+		void	swap(vector& x);
 
-		void clear()
+		void	clear()
 		{
 			destroy_range(begin_, end_);
 			end_ = begin_;
 		}
 
-		allocator_type get_allocator() const;
+		allocator_type	get_allocator() const;
 
 	private:
 		allocator_type	alloc_;
