@@ -216,6 +216,47 @@ TEST_F(VectorTest, AtTest)
 	EXPECT_THROW(ft_const_vec.at(3), std::out_of_range);
 }
 
+TEST_F(VectorTest, FrontTest)
+{
+	EXPECT_EQ(st_vec_.front(), ft_vec_.front());
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	EXPECT_EQ(st_const_vec.front(), ft_const_vec.front());
+
+	// std::vector<int>	st_zero_vec;
+	// ft::vector<int>		ft_zero_vec;
+	// std::cout << st_zero_vec.front() << std::endl;
+	// EXPECT_EQ(st_zero_vec.front(), ft_zero_vec.front());
+}
+
+TEST_F(VectorTest, BackTest)
+{
+	EXPECT_EQ(st_vec_.back(), ft_vec_.back());
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	EXPECT_EQ(st_const_vec.back(), ft_const_vec.back());
+
+	// std::vector<int>	st_zero_vec;
+	// ft::vector<int>		ft_zero_vec;
+	// std::cout << st_zero_vec.back() << std::endl;
+	// EXPECT_EQ(st_zero_vec.back(), ft_zero_vec.back());
+}
+
+TEST_F(VectorTest, DataTest)
+{
+	EXPECT_EQ(*(st_vec_.data()), *(ft_vec_.data()));
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	EXPECT_EQ(*(st_const_vec.data()), *(ft_const_vec.data()));
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	EXPECT_EQ(st_zero_vec.data(), ft_zero_vec.data());
+}
+
 TEST_F(VectorTest, ReserveTest)
 {
 	st_vec_.reserve(1);

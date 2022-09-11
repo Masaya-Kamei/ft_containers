@@ -148,6 +148,7 @@ class	vector
 				throw std::out_of_range("ft::vector");
 			return (begin_[n]);
 		}
+
 		const_reference	at(size_type n) const
 		{
 			if (size() <= n)
@@ -155,12 +156,12 @@ class	vector
 			return (begin_[n]);
 		}
 
-		reference	front();
-		const_reference	front() const;
-		reference	back();
-		const_reference	back() const;
-		value_type*	data();
-		const value_type*	data() const;
+		reference			front()			{ return (*begin_); }
+		const_reference		front() const	{ return (*begin_); }
+		reference			back()			{ return (*(end_ - 1)); }
+		const_reference		back() const	{ return (*(end_ - 1)); }
+		value_type*			data()			{ return (begin_); }
+		const value_type*	data() const	{ return (begin_); }
 
 		template <class InputIterator>
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
