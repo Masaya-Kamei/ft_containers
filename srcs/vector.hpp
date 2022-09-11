@@ -139,10 +139,22 @@ class	vector
 			alloc_.deallocate(old_begin, old_capacity);
 		}
 
-		reference	operator[] (size_type n);
-		const_reference	operator[] (size_type n) const;
-		reference	at(size_type n);
-		const_reference	at(size_type n) const;
+		reference		operator[] (size_type n)		{ return (begin_[n]); }
+		const_reference	operator[] (size_type n) const	{ return (begin_[n]); }
+
+		reference	at(size_type n)
+		{
+			if (size() <= n)
+				throw std::out_of_range("ft::vector");
+			return (begin_[n]);
+		}
+		const_reference	at(size_type n) const
+		{
+			if (size() <= n)
+				throw std::out_of_range("ft::vector");
+			return (begin_[n]);
+		}
+
 		reference	front();
 		const_reference	front() const;
 		reference	back();

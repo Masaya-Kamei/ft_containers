@@ -186,6 +186,36 @@ TEST_F(VectorTest, OpeEqualTest)
 	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
 }
 
+TEST_F(VectorTest, OpeBracketsTest)
+{
+	EXPECT_EQ(st_vec_[0], ft_vec_[0]);
+	EXPECT_EQ(st_vec_[1], ft_vec_[1]);
+	EXPECT_EQ(st_vec_[2], ft_vec_[2]);
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	EXPECT_EQ(st_const_vec[0], ft_const_vec[0]);
+	EXPECT_EQ(st_const_vec[1], ft_const_vec[1]);
+	EXPECT_EQ(st_const_vec[2], ft_const_vec[2]);
+}
+
+TEST_F(VectorTest, AtTest)
+{
+	EXPECT_EQ(st_vec_.at(0), ft_vec_.at(0));
+	EXPECT_EQ(st_vec_.at(1), ft_vec_.at(1));
+	EXPECT_EQ(st_vec_.at(2), ft_vec_.at(2));
+	EXPECT_THROW(st_vec_.at(3), std::out_of_range);
+	EXPECT_THROW(ft_vec_.at(3), std::out_of_range);
+
+	const std::vector<int>	st_const_vec(st_vec_);
+	const ft::vector<int>	ft_const_vec(ft_vec_);
+	EXPECT_EQ(st_const_vec.at(0), ft_const_vec.at(0));
+	EXPECT_EQ(st_const_vec.at(1), ft_const_vec.at(1));
+	EXPECT_EQ(st_const_vec.at(2), ft_const_vec.at(2));
+	EXPECT_THROW(st_const_vec.at(3), std::out_of_range);
+	EXPECT_THROW(ft_const_vec.at(3), std::out_of_range);
+}
+
 TEST_F(VectorTest, ReserveTest)
 {
 	st_vec_.reserve(1);
