@@ -208,8 +208,19 @@ class	vector
 			}
 		}
 
-		void	push_back(const value_type& val);
-		void	pop_back();
+		void	push_back(const value_type& val)
+		{
+			if (end_ == end_cap_)
+				reserve(recommend_size(size() + 1));
+			alloc_.construct(end_, val);
+			end_ += 1;
+		}
+
+		void	pop_back()
+		{
+			alloc_.destroy(end_ - 1);
+			end_ -= 1;
+		}
 
 		iterator	insert(iterator position, const value_type& val)
 		{
@@ -282,7 +293,10 @@ class	vector
 			end_ = begin_;
 		}
 
-		allocator_type	get_allocator() const;
+		allocator_type	get_allocator() const
+		{
+			return (alloc_);
+		}
 
 	private:
 		allocator_type	alloc_;

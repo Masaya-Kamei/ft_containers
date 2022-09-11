@@ -255,6 +255,34 @@ TEST_F(VectorTest, ReserveTest)
 	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
+TEST_F(VectorTest, PushBackTest)
+{
+	st_vec_.push_back(42);
+	ft_vec_.push_back(42);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.push_back(43); st_vec_.push_back(44); st_vec_.push_back(45);
+	st_vec_.push_back(46); st_vec_.push_back(47); st_vec_.push_back(48);
+	ft_vec_.push_back(43); ft_vec_.push_back(44); ft_vec_.push_back(45);
+	ft_vec_.push_back(46); ft_vec_.push_back(47); ft_vec_.push_back(48);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+}
+
+TEST_F(VectorTest, PopBackTest)
+{
+	st_vec_.pop_back();
+	ft_vec_.pop_back();
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.pop_back();
+	ft_vec_.pop_back();
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.pop_back();
+	ft_vec_.pop_back();
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	// st_vec_.pop_back();
+	// ft_vec_.pop_back();
+	// CompareSizeCapElem(st_vec_, ft_vec_);
+}
+
 TEST_F(VectorTest, InsertSingleTest)
 {
 	std::vector<int>::iterator	st_itr;
@@ -413,4 +441,9 @@ TEST_F(VectorTest, ClearTest)
 	st_zero_vec.clear();
 	ft_zero_vec.clear();
 	CompareSizeCapElem(st_zero_vec, ft_zero_vec);
+}
+
+TEST_F(VectorTest, GetAllocatorTest)
+{
+	EXPECT_EQ(st_vec_.get_allocator(), ft_vec_.get_allocator());
 }
