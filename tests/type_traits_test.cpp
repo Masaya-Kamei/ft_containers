@@ -20,12 +20,12 @@ class TypeTraitsTest : public ::testing::Test
 
 TEST_F(TypeTraitsTest, IsIntegralTest)
 {
-	EXPECT_EQ(std::is_integral<bool>::value, ft::is_integral<bool>::value);
-	EXPECT_EQ(std::is_integral<long>::value, ft::is_integral<long>::value);
-	EXPECT_EQ(std::is_integral<const int>::value, ft::is_integral<const int>::value);
-	EXPECT_EQ(std::is_integral<volatile int>::value, ft::is_integral<volatile int>::value);
-	EXPECT_EQ(std::is_integral<const volatile int>::value, ft::is_integral<const volatile int>::value);
-	EXPECT_EQ(std::is_integral<volatile const int>::value, ft::is_integral<volatile const int>::value);
+	EXPECT_EQ(std::is_integral<bool>::value,				ft::is_integral<bool>::value);
+	EXPECT_EQ(std::is_integral<long>::value,				ft::is_integral<long>::value);
+	EXPECT_EQ(std::is_integral<const int>::value,			ft::is_integral<const int>::value);
+	EXPECT_EQ(std::is_integral<volatile int>::value,		ft::is_integral<volatile int>::value);
+	EXPECT_EQ(std::is_integral<const volatile int>::value,	ft::is_integral<const volatile int>::value);
+	EXPECT_EQ(std::is_integral<volatile const int>::value,	ft::is_integral<volatile const int>::value);
 
 	EXPECT_EQ(std::is_integral<void *>::value, ft::is_integral<void *>::value);
 	EXPECT_EQ(std::is_integral<char *>::value, ft::is_integral<char *>::value);
