@@ -255,7 +255,13 @@ class	vector
 			return (first);
 		}
 
-		void	swap(vector& x);
+		void	swap(vector& x)
+		{
+			std::swap(alloc_, x.alloc_);
+			std::swap(begin_, x.begin_);
+			std::swap(end_, x.end_);
+			std::swap(end_cap_, x.end_cap_);
+		}
 
 		void	clear()
 		{

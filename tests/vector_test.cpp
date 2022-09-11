@@ -329,6 +329,26 @@ TEST_F(VectorTest, EraseRangeTest)
 	CompareSizeCapElem(st_vec3, ft_vec3);
 }
 
+TEST_F(VectorTest, SwapTest)
+{
+	std::vector<int>::iterator	st_begin = st_vec_.begin();
+	ft::vector<int>::iterator	ft_begin = ft_vec_.begin();
+	std::vector<int>			st_vec2(5, 42);
+	ft::vector<int>				ft_vec2(5, 42);
+	st_vec_.swap(st_vec2);
+	ft_vec_.swap(ft_vec2);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	CompareSizeCapElem(st_vec2, ft_vec2);
+	EXPECT_EQ(st_begin == st_vec2.begin(), ft_begin == ft_vec2.begin());
+
+	std::vector<int>			st_vec3;
+	ft::vector<int>				ft_vec3;
+	st_vec_.swap(st_vec3);
+	ft_vec_.swap(ft_vec3);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	CompareSizeCapElem(st_vec3, ft_vec3);
+}
+
 TEST_F(VectorTest, ClearTest)
 {
 	st_vec_.clear();
