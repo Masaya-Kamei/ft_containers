@@ -147,11 +147,9 @@ TEST_F(VectorTest, CopyConstructorTest)
 TEST_F(VectorTest, OpeAssignTest)
 {
 	std::vector<int>	st_vec_copy;
-	st_vec_copy = st_vec_;
-	ft::vector<int>	ft_vec_copy;
-	ft_vec_copy = ft_vec_;
+	ft::vector<int>		ft_vec_copy;
 
-	CompareSizeCapElem(st_vec_copy, ft_vec_copy);
+	CompareSizeCapElem((st_vec_copy = st_vec_), (ft_vec_copy = ft_vec_));
 	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
 }
 
