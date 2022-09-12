@@ -21,6 +21,26 @@ class VectorTest : public ::testing::Test
 		{
 		}
 
+		void SetupVectorForRelationalOpe()
+		{
+			int	nums[]	= {10, 20,  30, 40, 50};
+			int	large[] = {10, 200, 30, 40, 50};
+			int	small[] = {10, 2,   30, 40, 50};
+			int	more[]	= {10, 20,  30, 40, 50, 60, 70};
+			int	less[]	= {10, 20,  30};
+
+			st_nums_.assign(nums, nums + 5);
+			ft_nums_.assign(nums, nums + 5);
+			st_large_.assign(large, large + 5);
+			ft_large_.assign(large, large + 5);
+			st_small_.assign(small, small + 5);
+			ft_small_.assign(small, small + 5);
+			st_more_.assign(more, more + 7);
+			ft_more_.assign(more, more + 7);
+			st_less_.assign(less, less + 3);
+			ft_less_.assign(less, less + 3);
+		}
+
 		template <class T>
 		void CompareSizeCapElem(const std::vector<T>& st_vec, const ft::vector<T>& ft_vec)
 		{
@@ -55,6 +75,17 @@ class VectorTest : public ::testing::Test
 		static const int	nums[3];
 		std::vector<int>	st_vec_;
 		ft::vector<int>		ft_vec_;
+
+		std::vector<int>	st_nums_;
+		ft::vector<int>		ft_nums_;
+		std::vector<int>	st_large_;
+		ft::vector<int>		ft_large_;
+		std::vector<int>	st_small_;
+		ft::vector<int>		ft_small_;
+		std::vector<int>	st_more_;
+		ft::vector<int>		ft_more_;
+		std::vector<int>	st_less_;
+		ft::vector<int>		ft_less_;
 };
 
 const int VectorTest::nums[3] = {1, 2, 3};
@@ -113,7 +144,7 @@ TEST_F(VectorTest, CopyConstructorTest)
 	EXPECT_NE(ft_vec.begin(), ft_vec_copy.begin());
 }
 
-TEST_F(VectorTest, OpeEqualTest)
+TEST_F(VectorTest, OpeAssignTest)
 {
 	std::vector<int>	st_vec_copy;
 	st_vec_copy = st_vec_;
@@ -570,4 +601,89 @@ TEST_F(VectorTest, ClearTest)
 TEST_F(VectorTest, GetAllocatorTest)
 {
 	EXPECT_EQ(st_vec_.get_allocator(), ft_vec_.get_allocator());
+}
+
+TEST_F(VectorTest, OpeEqualTest)
+{
+	SetupVectorForRelationalOpe();
+	EXPECT_EQ(st_nums_ == st_nums_,		ft_nums_ == ft_nums_);
+	EXPECT_EQ(st_nums_ == st_large_,	ft_nums_ == ft_large_);
+	EXPECT_EQ(st_nums_ == st_small_,	ft_nums_ == ft_small_);
+	EXPECT_EQ(st_nums_ == st_more_,		ft_nums_ == ft_more_);
+	EXPECT_EQ(st_nums_ == st_less_,		ft_nums_ == ft_less_);
+}
+
+TEST_F(VectorTest, OpeNotEqualTest)
+{
+	SetupVectorForRelationalOpe();
+	EXPECT_EQ(st_nums_ != st_nums_,		ft_nums_ != ft_nums_);
+	EXPECT_EQ(st_nums_ != st_large_,	ft_nums_ != ft_large_);
+	EXPECT_EQ(st_nums_ != st_small_,	ft_nums_ != ft_small_);
+	EXPECT_EQ(st_nums_ != st_more_,		ft_nums_ != ft_more_);
+	EXPECT_EQ(st_nums_ != st_less_,		ft_nums_ != ft_less_);
+}
+
+TEST_F(VectorTest, OpeLessTest)
+{
+	SetupVectorForRelationalOpe();
+	EXPECT_EQ(st_nums_ < st_nums_,		ft_nums_ < ft_nums_);
+	EXPECT_EQ(st_nums_ < st_large_,		ft_nums_ < ft_large_);
+	EXPECT_EQ(st_nums_ < st_small_,		ft_nums_ < ft_small_);
+	EXPECT_EQ(st_nums_ < st_more_,		ft_nums_ < ft_more_);
+	EXPECT_EQ(st_nums_ < st_less_,		ft_nums_ < ft_less_);
+}
+
+TEST_F(VectorTest, OpeLessEqualTest)
+{
+	SetupVectorForRelationalOpe();
+	EXPECT_EQ(st_nums_ <= st_nums_,		ft_nums_ <= ft_nums_);
+	EXPECT_EQ(st_nums_ <= st_large_,	ft_nums_ <= ft_large_);
+	EXPECT_EQ(st_nums_ <= st_small_,	ft_nums_ <= ft_small_);
+	EXPECT_EQ(st_nums_ <= st_more_,		ft_nums_ <= ft_more_);
+	EXPECT_EQ(st_nums_ <= st_less_,		ft_nums_ <= ft_less_);
+}
+
+TEST_F(VectorTest, OpeGreaterTest)
+{
+	SetupVectorForRelationalOpe();
+	EXPECT_EQ(st_nums_ > st_nums_,		ft_nums_ > ft_nums_);
+	EXPECT_EQ(st_nums_ > st_large_,		ft_nums_ > ft_large_);
+	EXPECT_EQ(st_nums_ > st_small_,		ft_nums_ > ft_small_);
+	EXPECT_EQ(st_nums_ > st_more_,		ft_nums_ > ft_more_);
+	EXPECT_EQ(st_nums_ > st_less_,		ft_nums_ > ft_less_);
+}
+
+TEST_F(VectorTest, OpeGreaterEqualTest)
+{
+	SetupVectorForRelationalOpe();
+	EXPECT_EQ(st_nums_ >= st_nums_,		ft_nums_ >= ft_nums_);
+	EXPECT_EQ(st_nums_ >= st_large_,	ft_nums_ >= ft_large_);
+	EXPECT_EQ(st_nums_ >= st_small_,	ft_nums_ >= ft_small_);
+	EXPECT_EQ(st_nums_ >= st_more_,		ft_nums_ >= ft_more_);
+	EXPECT_EQ(st_nums_ >= st_less_,		ft_nums_ >= ft_less_);
+}
+
+TEST_F(VectorTest, NonMemberSwapTest)
+{
+	std::vector<int>::iterator	st_begin = st_vec_.begin();
+	ft::vector<int>::iterator	ft_begin = ft_vec_.begin();
+	std::vector<int>			st_fill_vec(5, 42);
+	ft::vector<int>				ft_fill_vec(5, 42);
+	swap(st_vec_, st_fill_vec);
+	swap(ft_vec_, ft_fill_vec);
+	CompareSizeCapElem(st_vec_,		ft_vec_);
+	CompareSizeCapElem(st_fill_vec,	ft_fill_vec);
+	EXPECT_EQ(st_begin == st_fill_vec.begin(), ft_begin == ft_fill_vec.begin());
+
+	std::vector<int>	st_zero_vec;
+	ft::vector<int>		ft_zero_vec;
+	swap(st_vec_, st_zero_vec);
+	swap(ft_vec_, ft_zero_vec);
+	CompareSizeCapElem(st_vec_,		ft_vec_);
+	CompareSizeCapElem(st_zero_vec,	ft_zero_vec);
+
+	// const std::vector<int>	st_const_vec;
+	// std::vector<const int>	st_const_vec;
+	// swap(st_vec_, st_const_vec);
+	// swap(st_const_vec, st_vec_);
 }
