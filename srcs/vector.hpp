@@ -4,7 +4,7 @@
 #include <memory>
 #include <iterator>
 #include "type_traits.hpp"
-#include "random_access_iterator.hpp"
+#include "vector_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "algorithm.hpp"
 
@@ -23,8 +23,8 @@ class	vector
 		typedef const value_type&								const_reference;
 		typedef typename Allocator::pointer						pointer;
 		typedef typename Allocator::const_pointer				const_pointer;
-		typedef	ft::random_access_iterator<value_type>			iterator;
-		typedef ft::random_access_iterator<const value_type>	const_iterator;
+		typedef	ft::vector_iterator<value_type>					iterator;
+		typedef ft::vector_iterator<const value_type>			const_iterator;
 		typedef ft::reverse_iterator<iterator> 					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 

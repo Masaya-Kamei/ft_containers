@@ -2,7 +2,7 @@ SRCSDIR	= ../srcs
 vpath	%.cpp	$(SRCSDIR)
 
 SRCS	=	type_traits_test.cpp \
-			random_access_iterator_test.cpp \
+			vector_iterator_test.cpp \
 			reverse_iterator_test.cpp \
 			algorithm_test.cpp \
 			vector_test.cpp \

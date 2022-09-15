@@ -5,11 +5,11 @@
 #endif
 #include "vector.hpp"
 
-class RandomAccessIteratorTest : public ::testing::Test
+class VectorIteratorTest : public ::testing::Test
 {
 };
 
-TEST_F(RandomAccessIteratorTest, ConstructorTest)
+TEST_F(VectorIteratorTest, ConstructorTest)
 {
 	int 	a[3] = {1, 2, 3};
 	std::vector<int>			std_vec(a, a + 3);
@@ -27,7 +27,7 @@ TEST_F(RandomAccessIteratorTest, ConstructorTest)
 	EXPECT_EQ(ft_itr, ft_begin);
 }
 
-TEST_F(RandomAccessIteratorTest, CopyConstructorConstTest)
+TEST_F(VectorIteratorTest, CopyConstructorConstTest)
 {
 	int 	a[3] = {1, 2, 3};
 	ft::vector<int>				vec(a, a + 3);
@@ -45,7 +45,7 @@ TEST_F(RandomAccessIteratorTest, CopyConstructorConstTest)
 	ft::vector<int>::const_iterator	const_itr3(const_vec.begin());
 }
 
-TEST_F(RandomAccessIteratorTest, OpeEqualConstTest)
+TEST_F(VectorIteratorTest, OpeEqualConstTest)
 {
 	int 	a[3] = {1, 2, 3};
 	ft::vector<int>				vec(a, a + 3);
@@ -64,7 +64,7 @@ TEST_F(RandomAccessIteratorTest, OpeEqualConstTest)
 	ft::vector<int>::const_iterator	const_itr3; const_itr3 = const_vec.begin();
 }
 
-TEST_F(RandomAccessIteratorTest, OpeBothSidesTest)
+TEST_F(VectorIteratorTest, OpeBothSidesTest)
 {
 	int a[3] = {1, 2, 3};
 	ft::vector<int>	vec(a, a + 3);
@@ -88,7 +88,7 @@ TEST_F(RandomAccessIteratorTest, OpeBothSidesTest)
 	EXPECT_EQ(itr3 - itr4, 0);		EXPECT_EQ(itr4 - itr3, 0);
 }
 
-TEST_F(RandomAccessIteratorTest, OpeAddSubTest)
+TEST_F(VectorIteratorTest, OpeAddSubTest)
 {
 	int		a[3] = {1, 2, 3};
 	std::vector<int>			std_vec(a, a + 3);
@@ -115,7 +115,7 @@ TEST_F(RandomAccessIteratorTest, OpeAddSubTest)
 	EXPECT_EQ(ft_itr, ft_begin);
 }
 
-TEST_F(RandomAccessIteratorTest, OpeRelationalTest)
+TEST_F(VectorIteratorTest, OpeRelationalTest)
 {
 	int		a[3] = {1, 2, 3};
 	std::vector<int>			std_vec(a, a + 3);
@@ -133,7 +133,7 @@ TEST_F(RandomAccessIteratorTest, OpeRelationalTest)
 	EXPECT_EQ(std_first_itr >= std_second_itr,	ft_first_itr >= ft_second_itr);
 }
 
-TEST_F(RandomAccessIteratorTest, OpeOthersTest)
+TEST_F(VectorIteratorTest, OpeOthersTest)
 {
 	std::string s[3] = {"a", "b", "c"};
 	std::vector<std::string>	std_vec(s, s + 3);
