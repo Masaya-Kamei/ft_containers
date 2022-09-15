@@ -1,5 +1,5 @@
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef MAP_HPP
+# define MAP_HPP
 
 #include <functional>
 #include "pair.hpp"
@@ -20,7 +20,7 @@ class map
 
 		class value_compare
 		{
-			friend class map;
+			friend class map;	// TODO
 			protected:
 				Compare comp;
 				value_compare(Compare c) : comp(c) {}
@@ -39,12 +39,19 @@ class map
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::reference			pointer;
 		typedef typename allocator_type::const_reference	const_pointer;
-		// typedef iterator;
-		// typedef const_iterator;
-		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef ptrdiff_t									difference_type;
 		typedef size_t										size_type;
+
+	private:
+		typedef avl_tree<value_type, value_compare, allocator_type>	tree_type;
+
+		tree_type	tree_;
+
+	public:
+		typedef typename tree_type::iterator				iterator;
+		// typedef typename tree_type::const_iterator			const_iterator;
+		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 		explicit map(const key_compare& comp = key_compare(),
 						const allocator_type& alloc = allocator_type())
@@ -52,17 +59,22 @@ class map
 		{
 		}
 
-		// template <class InputIterator>
-		// map(InputIterator first, InputIterator last,
-		// 	const key_compare& comp = key_compare(),
-		// 	const allocator_type& alloc = allocator_type());
+		template <class InputIterator>
+		map(InputIterator first, InputIterator last,
+			const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type())
+			: tree_(value_compare(comp), alloc)
+		{
+			insert(first, last);
+		}
+
 		// map(const map& x);
 		// ~map();
 		// map& operator= (const map& x);
 
-		// iterator begin();
+		iterator begin()	{ return (tree_.begin()); }
 		// const_iterator begin() const;
-		// iterator end();
+		iterator end()		{ return (tree_.end()); }
 		// const_iterator end() const;
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
@@ -74,10 +86,20 @@ class map
 		// size_type max_size() const;
 		// mapped_type& operator[] (const key_type& k);
 
-		// pair<iterator, bool> insert(const value_type& val);
-		// iterator insert(iterator position, const value_type& val);
-		// template <class InputIterator>
-		// void insert(InputIterator first, InputIterator last);
+		pair<iterator, bool>	insert(const value_type& val)
+		{
+			return (tree_.insert(val));
+		}
+
+		// iterator	insert(iterator position, const value_type& val);
+
+		template <class InputIterator>
+		void	insert(InputIterator first, InputIterator last)
+		{
+			for (InputIterator p = first; p != last; ++p)
+				tree_.insert(*p);
+		}
+
 		// void erase(iterator position);
 		// size_type erase(const key_type& k);
 		// void erase(iterator first, iterator last);
@@ -95,11 +117,6 @@ class map
 		// pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
 		// pair<iterator, iterator>             equal_range(const key_type& k);
 		// allocator_type get_allocator() const;
-
-	private:
-		typedef avl_tree<value_type, value_compare, allocator_type>	avl_tree;
-
-		avl_tree	tree_;
 };
 
 // template <class Key, class T, class Compare, class Alloc>
@@ -125,4 +142,4 @@ class map
 
 }  // namespace ft
 
-#endif  // VECTOR_HPP
+#endif  // MAP_HPP
