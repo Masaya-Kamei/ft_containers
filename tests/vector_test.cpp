@@ -1,6 +1,11 @@
-#include <gtest/gtest.h>
+#ifndef TESTLIB
+# include <gtest/gtest.h>
+#else
+# include "testlib.hpp"
+#endif
 #include <vector>
 #include <string>
+#include <iostream>
 #include "vector.hpp"
 
 class VectorTest : public ::testing::Test

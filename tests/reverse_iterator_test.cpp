@@ -1,4 +1,8 @@
-#include <gtest/gtest.h>
+#ifndef TESTLIB
+# include <gtest/gtest.h>
+#else
+# include "testlib.hpp"
+#endif
 #include "vector.hpp"
 
 class ReverseIteratorTest : public ::testing::Test

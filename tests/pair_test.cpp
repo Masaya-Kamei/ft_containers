@@ -1,4 +1,8 @@
-#include <gtest/gtest.h>
+#ifndef TESTLIB
+# include <gtest/gtest.h>
+#else
+# include "testlib.hpp"
+#endif
 #include "pair.hpp"
 #include "vector.hpp"
 
@@ -60,8 +64,8 @@ TEST_F(PairTest, DefaultConstructorTest)
 	ft::pair<int, std::string>	ft_pair;
 	CompareFirstSecond(st_pair, ft_pair);
 
-	std::pair<ft::vector<int>, ft::vector<std::string>>	st_vec_pair;
-	ft::pair<ft::vector<int>, ft::vector<std::string>>	ft_vec_pair;
+	std::pair<ft::vector<int>, ft::vector<std::string> >	st_vec_pair;
+	ft::pair<ft::vector<int>, ft::vector<std::string> >	ft_vec_pair;
 	CompareFirstSecond(st_pair, ft_pair);
 }
 

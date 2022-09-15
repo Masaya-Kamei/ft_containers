@@ -1,5 +1,5 @@
 SRCSDIR	= ../srcs
-vpath	%.cpp	../srcs
+vpath	%.cpp	$(SRCSDIR)
 
 SRCS	=	type_traits_test.cpp \
 			random_access_iterator_test.cpp \
@@ -55,4 +55,10 @@ endif
 leak		:	CFLAGS	+=	-g -fsanitize=leak
 leak		:	re
 
-.PHONY		:	all clean fclean re leak test
+testlib		:
+				c++ -Wall -Wextra -Werror -g -fsanitize=address -std=c++98 \
+					-I../srcs -Itestlib -I./ -DTESTLIB \
+					-o unit_test testlib/testlib_main.cpp
+				@./$(NAME) || :
+
+.PHONY		:	all clean fclean re leak test testlib

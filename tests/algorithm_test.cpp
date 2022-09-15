@@ -1,4 +1,8 @@
-#include <gtest/gtest.h>
+#ifndef TESTLIB
+# include <gtest/gtest.h>
+#else
+# include "testlib.hpp"
+#endif
 #include <algorithm>
 #include "algorithm.hpp"
 
