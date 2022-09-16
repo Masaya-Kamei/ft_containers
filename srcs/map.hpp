@@ -81,9 +81,18 @@ class map
 		// reverse_iterator rend();
 		// const_reverse_iterator rend() const;
 
-		// bool empty() const;
-		// size_type size() const;
-		// size_type max_size() const;
+		bool empty() const
+		{
+			return (tree_.size() == 0);
+		}
+		size_type size() const
+		{
+			return (tree_.size());
+		}
+		size_type max_size() const
+		{
+			return (tree_.max_size());
+		}
 		// mapped_type& operator[] (const key_type& k);
 
 		pair<iterator, bool>	insert(const value_type& val)
