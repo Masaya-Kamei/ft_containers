@@ -690,3 +690,40 @@ TEST_F(VectorTest, NonMemberSwapTest)
 	// swap(st_vec_, st_const_vec);
 	// swap(st_const_vec, st_vec_);
 }
+
+// TEST_F(VectorTest, InputIteratorTest)
+// {
+// 	std::stringstream ss;
+// 	ss << 1 << std::endl << 2 << std::endl << 3;
+
+// 	std::istream_iterator<int>	first1(ss);
+// 	std::istream_iterator<int>	last1;
+// 	std::istream_iterator<int>	first2(ss);
+// 	std::istream_iterator<int>	last2;
+// 	std::istream_iterator<int>	first3 = first1;
+// 	std::istream_iterator<int>	last3 = last1;
+
+// 	for (std::istream_iterator<int>	itr = first1; itr != last1; ++itr)
+// 		std::cout << "No1 " << *itr << std::endl;
+// 	for (std::istream_iterator<int>	itr = first2; itr != last2; ++itr)
+// 		std::cout << "No2 " << *itr << std::endl;
+// 	for (std::istream_iterator<int>	itr = first3; itr != last3; ++itr)
+// 		std::cout << "No3 " << *itr << std::endl;
+// }
+
+// TEST_F(VectorTest, InputIteratorTest)
+// {
+// 	std::stringstream st_ss;
+// 	st_ss << 1 << std::endl << 2 << std::endl << 3;
+// 	std::istream_iterator<int>	st_first(st_ss);
+// 	std::istream_iterator<int>	st_last;
+
+// 	std::stringstream ft_ss;
+// 	ft_ss << 1 << std::endl << 2 << std::endl << 3;
+// 	std::istream_iterator<int>	ft_first(ft_ss);
+// 	std::istream_iterator<int>	ft_last;
+
+// 	std::vector<int>	st_vec(st_first, st_last);
+// 	ft::vector<int>		ft_vec(ft_first, ft_last);
+// 	CompareSizeCapElem(st_vec, ft_vec);
+// }
