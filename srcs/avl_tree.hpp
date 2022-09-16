@@ -2,153 +2,11 @@
 # define AVL_TREE_HPP
 
 # include "pair.hpp"
+# include "avl_tree_node.hpp"
+# include "avl_tree_iterator.hpp"
 
 namespace ft
 {
-
-template <class Val>
-class	tree_node
-{
-	public:
-		typedef tree_node*	pointer;
-		typedef Val			value_type;
-
-		pointer			parent_;
-		pointer			left_;
-		pointer			right_;
-		value_type		value_;
-
-		tree_node()
-		{
-		}
-
-		explicit tree_node(const value_type& val)
-			: parent_(NULL), left_(NULL), right_(NULL), value_(val)
-		{
-		}
-};
-
-template <class Val>
-class tree_iterator : public std::iterator<std::bidirectional_iterator_tag, Val>
-{
-	public:
-		typedef	typename std::iterator<std::bidirectional_iterator_tag, Val>::iterator_category	iterator_category;
-		typedef	typename std::iterator<std::bidirectional_iterator_tag, Val>::value_type		value_type;
-		typedef	typename std::iterator<std::bidirectional_iterator_tag, Val>::difference_type	difference_type;
-		typedef	typename std::iterator<std::bidirectional_iterator_tag, Val>::pointer			pointer;
-		typedef	typename std::iterator<std::bidirectional_iterator_tag, Val>::reference			reference;
-
-	private:
-		typedef tree_node<Val>	node_type;
-		typedef node_type*		node_pointer;
-
-		node_pointer	node_;
-
-	public:
-		tree_iterator()
-			: node_(NULL)
-		{
-		}
-		template <class T2>
-		tree_iterator(const tree_iterator<T2>& rhs)
-			: node_(rhs.base())
-		{
-		}
-		explicit tree_iterator(node_pointer node)
-			: node_(node)
-		{
-		}
-		tree_iterator& operator=(const tree_iterator& rhs)
-		{
-			if (this != &rhs)
-				node_ = rhs.node_;
-			return (*this);
-		}
-		virtual ~tree_iterator()
-		{
-		}
-
-		node_pointer	base() const { return (node_); }
-
-		reference	operator*() const
-		{
-			return (node_->value_);
-		}
-		pointer		operator->() const
-		{
-			return (&(node_->value_));
-		}
-
-		tree_iterator&	operator++()
-		{
-			node_ = get_next_node(node_);
-			return (*this);
-		}
-		tree_iterator	operator++(int )
-		{
-			tree_iterator	tmp(*this);
-			node_ = get_next_node(node_);
-			return (tmp);
-		}
-		tree_iterator&	operator--()
-		{
-			node_ = get_prev_node(node_);
-			return (*this);
-		}
-		tree_iterator	operator--(int )
-		{
-			tree_iterator	tmp(*this);
-			node_ = get_prev_node(node_);
-			return (tmp);
-		}
-
-	private:
-		node_pointer	get_next_node(node_pointer node)
-		{
-			if (node->right_)
-			{
-				node = node->right_;
-				while (node->left_)
-					node = node->left_;
-			}
-			else
-			{
-				while (node != node->parent_->left_)
-					node = node->parent_;
-				node = node->parent_;
-			}
-			return (node);
-		}
-
-		node_pointer	get_prev_node(node_pointer node)
-		{
-			if (node->left_)
-			{
-				node = node->left_;
-				while (node->right_)
-					node = node->left_;
-			}
-			else
-			{
-				while (node != node->parent_->right_)
-					node = node->parent_;
-				node = node->parent_;
-			}
-			return (node);
-		}
-};
-
-template <class T1, class T2>
-bool operator==(const tree_iterator<T1>& lhs, const tree_iterator<T2>& rhs)
-{
-	return (lhs.base() == rhs.base());
-}
-
-template <class T1, class T2>
-bool operator!=(const tree_iterator<T1>& lhs, const tree_iterator<T2>& rhs)
-{
-	return (lhs.base() != rhs.base());
-}
 
 template <class Val, class Compare, class Alloc>
 class	avl_tree
@@ -162,11 +20,11 @@ class	avl_tree
 		typedef ptrdiff_t										difference_type;
 		typedef size_t											size_type;
 
-		typedef tree_iterator<value_type>						iterator;
-		// typedef tree_const_iterator<value_type>					const_iterator;
+		typedef avl_tree_iterator<value_type>						iterator;
+		// typedef avl_tree_const_iterator<value_type>					const_iterator;
 
 	private:
-		typedef tree_node<Val>										node_type;
+		typedef avl_tree_node<Val>									node_type;
 		typedef node_type*											node_pointer;
 		typedef typename Alloc::template rebind<node_type>::other	node_allocator_type;
 
