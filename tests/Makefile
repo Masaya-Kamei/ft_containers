@@ -7,7 +7,8 @@ SRCS	=	type_traits_test.cpp \
 			algorithm_test.cpp \
 			vector_test.cpp \
 			pair_test.cpp \
-			map_test.cpp
+			map_test.cpp \
+			avl_tree_test.cpp
 
 OBJSDIR	=	objs
 OBJS	=	$(addprefix $(OBJSDIR)/, $(SRCS:.cpp=.o))

@@ -33,9 +33,9 @@ class MapTest : public ::testing::Test
 			typename ft::map<T1, T2>::iterator	ft_itr = ft_map.begin();
 			typename std::map<T1, T2>::iterator	st_end = st_map.end();
 
-			EXPECT_EQ(st_map.size(),		ft_map.size());
-			EXPECT_EQ(st_map.empty(),		ft_map.empty());
-			for (; st_itr != st_end; ++st_itr++, ++ft_itr)
+			EXPECT_EQ(st_map.size(),	ft_map.size());
+			EXPECT_EQ(st_map.empty(),	ft_map.empty());
+			for (; st_itr != st_end; ++st_itr, ++ft_itr)
 			{
 				EXPECT_EQ(st_itr->first,	ft_itr->first);
 				EXPECT_EQ(st_itr->second,	ft_itr->second);
@@ -90,7 +90,7 @@ TEST_F(MapTest, RangeConstructorTest)
 	CompareSizeCapElem(st_map, ft_map);
 }
 
-TEST_F(MapTest, InsertTest)
+TEST_F(MapTest, InsertSingleTest)
 {
 	std::map<int, std::string>	st_map;
 	ft::map<int, std::string>	ft_map;
@@ -101,28 +101,20 @@ TEST_F(MapTest, InsertTest)
 	ft_ret = ft_map.insert(ft::make_pair(1, "A"));
 	CompareInsertReturn(st_ret, ft_ret);
 
-	st_ret = st_map.insert(std::make_pair(1, "Z"));
-	ft_ret = ft_map.insert(ft::make_pair(1, "Z"));
-	CompareInsertReturn(st_ret, ft_ret);
-
 	st_ret = st_map.insert(std::make_pair(3, "C"));
 	ft_ret = ft_map.insert(ft::make_pair(3, "C"));
-	CompareInsertReturn(st_ret, ft_ret);
-
-	st_ret = st_map.insert(std::make_pair(3, "B"));
-	ft_ret = ft_map.insert(ft::make_pair(3, "B"));
-	CompareInsertReturn(st_ret, ft_ret);
-
-	st_ret = st_map.insert(std::make_pair(5, "E"));
-	ft_ret = ft_map.insert(ft::make_pair(5, "E"));
 	CompareInsertReturn(st_ret, ft_ret);
 
 	st_ret = st_map.insert(std::make_pair(4, "D"));
 	ft_ret = ft_map.insert(ft::make_pair(4, "D"));
 	CompareInsertReturn(st_ret, ft_ret);
 
-	st_ret = st_map.insert(std::make_pair(3, "X"));
-	ft_ret = ft_map.insert(ft::make_pair(3, "X"));
+	st_ret = st_map.insert(std::make_pair(2, "B"));
+	ft_ret = ft_map.insert(ft::make_pair(2, "B"));
+	CompareInsertReturn(st_ret, ft_ret);
+
+	st_ret = st_map.insert(std::make_pair(1, "Z"));
+	ft_ret = ft_map.insert(ft::make_pair(1, "Z"));
 	CompareInsertReturn(st_ret, ft_ret);
 
 	CompareSizeCapElem(st_map, ft_map);
