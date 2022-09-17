@@ -57,74 +57,56 @@ class avl_tree_iterator : public std::iterator<std::bidirectional_iterator_tag, 
 
 		avl_tree_iterator&	operator++()
 		{
-			node_ = get_next_node(node_);
+			node_ = node_->get_next_node();
 			return (*this);
 		}
 		avl_tree_iterator	operator++(int )
 		{
 			avl_tree_iterator	tmp(*this);
-			node_ = get_next_node(node_);
+			node_ = node_->get_next_node();
 			return (tmp);
 		}
 		avl_tree_iterator&	operator--()
 		{
-			node_ = get_prev_node(node_);
+			node_ = node_->get_prev_node();
 			return (*this);
 		}
 		avl_tree_iterator	operator--(int )
 		{
 			avl_tree_iterator	tmp(*this);
-			node_ = get_prev_node(node_);
+			node_ = node_->get_prev_node();
 			return (tmp);
 		}
 
-		template <class T1, class T2>
-		friend bool operator==(const avl_tree_iterator<T1>& lhs, const avl_tree_iterator<T2>& rhs)
+		node_pointer	base() const
 		{
-			return (lhs.node_ == rhs.node_);
+			return (node_);
 		}
 
-		template <class T1, class T2>
-		friend bool operator!=(const avl_tree_iterator<T1>& lhs, const avl_tree_iterator<T2>& rhs)
-		{
-			return (!(lhs == rhs));
-		}
+		// template <class T1, class T2>
+		// friend bool operator==(const avl_tree_iterator<T1>& lhs, const avl_tree_iterator<T2>& rhs)
+		// {
+		// 	return (lhs.node_ == rhs.node_);
+		// }
 
-	private:
-		static node_pointer	get_next_node(node_pointer node)
-		{
-			if (node->right_)
-			{
-				node = node->right_;
-				while (node->left_)
-					node = node->left_;
-			}
-			else
-			{
-				while (node != node->parent_->left_)
-					node = node->parent_;
-				node = node->parent_;
-			}
-			return (node);
-		}
-
-		static node_pointer	get_prev_node(node_pointer node)
-		{
-			if (node->left_)
-			{
-				node = node->left_;
-				while (node->right_)
-					node = node->left_;
-			}
-			else
-			{
-				while (node != node->parent_->right_)
-					node = node->parent_;
-				node = node->parent_;
-			}
-			return (node);
-		}
+		// template <class T1, class T2>
+		// friend bool operator!=(const avl_tree_iterator<T1>& lhs, const avl_tree_iterator<T2>& rhs)
+		// {
+		// 	return (!(lhs == rhs));
+		// }
 };
+
+template <class T1, class T2>
+bool operator==(const avl_tree_iterator<T1>& lhs, const avl_tree_iterator<T2>& rhs)
+{
+	return (lhs.base() == rhs.base());
+}
+
+template <class T1, class T2>
+bool operator!=(const avl_tree_iterator<T1>& lhs, const avl_tree_iterator<T2>& rhs)
+{
+	return (!(lhs == rhs));
+}
 
 }  // namespace ft
 

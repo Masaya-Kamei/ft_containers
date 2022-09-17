@@ -87,6 +87,24 @@ class	avl_tree
 			return (ft::make_pair(iterator(new_node), true));
 		}
 
+		void	erase(iterator position)
+		{
+			node_pointer	node = position.base();
+			node = NULL;
+			// node_pointer	replace_node;
+			// if (get_balance(node) >= 0)
+			// 	replace_node = avl_tree_node::get_max_node()
+		}
+
+		size_type	erase(const key_type& key)
+		{
+			iterator position = find(key);
+			if (position == end())
+				return (0);
+			erase(position);
+			return (1);
+		}
+
 		node_pointer	get_root()	{ return (end_->left_); }
 
 	private:
@@ -119,20 +137,6 @@ class	avl_tree
 			return (new_node);
 		}
 
-		difference_type	get_balance(node_pointer node)
-		{
-			size_type	left_height = node->left_ ? node->left_->height_ : 0;
-			size_type	right_height = node->right_ ? node->right_->height_ : 0;
-			return (left_height - right_height);
-		}
-
-		size_type	get_height(node_pointer node)
-		{
-			size_type	left_height = node->left_ ? node->left_->height_ : 0;
-			size_type	right_height = node->right_ ? node->right_->height_ : 0;
-			return (1 + std::max(left_height, right_height));
-		}
-
 		void	rotate_left(node_pointer node)
 		{
 			node_pointer	parent_node = node->parent_;
@@ -150,8 +154,8 @@ class	avl_tree
 			right_node->left_ = node;
 			node->parent_ = right_node;
 
-			node->height_ = get_height(node);
-			right_node->height_ = get_height(right_node);
+			node->update_height();
+			right_node->update_height();
 		}
 
 		void	rotate_right(node_pointer node)
@@ -171,8 +175,8 @@ class	avl_tree
 			left_node->right_ = node;
 			node->parent_ = left_node;
 
-			node->height_ = get_height(node);
-			left_node->height_ = get_height(left_node);
+			node->update_height();
+			left_node->update_height();
 		}
 
 		void	rebalance_tree(node_pointer new_node)
@@ -183,21 +187,21 @@ class	avl_tree
 
 			while (node != end_)
 			{
-				balance = get_balance(node);
+				balance = node->get_balance();
 				if (balance == 2)
 				{
-					if (get_balance(node->left_) == -1)
+					if (node->left_->get_balance() == -1)
 						rotate_left(node->left_);
 					rotate_right(node);
 				}
 				else if (balance == -2)
 				{
-					if (get_balance(node->right_) == 1)
+					if (node->right_->get_balance() == 1)
 						rotate_right(node->right_);
 					rotate_left(node);
 				}
 				else
-					node->height_ = get_height(node);
+					node->update_height();
 				node = parent_node;
 				parent_node = node->parent_;
 			}
