@@ -19,8 +19,10 @@ class MapTest : public ::testing::Test
 		}
 		virtual void SetUp()
 		{
-			// st_map_.insert(st_pairs_, st_pairs_ + 3);
-			// ft_map_.insert(ft_pairs_, ft_pairs_ + 3);
+			seed_ = time(NULL);
+			srand(seed_);
+			st_map_.insert(st_pairs_, st_pairs_ + 12);
+			ft_map_.insert(ft_pairs_, ft_pairs_ + 12);
 		}
 		virtual void TearDown()
 		{
@@ -64,16 +66,23 @@ class MapTest : public ::testing::Test
 			std::cout << "]" << std::endl;
 		}
 
-		static const std::pair<int, std::string>	st_pairs_[3];
-		static const ft::pair<int, std::string>		ft_pairs_[3];
-		// std::map<int, std::string>	st_map_;
-		// ft::map<int, std::string>	ft_map_;
+		static const std::pair<int, std::string>	st_pairs_[12];
+		static const ft::pair<int, std::string>		ft_pairs_[12];
+		std::map<int, std::string>	st_map_;
+		ft::map<int, std::string>	ft_map_;
+		unsigned int				seed_;
 };
 
-const std::pair<int, std::string>	MapTest::st_pairs_[3]
-	= {std::make_pair(1, "A"), std::make_pair(2, "B"), std::make_pair(3, "C")};
-const ft::pair<int, std::string>	MapTest::ft_pairs_[3]
-	= {ft::make_pair(1, "A"), ft::make_pair(2, "B"), ft::make_pair(3, "C")};
+const std::pair<int, std::string>	MapTest::st_pairs_[12]
+	= {std::make_pair(9, "I"), std::make_pair(2, "B"), std::make_pair(11, "K")
+		, std::make_pair(8, "H"), std::make_pair(5, "E"), std::make_pair(6, "F")
+		, std::make_pair(12, "L"), std::make_pair(4, "D"), std::make_pair(1, "A")
+		, std::make_pair(10, "J"), std::make_pair(3, "C"), std::make_pair(7, "G")};
+const ft::pair<int, std::string>	MapTest::ft_pairs_[12]
+	= {ft::make_pair(9, "I"), ft::make_pair(2, "B"), ft::make_pair(11, "K")
+		, ft::make_pair(8, "H"), ft::make_pair(5, "E"), ft::make_pair(6, "F")
+		, ft::make_pair(12, "L"), ft::make_pair(4, "D"), ft::make_pair(1, "A")
+		, ft::make_pair(10, "J"), ft::make_pair(3, "C"), ft::make_pair(7, "G")};
 
 
 TEST_F(MapTest, DefaultConstructorTest)
@@ -85,8 +94,8 @@ TEST_F(MapTest, DefaultConstructorTest)
 
 TEST_F(MapTest, RangeConstructorTest)
 {
-	std::map<int, std::string>	st_map(st_pairs_, st_pairs_ + 3);
-	ft::map<int, std::string>	ft_map(ft_pairs_, ft_pairs_ + 3);
+	std::map<int, std::string>	st_map(st_pairs_, st_pairs_ + 12);
+	ft::map<int, std::string>	ft_map(ft_pairs_, ft_pairs_ + 12);
 	CompareSizeCapElem(st_map, ft_map);
 }
 
@@ -118,6 +127,23 @@ TEST_F(MapTest, InsertSingleTest)
 	CompareInsertReturn(st_ret, ft_ret);
 
 	CompareSizeCapElem(st_map, ft_map);
+}
+
+TEST_F(MapTest, EraseSingleIteratorTest)
+{
+	for (int i = 0; i < 12; ++i)
+	{
+		std::map<int, std::string>::iterator	st_erase_itr = st_map_.begin();
+		ft::map<int, std::string>::iterator		ft_erase_itr = ft_map_.begin();
+		for (int j = rand_r(&seed_) % (12 - i); j > 0; --j)
+		{
+			++st_erase_itr;
+			++ft_erase_itr;
+		}
+		st_map_.erase(st_erase_itr);
+		ft_map_.erase(ft_erase_itr);
+		CompareSizeCapElem(st_map_, ft_map_);
+	}
 }
 
 TEST_F(MapTest, MaxSizeTest)

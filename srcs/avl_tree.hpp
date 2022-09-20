@@ -5,6 +5,8 @@
 # include "avl_tree_node.hpp"
 # include "avl_tree_iterator.hpp"
 
+# define PUT(X) std::cout << X << std::endl;
+
 namespace ft
 {
 
@@ -50,8 +52,7 @@ class	avl_tree
 		~avl_tree()
 		{
 			delete_tree(end_->left_);
-			node_alloc_.destroy(end_);
-			node_alloc_.deallocate(end_, 1);
+			delete_node(end_);
 		}
 
 		iterator	begin()	{ return (iterator(begin_)); }
@@ -89,11 +90,31 @@ class	avl_tree
 
 		void	erase(iterator position)
 		{
-			node_pointer	node = position.base();
-			node = NULL;
-			// node_pointer	replace_node;
-			// if (get_balance(node) >= 0)
-			// 	replace_node = avl_tree_node::get_max_node()
+			node_pointer	erase_node = position.base();
+
+			if (erase_node == begin_)
+				begin_ = erase_node->get_next_node();  // TODO(mkamei)
+
+			node_pointer	alt_node;
+			if (erase_node->left_ == NULL && erase_node->right_ == NULL)
+				alt_node = NULL;
+			else if (erase_node->get_balance() >= 0)
+				alt_node = erase_node->left_->get_max_node();
+			else
+				alt_node = erase_node->right_->get_min_node();
+
+			node_pointer	bottom_node;
+			if (alt_node == NULL)
+				bottom_node = erase_node->parent_;
+			else if (alt_node->parent_ == erase_node)
+				bottom_node = alt_node;
+			else
+				bottom_node = alt_node->parent_;
+
+			replace_node(erase_node, alt_node);
+			delete_node(erase_node);
+			--size_;
+			rebalance_tree(bottom_node);
 		}
 
 		size_type	erase(const key_type& key)
@@ -105,54 +126,72 @@ class	avl_tree
 			return (1);
 		}
 
-		node_pointer	get_root()	{ return (end_->left_); }
+		node_pointer	get_root() const { return (end_->left_); }
 
 	private:
+		void	delete_node(node_pointer node)
+		{
+			node_alloc_.destroy(node);
+			node_alloc_.deallocate(node, 1);
+		}
+
 		void	delete_tree(node_pointer node)
 		{
 			if (node != NULL)
 			{
 				delete_tree(node->left_);
 				delete_tree(node->right_);
-				node_alloc_.destroy(node);
-				node_alloc_.deallocate(node, 1);
+				delete_node(node);
+				--size_;
 			}
+		}
+
+		node_pointer	create_node(const value_type& val)
+		{
+			node_pointer	new_node = node_alloc_.allocate(1);
+			node_alloc_.construct(new_node, node_type(val));
+			return (new_node);
 		}
 
 		node_pointer	create_node_at(const value_type& val, node_pointer parent_node)
 		{
-			node_pointer	new_node = node_alloc_.allocate(1);
-			node_alloc_.construct(new_node, node_type(val));
+			node_pointer	new_node = create_node(val);
 
-			const bool	is_left = (parent_node == end_ || comp_(val, parent_node->value_));
-			if (is_left)
-				parent_node->left_ = new_node;
-			else
-				parent_node->right_ = new_node;
-			new_node->parent_ = parent_node;
+			bool	is_left = (parent_node == end_ || comp_(val, parent_node->value_));
+			new_node->connect_parent(parent_node, is_left);
 
 			if (is_left && parent_node == begin_)
 				begin_ = new_node;
+
 			++size_;
 			return (new_node);
 		}
 
+		void	replace_node(node_pointer erase_node, node_pointer alt_node)
+		{
+			if (alt_node == NULL)
+				erase_node->disconnect_parent();
+			else
+			{
+				if (alt_node->left_ == NULL && alt_node->right_ == NULL)
+					alt_node->disconnect_parent();
+				else if (alt_node->left_)
+					alt_node->left_->connect_parent(alt_node->parent_, alt_node->is_left());
+				else
+					alt_node->right_->connect_parent(alt_node->parent_, alt_node->is_left());
+				alt_node->connect_parent(erase_node->parent_, erase_node->is_left());
+				alt_node->connect_left(erase_node->left_);
+				alt_node->connect_right(erase_node->right_);
+			}
+		}
+
 		void	rotate_left(node_pointer node)
 		{
-			node_pointer	parent_node = node->parent_;
 			node_pointer	right_node = node->right_;
 
-			if (parent_node->left_ == node)
-				parent_node->left_ = right_node;
-			else
-				parent_node->right_ = right_node;
-			right_node->parent_ = parent_node;
-
-			node->right_ = right_node->left_;
-			if (right_node->left_)
-				right_node->left_->parent_ = node;
-			right_node->left_ = node;
-			node->parent_ = right_node;
+			right_node->connect_parent(node->parent_, node->is_left());
+			node->connect_right(right_node->left_);
+			right_node->connect_left(node);
 
 			node->update_height();
 			right_node->update_height();
@@ -160,34 +199,25 @@ class	avl_tree
 
 		void	rotate_right(node_pointer node)
 		{
-			node_pointer	parent_node = node->parent_;
 			node_pointer	left_node = node->left_;
 
-			if (parent_node->left_ == node)
-				parent_node->left_ = left_node;
-			else
-				parent_node->right_ = left_node;
-			left_node->parent_ = parent_node;
-
-			node->left_ = left_node->right_;
-			if (left_node->right_)
-				left_node->right_->parent_ = node;
-			left_node->right_ = node;
-			node->parent_ = left_node;
+			left_node->connect_parent(node->parent_, node->is_left());
+			node->connect_left(left_node->right_);
+			left_node->connect_right(node);
 
 			node->update_height();
 			left_node->update_height();
 		}
 
-		void	rebalance_tree(node_pointer new_node)
+		void	rebalance_tree(node_pointer bottom_node)
 		{
-			difference_type	balance;
-			node_pointer	node = new_node;
-			node_pointer	parent_node = node->parent_;
+			node_pointer	node = bottom_node;
+			node_pointer	parent_node;
 
 			while (node != end_)
 			{
-				balance = node->get_balance();
+				parent_node = node->parent_;
+				difference_type	balance = node->get_balance();
 				if (balance == 2)
 				{
 					if (node->left_->get_balance() == -1)
@@ -203,7 +233,6 @@ class	avl_tree
 				else
 					node->update_height();
 				node = parent_node;
-				parent_node = node->parent_;
 			}
 		}
 };

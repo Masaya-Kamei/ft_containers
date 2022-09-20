@@ -51,6 +51,38 @@ class	avl_tree_node
 		bool	is_left()  const { return (this == parent_->left_); }
 		bool	is_right() const { return (this == parent_->right_); }
 
+		void	connect_left(node_pointer new_left_node)
+		{
+			left_ = new_left_node;
+			if (new_left_node)
+				new_left_node->parent_ = this;
+		}
+
+		void	connect_right(node_pointer new_right_node)
+		{
+			right_ = new_right_node;
+			if (new_right_node)
+				new_right_node->parent_ = this;
+		}
+
+		void	connect_parent(node_pointer new_parent_node, bool is_left)
+		{
+			parent_ = new_parent_node;
+			if (is_left)
+				new_parent_node->left_ = this;
+			else
+				new_parent_node->right_ = this;
+		}
+
+		void	disconnect_parent()
+		{
+			if (is_left())
+				parent_->left_ = NULL;
+			else
+				parent_->right_ = NULL;
+			parent_ = NULL;
+		}
+
 		node_pointer	get_max_node()
 		{
 			node_pointer	node = this;

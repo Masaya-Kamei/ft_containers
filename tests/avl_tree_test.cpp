@@ -51,19 +51,25 @@ class AvlTreeTest : public ::testing::Test
 			return (1 + std::max(left_height, right_height));
 		}
 
-		void	print_tree(node_pointer node, const int depth = 0)
+		void	print_node_rec(node_pointer node, const int depth = 0)
 		{
 			if (node)
 			{
-				print_tree(node->right_, depth + 1);
+				print_node_rec(node->right_, depth + 1);
 				for (int i = 0; i < depth; ++i)
 					std::cout << "\t\t";
 				std::cout	<< node->value_.first << "," << node->height_ << std::endl;
-				print_tree(node->left_, depth + 1);
+				print_node_rec(node->left_, depth + 1);
 			}
 		}
 
-		void	check_tree(node_pointer node)
+		void	print_tree(const tree_type& tree)
+		{
+			std::cout << "size: " << tree.size() << std::endl;
+			print_node_rec(tree.get_root());
+		}
+
+		void	check_node_rec(node_pointer node)
 		{
 			if (node == NULL)
 				return;
@@ -74,8 +80,14 @@ class AvlTreeTest : public ::testing::Test
 			EXPECT_EQ(node->height_, get_height(node));
 			EXPECT_LT(abs(get_balance(node)), 2);
 			EXPECT_TRUE(node->parent_->left_ == node || node->parent_->right_ == node);
-			check_tree(node->left_);
-			check_tree(node->right_);
+			check_node_rec(node->left_);
+			check_node_rec(node->right_);
+		}
+
+		void	check_tree(const tree_type& tree, size_t expect_size)
+		{
+			EXPECT_EQ(expect_size, tree.size());
+			check_node_rec(tree.get_root());
 		}
 };
 
@@ -86,8 +98,19 @@ TEST_F(AvlTreeTest, Test)
 
 	tree_type 	tree((value_compare()), allocator_type());
 
-	for (int i = 0; i < 100; ++i)
+	for (size_t i = 0; i < 100; ++i)
 		tree.insert(ft::make_pair(rand_r(&seed) % 1000, "A"));
-	// print_tree(tree.get_root());
-	check_tree(tree.get_root());
+	// print_tree(tree);
+	size_t	size = tree.size();
+	check_tree(tree, size);
+
+	for (size_t i = 0; i < size; ++i)
+	{
+		tree_type::iterator	erase_itr = tree.begin();
+		for (int j = rand_r(&seed) % (size - i); j > 0; --j)
+			++erase_itr;
+		// print_tree(tree);
+		tree.erase(erase_itr);
+		check_tree(tree, size - i - 1);
+	}
 }

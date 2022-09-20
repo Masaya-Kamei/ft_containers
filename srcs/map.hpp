@@ -109,9 +109,19 @@ class map
 				tree_.insert(*p);
 		}
 
-		// void erase(iterator position);
-		// size_type erase(const key_type& k);
-		// void erase(iterator first, iterator last);
+		void erase(iterator position)
+		{
+			tree_.erase(position);
+		}
+		size_type erase(const key_type& k)
+		{
+			return (tree_.erase(k));
+		}
+		void erase(iterator first, iterator last)
+		{
+			for (iterator itr = first; itr != last; ++itr)
+				tree_.erase(itr);
+		}
 		// void swap(map& x);
 		// void clear();
 		// key_compare key_comp() const;
