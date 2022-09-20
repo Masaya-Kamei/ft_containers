@@ -153,3 +153,33 @@ TEST_F(MapTest, MaxSizeTest)
 	std::allocator<node_type>	alloc;
 	EXPECT_EQ(ft_map.max_size(), alloc.max_size());
 }
+
+TEST_F(MapTest, FindTest)
+{
+	EXPECT_EQ((st_map_.find(5))->first, (ft_map_.find(5))->first);
+	EXPECT_EQ((st_map_.find(6))->first, (ft_map_.find(6))->first);
+	EXPECT_EQ((st_map_.find(1))->first, (ft_map_.find(1))->first);
+	EXPECT_EQ((st_map_.find(12))->first, (ft_map_.find(12))->first);
+	EXPECT_EQ(st_map_.find(42), st_map_.end());
+	EXPECT_EQ(ft_map_.find(42), ft_map_.end());
+}
+
+TEST_F(MapTest, LowerBoundTest)
+{
+	EXPECT_EQ((st_map_.lower_bound(5))->first, (ft_map_.lower_bound(5))->first);
+	EXPECT_EQ((st_map_.lower_bound(6))->first, (ft_map_.lower_bound(6))->first);
+	EXPECT_EQ((st_map_.lower_bound(1))->first, (ft_map_.lower_bound(1))->first);
+	EXPECT_EQ((st_map_.lower_bound(12))->first, (ft_map_.lower_bound(12))->first);
+	EXPECT_EQ(st_map_.lower_bound(42), st_map_.end());
+	EXPECT_EQ(ft_map_.lower_bound(42), ft_map_.end());
+}
+
+TEST_F(MapTest, UpperBoundTest)
+{
+	EXPECT_EQ((st_map_.lower_bound(5))->first, (ft_map_.lower_bound(5))->first);
+	EXPECT_EQ((st_map_.lower_bound(6))->first, (ft_map_.lower_bound(6))->first);
+	EXPECT_EQ((st_map_.lower_bound(1))->first, (ft_map_.lower_bound(1))->first);
+	EXPECT_EQ((st_map_.lower_bound(12))->first, (ft_map_.lower_bound(12))->first);
+	EXPECT_EQ(st_map_.lower_bound(42), st_map_.end());
+	EXPECT_EQ(ft_map_.lower_bound(42), ft_map_.end());
+}

@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include "avl_tree.hpp"
+#include "map.hpp"
 
 class AvlTreeTest : public ::testing::Test
 {
@@ -25,26 +26,17 @@ class AvlTreeTest : public ::testing::Test
 
 		typedef int									key_type;
 		typedef std::string							mapped_type;
-		typedef ft::pair<key_type, mapped_type>		value_type;
-		class value_compare
-		{
-			public:
-				bool operator()(const value_type& x, const value_type& y) const
-				{ return (x.first < y.first); }
-		};
-		typedef std::allocator<ft::pair<const key_type, mapped_type> >	allocator_type;
-		typedef ft::avl_tree<value_type, value_compare, allocator_type>	tree_type;
-		typedef tree_type::node_pointer									node_pointer;
-		typedef ptrdiff_t												difference_type;
-		typedef size_t													size_type;
+		typedef ft::map<key_type, mapped_type>		map_type;
+		typedef typename map_type::value_type		value_type;
+		typedef typename map_type::key_compare		key_compare;
+		typedef ft::map_value_compare<key_type, value_type, key_compare>	map_value_compare;
+		typedef typename map_type::allocator_type							allocator_type;
+		typedef ft::avl_tree<key_type, value_type, map_value_compare, allocator_type>	tree_type;
+		typedef tree_type::node_pointer				node_pointer;
+		typedef ptrdiff_t							difference_type;
+		typedef size_t								size_type;
 
-		difference_type	get_balance(node_pointer node)
-		{
-			size_type	left_height = node->left_ ? node->left_->height_ : 0;
-			size_type	right_height = node->right_ ? node->right_->height_ : 0;
-			return (left_height - right_height);
-		}
-		size_type	get_height(node_pointer node)
+		size_type	calc_height_from_child(node_pointer node)
 		{
 			size_type	left_height = node->left_ ? node->left_->height_ : 0;
 			size_type	right_height = node->right_ ? node->right_->height_ : 0;
@@ -77,8 +69,8 @@ class AvlTreeTest : public ::testing::Test
 				EXPECT_LT(node->left_->value_.first, node->value_.first);
 			if (node->right_)
 				EXPECT_LT(node->value_.first, node->right_->value_.first);
-			EXPECT_EQ(node->height_, get_height(node));
-			EXPECT_LT(abs(get_balance(node)), 2);
+			EXPECT_EQ(node->height_, calc_height_from_child(node));
+			EXPECT_LT(abs(node->get_balance()), 2);
 			EXPECT_TRUE(node->parent_->left_ == node || node->parent_->right_ == node);
 			check_node_rec(node->left_);
 			check_node_rec(node->right_);
@@ -96,7 +88,7 @@ TEST_F(AvlTreeTest, Test)
 	unsigned int	seed = time(NULL);
 	srand(seed);
 
-	tree_type 	tree((value_compare()), allocator_type());
+	tree_type 	tree((map_value_compare()), allocator_type());
 
 	for (size_t i = 0; i < 100; ++i)
 		tree.insert(ft::make_pair(rand_r(&seed) % 1000, "A"));

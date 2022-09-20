@@ -9,6 +9,31 @@
 namespace ft
 {
 
+template <class Key, class Val, class Compare>
+class	map_value_compare
+{
+	private:
+		typedef Compare		key_compare;
+		key_compare			comp_;
+
+	public:
+		map_value_compare() : comp_() {}
+		explicit map_value_compare(key_compare c) : comp_(c) {}
+
+	bool operator()(const Val& x, const Val& y) const
+	{
+		return (comp_(x.first, y.first));
+	}
+	bool operator()(const Val& x, const Key& y) const
+	{
+		return (comp_(x.first, y));
+	}
+    bool operator()(const Key& x, const Val& y) const
+	{
+		return (comp_(x, y.first));
+	}
+};
+
 template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key, T> > >
 class map
 {
@@ -43,7 +68,8 @@ class map
 		typedef size_t										size_type;
 
 	private:
-		typedef avl_tree<value_type, value_compare, allocator_type>	tree_type;
+		typedef map_value_compare<key_type, value_type, key_compare>				map_value_compare;
+		typedef avl_tree<key_type, value_type, map_value_compare, allocator_type>	tree_type;
 
 		tree_type	tree_;
 
@@ -55,7 +81,7 @@ class map
 
 		explicit map(const key_compare& comp = key_compare(),
 						const allocator_type& alloc = allocator_type())
-			: tree_(value_compare(comp), alloc)
+			: tree_(map_value_compare(comp), alloc)
 		{
 		}
 
@@ -63,7 +89,7 @@ class map
 		map(InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
-			: tree_(value_compare(comp), alloc)
+			: tree_(map_value_compare(comp), alloc)
 		{
 			insert(first, last);
 		}
@@ -115,7 +141,11 @@ class map
 		}
 		size_type erase(const key_type& k)
 		{
-			return (tree_.erase(k));
+			iterator position = tree_.find(k);
+			if (position == end())
+				return (0);
+			tree_.erase(position);
+			return (1);
 		}
 		void erase(iterator first, iterator last)
 		{
@@ -126,12 +156,21 @@ class map
 		// void clear();
 		// key_compare key_comp() const;
 		// value_compare value_comp() const;
-		// iterator find(const key_type& k);
+		iterator find(const key_type& k)
+		{
+			return (tree_.find(k));
+		}
 		// const_iterator find(const key_type& k) const;
 		// size_type count(const key_type& k) const;
-		// iterator lower_bound(const key_type& k);
+		iterator lower_bound(const key_type& k)
+		{
+			return (tree_.lower_bound(k));
+		}
 		// const_iterator lower_bound(const key_type& k) const;
-		// iterator upper_bound(const key_type& k);
+		iterator upper_bound(const key_type& k)
+		{
+			return (tree_.upper_bound(k));
+		}
 		// const_iterator upper_bound(const key_type& k) const;
 		// pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
 		// pair<iterator, iterator>             equal_range(const key_type& k);

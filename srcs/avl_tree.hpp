@@ -10,14 +10,13 @@
 namespace ft
 {
 
-template <class Val, class Compare, class Alloc>
+template <class Key, class Val, class Compare, class Alloc>
 class	avl_tree
 {
 	public:
+		typedef Key												key_type;
 		typedef Val												value_type;
-		typedef typename value_type::first_type					key_type;
-		typedef typename value_type::second_type				mapped_type;
-		typedef Compare											value_compare;
+		typedef Compare											map_value_compare;
 		typedef Alloc											allocator_type;
 		typedef ptrdiff_t										difference_type;
 		typedef size_t											size_type;
@@ -33,14 +32,14 @@ class	avl_tree
 		typedef typename Alloc::template rebind<node_type>::other	node_allocator_type;
 
 	private:
-		value_compare		comp_;
+		map_value_compare	comp_;
 		node_allocator_type	node_alloc_;
 		size_type			size_;
 		node_pointer		begin_;
 		node_pointer		end_;
 
 	public:
-		avl_tree(value_compare comp, allocator_type alloc)
+		avl_tree(map_value_compare comp, allocator_type alloc)
 			: comp_(comp), node_alloc_(alloc), size_(0)
 		{
 			end_ = node_alloc_.allocate(1);
@@ -51,7 +50,7 @@ class	avl_tree
 
 		~avl_tree()
 		{
-			delete_tree(end_->left_);
+			delete_tree(get_root());
 			delete_node(end_);
 		}
 
@@ -70,7 +69,7 @@ class	avl_tree
 		ft::pair<iterator, bool>	insert(const value_type& val)
 		{
 			node_pointer	parent_node = end_;
-			node_pointer	node = end_->left_;
+			node_pointer	node = get_root();
 
 			while (node)
 			{
@@ -117,13 +116,53 @@ class	avl_tree
 			rebalance_tree(bottom_node);
 		}
 
-		size_type	erase(const key_type& key)
+		iterator	find(const key_type& k)
 		{
-			iterator position = find(key);
-			if (position == end())
-				return (0);
-			erase(position);
-			return (1);
+			node_pointer	node = get_root();
+			while (node)
+			{
+				if (comp_(k, node->value_))
+					node = node->left_;
+				else if (comp_(node->value_, k))
+					node = node->right_;
+				else
+					return (iterator(node));
+			}
+			return (end());
+		}
+
+		iterator	lower_bound(const key_type& k)
+		{
+			node_pointer	node = get_root();
+			node_pointer	result = end_;
+			while (node)
+			{
+				if (!comp_(node->value_, k))
+				{
+					result = node;
+					node = node->left_;
+				}
+				else
+					node = node->right_;
+			}
+			return (iterator(result));
+		}
+
+		iterator	upper_bound(const key_type& k)
+		{
+			node_pointer	node = get_root();
+			node_pointer	result = end_;
+			while (node)
+			{
+				if (!comp_(k, node->value_))
+				{
+					result = node;
+					node = node->right_;
+				}
+				else
+					node = node->left_;
+			}
+			return (iterator(result));
 		}
 
 		node_pointer	get_root() const { return (end_->left_); }
