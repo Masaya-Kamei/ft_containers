@@ -7,34 +7,54 @@
 
 class ReverseIteratorTest : public ::testing::Test
 {
+	protected:
+		static void SetUpTestCase()
+		{
+		}
+		static void TearDownTestCase()
+		{
+		}
+		virtual void SetUp()
+		{
+			st_vec_.assign(nums, nums + 3);
+			ft_vec_.assign(nums, nums + 3);
+		}
+		virtual void TearDown()
+		{
+		}
+
+		static const int	nums[3];
+		std::vector<int>	st_vec_;
+		ft::vector<int>		ft_vec_;
 };
+
+const int ReverseIteratorTest::nums[3] = {1, 2, 3};
+
 
 TEST_F(ReverseIteratorTest, ConstructorTest)
 {
-	int 	a[3] = {1, 2, 3};
-	std::vector<int>					std_vec(a, a + 3);
-	ft::vector<int>						ft_vec(a, a + 3);
-	std::vector<int>::reverse_iterator	std_ritr	= std_vec.rbegin();
-	ft::vector<int>::reverse_iterator	ft_ritr		= ft_vec.rbegin();
-	std::vector<int>::reverse_iterator	std_rbegin;
-	std_rbegin = std_vec.rbegin();
+	std::vector<int>::reverse_iterator	st_ritr(st_vec_.rbegin());
+	ft::vector<int>::reverse_iterator	ft_ritr(ft_vec_.rbegin());
+	std::vector<int>::reverse_iterator	st_rbegin;
+	st_rbegin = st_vec_.rbegin();
 	ft::vector<int>::reverse_iterator	ft_rbegin;
-	ft_rbegin = ft_vec.rbegin();
+	ft_rbegin = ft_vec_.rbegin();
 
-	EXPECT_EQ(*std_ritr, *ft_ritr);
-	EXPECT_EQ(*std_rbegin, *ft_rbegin);
-	EXPECT_EQ(std_ritr, std_rbegin);
+	EXPECT_EQ(*st_ritr, *ft_ritr);
+	EXPECT_EQ(*st_rbegin, *ft_rbegin);
+	EXPECT_EQ(st_ritr, st_rbegin);
 	EXPECT_EQ(ft_ritr, ft_rbegin);
 }
 
 TEST_F(ReverseIteratorTest, CopyConstructorConstTest)
 {
-	int 	a[3] = {1, 2, 3};
-	ft::vector<int>				vec(a, a + 3);
-	ft::vector<const int>		vec_const(a, a + 3);
-	const ft::vector<int>		const_vec(a, a + 3);
+	ft::vector<int>				vec(nums, nums + 3);
+	ft::vector<const int>		vec_const(nums, nums + 3);
+	const ft::vector<int>		const_vec(nums, nums + 3);
 
 	ft::vector<int>::reverse_iterator		ritr1(vec.rbegin());
+	// ft::vector<int>::reverse_iterator		ritr2(vec_const.rbegin());
+	// ft::vector<int>::reverse_iterator		ritr3(const_vec.rbegin());
 
 	ft::vector<const int>::reverse_iterator	ritr_const1(vec.rbegin());
 	ft::vector<const int>::reverse_iterator	ritr_const2(vec_const.rbegin());
@@ -47,12 +67,13 @@ TEST_F(ReverseIteratorTest, CopyConstructorConstTest)
 
 TEST_F(ReverseIteratorTest, OpeEqualConstTest)
 {
-	int 	a[3] = {1, 2, 3};
-	ft::vector<int>				vec(a, a + 3);
-	ft::vector<const int>		vec_const(a, a + 3);
-	const ft::vector<int>		const_vec(a, a + 3);
+	ft::vector<int>				vec(nums, nums + 3);
+	ft::vector<const int>		vec_const(nums, nums + 3);
+	const ft::vector<int>		const_vec(nums, nums + 3);
 
 	ft::vector<int>::reverse_iterator		ritr1(vec.rbegin());
+	// ft::vector<int>::reverse_iterator		ritr2(vec_const.rbegin());
+	// ft::vector<int>::reverse_iterator		ritr3(const_vec.rbegin());
 
 	ft::vector<const int>::reverse_iterator	ritr_const1; ritr_const1 = vec.rbegin();
 	ft::vector<const int>::reverse_iterator	ritr_const2; ritr_const2 = vec_const.rbegin();
@@ -65,12 +86,10 @@ TEST_F(ReverseIteratorTest, OpeEqualConstTest)
 
 TEST_F(ReverseIteratorTest, OpeBothSidesTest)
 {
-	int a[3] = {1, 2, 3};
-	ft::vector<int>	vec(a, a + 3);
-	ft::vector<int>::reverse_iterator				ritr1 = vec.rbegin();
-	ft::vector<int>::const_reverse_iterator			ritr2 = vec.rbegin();
-	ft::vector<const int>::reverse_iterator			ritr3 = vec.rbegin();
-	ft::vector<const int>::const_reverse_iterator	ritr4 = vec.rbegin();
+	ft::vector<int>::reverse_iterator				ritr1 = ft_vec_.rbegin();
+	ft::vector<int>::const_reverse_iterator			ritr2 = ft_vec_.rbegin();
+	ft::vector<const int>::reverse_iterator			ritr3 = ft_vec_.rbegin();
+	ft::vector<const int>::const_reverse_iterator	ritr4 = ft_vec_.rbegin();
 	EXPECT_EQ(ritr1 == ritr2, true);	EXPECT_EQ(ritr2 == ritr1, true);
 	EXPECT_EQ(ritr2 == ritr3, true);	EXPECT_EQ(ritr3 == ritr2, true);
 	EXPECT_EQ(ritr3 == ritr4, true);	EXPECT_EQ(ritr4 == ritr3, true);
@@ -89,58 +108,52 @@ TEST_F(ReverseIteratorTest, OpeBothSidesTest)
 
 TEST_F(ReverseIteratorTest, OpeAddSubTest)
 {
-	int		a[3] = {1, 2, 3};
-	std::vector<int>					std_vec(a, a + 3);
-	ft::vector<int>						ft_vec(a, a + 3);
-	std::vector<int>::reverse_iterator	std_ritr	= std_vec.rbegin();
-	ft::vector<int>::reverse_iterator	ft_ritr = ft_vec.rbegin();
-	std::vector<int>::reverse_iterator	std_rbegin = std_vec.rbegin();
-	ft::vector<int>::reverse_iterator	ft_rbegin = ft_vec.rbegin();
+	std::vector<int>::reverse_iterator	st_ritr	= st_vec_.rbegin();
+	ft::vector<int>::reverse_iterator	ft_ritr = ft_vec_.rbegin();
+	std::vector<int>::reverse_iterator	st_rbegin = st_vec_.rbegin();
+	ft::vector<int>::reverse_iterator	ft_rbegin = ft_vec_.rbegin();
 
-	EXPECT_EQ(*(std_ritr++), *(ft_ritr++));
-	EXPECT_EQ(*(++std_ritr), *(++ft_ritr));
-	EXPECT_EQ(*(std_ritr--), *(ft_ritr--));
-	EXPECT_EQ(*(--std_ritr), *(--ft_ritr));
+	EXPECT_EQ(*(st_ritr++), *(ft_ritr++));
+	EXPECT_EQ(*(++st_ritr), *(++ft_ritr));
+	EXPECT_EQ(*(st_ritr--), *(ft_ritr--));
+	EXPECT_EQ(*(--st_ritr), *(--ft_ritr));
 
-	EXPECT_EQ(*(std_ritr += 1), *(ft_ritr += 1));
-	EXPECT_EQ(*(std_ritr -= 1), *(ft_ritr -= 1));
-	EXPECT_EQ(*(std_ritr + 1), *(ft_ritr + 1));
-	EXPECT_EQ(*(std_ritr - 1 + 1), *(ft_ritr - 1 + 1));
-	EXPECT_EQ(*(1 + std_ritr), *(1 + ft_ritr));
-	EXPECT_EQ((std_ritr + 1) - std_rbegin, (ft_ritr + 1) - ft_rbegin);
+	EXPECT_EQ(*(st_ritr += 1), *(ft_ritr += 1));
+	EXPECT_EQ(*(st_ritr -= 1), *(ft_ritr -= 1));
+	EXPECT_EQ(*(st_ritr + 1), *(ft_ritr + 1));
+	EXPECT_EQ(*(st_ritr - 1 + 1), *(ft_ritr - 1 + 1));
+	EXPECT_EQ(*(1 + st_ritr), *(1 + ft_ritr));
+	EXPECT_EQ((st_ritr + 1) - st_rbegin, (ft_ritr + 1) - ft_rbegin);
 
-	EXPECT_EQ(*std_ritr, *ft_ritr);
-	EXPECT_EQ(std_ritr, std_rbegin);
+	EXPECT_EQ(*st_ritr, *ft_ritr);
+	EXPECT_EQ(st_ritr, st_rbegin);
 	EXPECT_EQ(ft_ritr, ft_rbegin);
 }
 
 TEST_F(ReverseIteratorTest, OpeRelationalTest)
 {
-	int		a[3] = {1, 2, 3};
-	std::vector<int>			std_vec(a, a + 3);
-	ft::vector<int>				ft_vec(a, a + 3);
-	std::vector<int>::iterator	std_first_ritr = std_vec.begin();
-	ft::vector<int>::iterator	ft_first_ritr = ft_vec.begin();
-	std::vector<int>::iterator	std_second_ritr = std_first_ritr + 1;
+	std::vector<int>::iterator	st_first_ritr = st_vec_.begin();
+	ft::vector<int>::iterator	ft_first_ritr = ft_vec_.begin();
+	std::vector<int>::iterator	st_second_ritr = st_first_ritr + 1;
 	ft::vector<int>::iterator	ft_second_ritr = ft_first_ritr + 1;
 
-	EXPECT_EQ(std_first_ritr == std_second_ritr,	ft_first_ritr == ft_second_ritr);
-	EXPECT_EQ(std_first_ritr != std_second_ritr,	ft_first_ritr != ft_second_ritr);
-	EXPECT_EQ(std_first_ritr < std_second_ritr,		ft_first_ritr < ft_second_ritr);
-	EXPECT_EQ(std_first_ritr <= std_second_ritr,	ft_first_ritr <= ft_second_ritr);
-	EXPECT_EQ(std_first_ritr > std_second_ritr,		ft_first_ritr > ft_second_ritr);
-	EXPECT_EQ(std_first_ritr >= std_second_ritr,	ft_first_ritr >= ft_second_ritr);
+	EXPECT_EQ(st_first_ritr == st_second_ritr,	ft_first_ritr == ft_second_ritr);
+	EXPECT_EQ(st_first_ritr != st_second_ritr,	ft_first_ritr != ft_second_ritr);
+	EXPECT_EQ(st_first_ritr <  st_second_ritr,	ft_first_ritr <  ft_second_ritr);
+	EXPECT_EQ(st_first_ritr <= st_second_ritr,	ft_first_ritr <= ft_second_ritr);
+	EXPECT_EQ(st_first_ritr >  st_second_ritr,	ft_first_ritr >  ft_second_ritr);
+	EXPECT_EQ(st_first_ritr >= st_second_ritr,	ft_first_ritr >= ft_second_ritr);
 }
 
 TEST_F(ReverseIteratorTest, OpeOthersTest)
 {
 	std::string s[3] = {"a", "b", "c"};
-	std::vector<std::string>	std_vec(s, s + 3);
-	ft::vector<std::string>		ft_vec(s, s + 3);
-	std::vector<std::string>::reverse_iterator	std_ritr	= std_vec.rbegin();
-	ft::vector<std::string>::reverse_iterator	ft_ritr		= ft_vec.rbegin();
+	std::vector<std::string>	st_str_vec(s, s + 3);
+	ft::vector<std::string>		ft_str_vec(s, s + 3);
+	std::vector<std::string>::reverse_iterator	st_ritr	= st_str_vec.rbegin();
+	ft::vector<std::string>::reverse_iterator	ft_ritr	= ft_str_vec.rbegin();
 
-	EXPECT_EQ(*std_ritr, *ft_ritr);
-	EXPECT_EQ(std_ritr[1], ft_ritr[1]);
-	EXPECT_EQ(std_ritr->length(), ft_ritr->length());
+	EXPECT_EQ(*st_ritr, *ft_ritr);
+	EXPECT_EQ(st_ritr[1], ft_ritr[1]);
+	EXPECT_EQ(st_ritr->length(), ft_ritr->length());
 }
