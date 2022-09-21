@@ -68,6 +68,8 @@ class MapTest : public ::testing::Test
 
 		static const std::pair<int, std::string>	st_pairs_[12];
 		static const ft::pair<int, std::string>		ft_pairs_[12];
+		static const std::map<int, std::string>		st_const_map_;
+		static const ft::map<int, std::string>		ft_const_map_;
 		std::map<int, std::string>	st_map_;
 		ft::map<int, std::string>	ft_map_;
 		unsigned int				seed_;
@@ -83,6 +85,8 @@ const ft::pair<int, std::string>	MapTest::ft_pairs_[12]
 		, ft::make_pair(8, "H"), ft::make_pair(5, "E"), ft::make_pair(6, "F")
 		, ft::make_pair(12, "L"), ft::make_pair(4, "D"), ft::make_pair(1, "A")
 		, ft::make_pair(10, "J"), ft::make_pair(3, "C"), ft::make_pair(7, "G")};
+const std::map<int, std::string>	MapTest::st_const_map_(st_pairs_, &st_pairs_[12]);
+const ft::map<int, std::string>		MapTest::ft_const_map_(ft_pairs_, &ft_pairs_[12]);
 
 
 TEST_F(MapTest, DefaultConstructorTest)
@@ -156,39 +160,68 @@ TEST_F(MapTest, MaxSizeTest)
 
 TEST_F(MapTest, FindTest)
 {
-	EXPECT_EQ((st_map_.find(5))->first, (ft_map_.find(5))->first);
-	EXPECT_EQ((st_map_.find(6))->first, (ft_map_.find(6))->first);
-	EXPECT_EQ((st_map_.find(1))->first, (ft_map_.find(1))->first);
+	EXPECT_EQ((st_map_.find(5))->first,  (ft_map_.find(5))->first);
+	EXPECT_EQ((st_map_.find(6))->first,  (ft_map_.find(6))->first);
+	EXPECT_EQ((st_map_.find(1))->first,  (ft_map_.find(1))->first);
 	EXPECT_EQ((st_map_.find(12))->first, (ft_map_.find(12))->first);
 	EXPECT_EQ(st_map_.find(42), st_map_.end());
 	EXPECT_EQ(ft_map_.find(42), ft_map_.end());
+
+	EXPECT_EQ((st_const_map_.find(5))->first,  (ft_const_map_.find(5))->first);
+	EXPECT_EQ((st_const_map_.find(6))->first,  (ft_const_map_.find(6))->first);
+	EXPECT_EQ((st_const_map_.find(1))->first,  (ft_const_map_.find(1))->first);
+	EXPECT_EQ((st_const_map_.find(12))->first, (ft_const_map_.find(12))->first);
+	EXPECT_EQ(st_const_map_.find(42), st_const_map_.end());
+	EXPECT_EQ(ft_const_map_.find(42), ft_const_map_.end());
 }
 
-// TEST_F(MapTest, CountTest)
-// {
-// 	EXPECT_EQ(st_map_.count(5), ft_map_.count(5));
-// 	EXPECT_EQ(st_map_.count(6), ft_map_.count(6));
-// 	EXPECT_EQ(st_map_.count(1), ft_map_.count(1));
-// 	EXPECT_EQ(st_map_.count(12), ft_map_.count(12));
-// 	EXPECT_EQ(st_map_.count(42), ft_map_.count(42));
-// }
+TEST_F(MapTest, CountTest)
+{
+	EXPECT_EQ(st_map_.count(5),  ft_map_.count(5));
+	EXPECT_EQ(st_map_.count(6),  ft_map_.count(6));
+	EXPECT_EQ(st_map_.count(1),  ft_map_.count(1));
+	EXPECT_EQ(st_map_.count(12), ft_map_.count(12));
+	EXPECT_EQ(st_map_.count(42), ft_map_.count(42));
+
+	EXPECT_EQ(st_const_map_.count(5),  ft_const_map_.count(5));
+	EXPECT_EQ(st_const_map_.count(6),  ft_const_map_.count(6));
+	EXPECT_EQ(st_const_map_.count(1),  ft_const_map_.count(1));
+	EXPECT_EQ(st_const_map_.count(12), ft_const_map_.count(12));
+	EXPECT_EQ(st_const_map_.count(42), ft_const_map_.count(42));
+}
 
 TEST_F(MapTest, LowerBoundTest)
 {
-	EXPECT_EQ((st_map_.lower_bound(5))->first, (ft_map_.lower_bound(5))->first);
-	EXPECT_EQ((st_map_.lower_bound(6))->first, (ft_map_.lower_bound(6))->first);
-	EXPECT_EQ((st_map_.lower_bound(1))->first, (ft_map_.lower_bound(1))->first);
+	EXPECT_EQ((st_map_.lower_bound(5))->first,  (ft_map_.lower_bound(5))->first);
+	EXPECT_EQ((st_map_.lower_bound(6))->first,  (ft_map_.lower_bound(6))->first);
+	EXPECT_EQ((st_map_.lower_bound(1))->first,  (ft_map_.lower_bound(1))->first);
 	EXPECT_EQ((st_map_.lower_bound(12))->first, (ft_map_.lower_bound(12))->first);
 	EXPECT_EQ(st_map_.lower_bound(42), st_map_.end());
 	EXPECT_EQ(ft_map_.lower_bound(42), ft_map_.end());
+
+	EXPECT_EQ((st_const_map_.lower_bound(5))->first,  (ft_const_map_.lower_bound(5))->first);
+	EXPECT_EQ((st_const_map_.lower_bound(6))->first,  (ft_const_map_.lower_bound(6))->first);
+	EXPECT_EQ((st_const_map_.lower_bound(1))->first,  (ft_const_map_.lower_bound(1))->first);
+	EXPECT_EQ((st_const_map_.lower_bound(12))->first, (ft_const_map_.lower_bound(12))->first);
+	EXPECT_EQ(st_const_map_.lower_bound(42), st_const_map_.end());
+	EXPECT_EQ(ft_const_map_.lower_bound(42), ft_const_map_.end());
 }
 
 TEST_F(MapTest, UpperBoundTest)
 {
-	EXPECT_EQ((st_map_.lower_bound(5))->first, (ft_map_.lower_bound(5))->first);
-	EXPECT_EQ((st_map_.lower_bound(6))->first, (ft_map_.lower_bound(6))->first);
-	EXPECT_EQ((st_map_.lower_bound(1))->first, (ft_map_.lower_bound(1))->first);
-	EXPECT_EQ((st_map_.lower_bound(12))->first, (ft_map_.lower_bound(12))->first);
-	EXPECT_EQ(st_map_.lower_bound(42), st_map_.end());
-	EXPECT_EQ(ft_map_.lower_bound(42), ft_map_.end());
+	EXPECT_EQ((st_map_.upper_bound(5))->first,  (ft_map_.upper_bound(5))->first);
+	EXPECT_EQ((st_map_.upper_bound(6))->first,  (ft_map_.upper_bound(6))->first);
+	EXPECT_EQ((st_map_.upper_bound(1))->first,  (ft_map_.upper_bound(1))->first);
+	EXPECT_EQ(st_map_.upper_bound(12), st_map_.end());
+	EXPECT_EQ(ft_map_.upper_bound(12), ft_map_.end());
+	EXPECT_EQ(st_map_.upper_bound(42), st_map_.end());
+	EXPECT_EQ(ft_map_.upper_bound(42), ft_map_.end());
+
+	EXPECT_EQ((st_const_map_.upper_bound(5))->first,  (ft_const_map_.upper_bound(5))->first);
+	EXPECT_EQ((st_const_map_.upper_bound(6))->first,  (ft_const_map_.upper_bound(6))->first);
+	EXPECT_EQ((st_const_map_.upper_bound(1))->first,  (ft_const_map_.upper_bound(1))->first);
+	EXPECT_EQ(st_const_map_.upper_bound(12), st_const_map_.end());
+	EXPECT_EQ(ft_const_map_.upper_bound(12), ft_const_map_.end());
+	EXPECT_EQ(st_const_map_.upper_bound(42), st_const_map_.end());
+	EXPECT_EQ(ft_const_map_.upper_bound(42), ft_const_map_.end());
 }

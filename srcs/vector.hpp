@@ -28,6 +28,13 @@ class	vector
 		typedef ft::reverse_iterator<iterator> 					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
+	private:
+		allocator_type	alloc_;
+		pointer			begin_;
+		pointer			end_;
+		pointer			end_cap_;
+
+	public:
 		explicit vector(const allocator_type& alloc = allocator_type())
 			: alloc_(alloc), begin_(NULL), end_(NULL), end_cap_(NULL)
 		{
@@ -298,12 +305,6 @@ class	vector
 		{
 			return (alloc_);
 		}
-
-	private:
-		allocator_type	alloc_;
-		pointer			begin_;
-		pointer			end_;
-		pointer			end_cap_;
 
 		 void	construct_range(pointer first, pointer last)
 		 {

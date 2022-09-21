@@ -21,15 +21,15 @@ class	avl_tree
 		typedef ptrdiff_t										difference_type;
 		typedef size_t											size_type;
 
-		typedef avl_tree_iterator<value_type>					iterator;
-		typedef avl_tree_iterator<const value_type>				const_iterator;
-
 	private:
 		typedef avl_tree_node<Val>									node_type;
 
 	public:
 		typedef node_type*											node_pointer;
 		typedef typename Alloc::template rebind<node_type>::other	node_allocator_type;
+
+		typedef avl_tree_iterator<value_type, node_type>			iterator;
+		typedef avl_tree_iterator<const value_type, node_type>		const_iterator;
 
 	private:
 		map_value_compare	comp_;
@@ -225,13 +225,13 @@ class	avl_tree
 			node_pointer	result = end_;
 			while (node)
 			{
-				if (!comp_(k, node->value_))
+				if (comp_(k, node->value_))
 				{
 					result = node;
-					node = node->right_;
+					node = node->left_;
 				}
 				else
-					node = node->left_;
+					node = node->right_;
 			}
 			return (result);
 		}
