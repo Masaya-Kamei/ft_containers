@@ -5,6 +5,7 @@
 #endif
 #include <string>
 #include <iostream>
+#include <iterator>
 #include "avl_tree.hpp"
 #include "map.hpp"
 
@@ -93,14 +94,28 @@ TEST_F(AvlTreeTest, Test)
 	for (size_t i = 0; i < 100; ++i)
 		tree.insert(ft::make_pair(rand_r(&seed) % 1000, "A"));
 	// print_tree(tree);
+
+	for (size_t i = 0; i < 100; ++i)
+	{
+		tree_type::iterator	hint_itr = tree.begin();
+		std::advance(hint_itr, rand_r(&seed) % tree.size());
+		tree.insert(hint_itr, ft::make_pair(rand_r(&seed) % 1000, "A"));
+	}
+	tree.insert(tree.begin(), ft::make_pair(rand_r(&seed) % 1000, "A"));
+	tree.insert(tree.end(),	  ft::make_pair(rand_r(&seed) % 1000, "A"));
+	// print_tree(tree);
+
 	size_t	size = tree.size();
 	check_tree(tree, size);
+
+	tree.erase(tree.begin());
+	tree.erase(--tree.end());
+	size -= 2;
 
 	for (size_t i = 0; i < size; ++i)
 	{
 		tree_type::iterator	erase_itr = tree.begin();
-		for (int j = rand_r(&seed) % (size - i); j > 0; --j)
-			++erase_itr;
+		std::advance(erase_itr, rand_r(&seed) % tree.size());
 		// print_tree(tree);
 		tree.erase(erase_itr);
 		check_tree(tree, size - i - 1);

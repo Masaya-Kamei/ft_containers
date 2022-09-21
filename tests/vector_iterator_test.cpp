@@ -28,7 +28,7 @@ class VectorIteratorTest : public ::testing::Test
 		ft::vector<int>		ft_vec_;
 };
 
-const int VectorIteratorTest::nums[3] = {1, 2, 3};
+const int VectorIteratorTest::nums[3] = {10, 20, 30};
 
 
 TEST_F(VectorIteratorTest, ConstructorTest)

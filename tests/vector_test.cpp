@@ -95,7 +95,7 @@ class VectorTest : public ::testing::Test
 		ft::vector<int>		ft_less_;
 };
 
-const int 				VectorTest::nums[3] = {1, 2, 3};
+const int 				VectorTest::nums[3] = {10, 20, 30};
 const std::vector<int>	VectorTest::st_const_vec_(nums, nums + 3);
 const ft::vector<int>	VectorTest::ft_const_vec_(nums, nums + 3);
 

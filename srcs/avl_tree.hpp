@@ -104,6 +104,34 @@ class	avl_tree
 			return (ft::make_pair(iterator(new_node), true));
 		}
 
+		iterator	insert(iterator position, const value_type& val)
+		{
+			node_pointer	pos_node = position.base();
+			node_pointer	parent_node;
+
+			if (pos_node == end_ || comp_(val, pos_node->value_))
+			{
+				node_pointer	prev_node = (pos_node == begin_) ? NULL : pos_node->prev_node();
+				if (pos_node == begin_ || comp_(prev_node->value_, val))
+					parent_node = (pos_node->left_ == NULL) ? pos_node : prev_node;
+				else
+					return (insert(val).first);
+			}
+			else if (comp_(pos_node->value_, val))
+			{
+				node_pointer	next_node = pos_node->next_node();
+				if (next_node == end_ || comp_(val, next_node->value_))
+					parent_node = (pos_node->right_ == NULL) ? pos_node : next_node;
+				else
+					return (insert(val).first);
+			}
+			else
+				return (iterator(pos_node));
+			node_pointer	new_node = create_node_at(val, parent_node);
+			rebalance_tree(new_node);
+			return (iterator(new_node));
+		}
+
 	private:
 		void	replace_node(node_pointer erase_node, node_pointer alt_node)
 		{

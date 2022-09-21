@@ -18,112 +18,104 @@ class AlgorithmTest : public ::testing::Test
 		{
 			return (i > j);
 		}
+
+		static const int n_[];
+		static const int small_[];
+		static const int large_[];
+		static const int more_[];
+		static const int less_[];
 };
+
+const int	AlgorithmTest::n_[]		=	{10, 20,  30, 40, 50};
+const int	AlgorithmTest::small_[] =	{10, 2,   30, 40, 50};
+const int	AlgorithmTest::large_[] =	{10, 200, 30, 40, 50};
+const int	AlgorithmTest::more_[]	=	{10, 20,  30, 40, 50, 60, 70, 80};
+const int	AlgorithmTest::less_[]	=	{10, 20,  30};
 
 TEST_F(AlgorithmTest, EqualTest)
 {
-	int		n[]		=	{10, 20,  30, 40, 50};
-	int		small[] =	{10, 2,   30, 40, 50};
-	int		large[] =	{10, 200, 30, 40, 50};
-	int		more[]	=	{10, 20,  30, 40, 50, 60, 70, 80};
-	// int		less[]	=	{10, 20,  30};
-
-	EXPECT_EQ(std::equal(n, n + 5, n),		ft::equal(n, n + 5, n));
-	EXPECT_EQ(std::equal(n, n + 5, small),	ft::equal(n, n + 5, small));
-	EXPECT_EQ(std::equal(n, n + 5, large),	ft::equal(n, n + 5, large));
-	EXPECT_EQ(std::equal(n, n + 5, more),	ft::equal(n, n + 5, more));
-	// EXPECT_EQ(std::equal(n, n + 5, less),	ft::equal(n, n + 5, less));
+	EXPECT_EQ(std::equal(n_, n_ + 5, n_),		ft::equal(n_, n_ + 5, n_));
+	EXPECT_EQ(std::equal(n_, n_ + 5, small_),	ft::equal(n_, n_ + 5, small_));
+	EXPECT_EQ(std::equal(n_, n_ + 5, large_),	ft::equal(n_, n_ + 5, large_));
+	EXPECT_EQ(std::equal(n_, n_ + 5, more_),	ft::equal(n_, n_ + 5, more_));
+	// EXPECT_EQ(std::equal(n_, n_ + 5, less_),	ft::equal(n_, n_ + 5, less_));
 }
 
 TEST_F(AlgorithmTest, EqualFuncTest)
 {
-	int		n[]		=	{10, 20,  30, 40, 50};
-	int		small[] =	{10, 2,   30, 40, 50};
-	int		large[] =	{10, 200, 30, 40, 50};
-	int		more[]	=	{10, 20,  30, 40, 50, 60, 70, 80};
-	// int		less[]	=	{10, 20,  30};
-
-	EXPECT_EQ(std::equal(n, n + 5, n, MyNotEqual),		ft::equal(n, n + 5, n, MyNotEqual));
-	EXPECT_EQ(std::equal(n, n + 5, small, MyNotEqual),	ft::equal(n, n + 5, small, MyNotEqual));
-	EXPECT_EQ(std::equal(n, n + 5, large, MyNotEqual),	ft::equal(n, n + 5, large, MyNotEqual));
-	EXPECT_EQ(std::equal(n, n + 5, more, MyNotEqual),	ft::equal(n, n + 5, more, MyNotEqual));
-	// EXPECT_EQ(std::equal(n, n + 5, less, MyNotEqual),	ft::equal(n, n + 5, less, MyNotEqual));
+	EXPECT_EQ(std::equal(n_, n_ + 5, n_,	 MyNotEqual),	ft::equal(n_, n_ + 5, n_,	  MyNotEqual));
+	EXPECT_EQ(std::equal(n_, n_ + 5, small_, MyNotEqual),	ft::equal(n_, n_ + 5, small_, MyNotEqual));
+	EXPECT_EQ(std::equal(n_, n_ + 5, large_, MyNotEqual),	ft::equal(n_, n_ + 5, large_, MyNotEqual));
+	EXPECT_EQ(std::equal(n_, n_ + 5, more_,  MyNotEqual),	ft::equal(n_, n_ + 5, more_,  MyNotEqual));
+	// EXPECT_EQ(std::equal(n_, n_ + 5, less_,  MyNotEqual),	ft::equal(n_, n_ + 5, less_,  MyNotEqual));
 }
 
 TEST_F(AlgorithmTest, LexicographicalCompareTest)
 {
-	int		n[]	=	{10, 20,  30, 40, 50};
-	int		s[] =	{10, 2,   30, 40, 50};
-	int		l[] =	{10, 200, 30, 40, 50};
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 0, n_, n_ + 0),
+			   ft::lexicographical_compare(n_, n_ + 0, n_, n_ + 0));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 0, n_, n_ + 1),
+			   ft::lexicographical_compare(n_, n_ + 0, n_, n_ + 1));
 
-	EXPECT_EQ(std::lexicographical_compare(n, n + 0, n, n + 0),
-			   ft::lexicographical_compare(n, n + 0, n, n + 0));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 0, n, n + 1),
-			   ft::lexicographical_compare(n, n + 0, n, n + 1));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 0),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 0));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 1),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 1));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 3),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 3));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 5),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 5));
 
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 0),
-			   ft::lexicographical_compare(n, n + 3, n, n + 0));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 1),
-			   ft::lexicographical_compare(n, n + 3, n, n + 1));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 3),
-			   ft::lexicographical_compare(n, n + 3, n, n + 3));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 5),
-			   ft::lexicographical_compare(n, n + 3, n, n + 5));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 0),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 0));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 1),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 1));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 3),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 3));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 5),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 5));
 
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 0),
-			   ft::lexicographical_compare(n, n + 3, s, s + 0));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 1),
-			   ft::lexicographical_compare(n, n + 3, s, s + 1));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 3),
-			   ft::lexicographical_compare(n, n + 3, s, s + 3));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 5),
-			   ft::lexicographical_compare(n, n + 3, s, s + 5));
-
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 0),
-			   ft::lexicographical_compare(n, n + 3, l, l + 0));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 1),
-			   ft::lexicographical_compare(n, n + 3, l, l + 1));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 3),
-			   ft::lexicographical_compare(n, n + 3, l, l + 3));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 5),
-			   ft::lexicographical_compare(n, n + 3, l, l + 5));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 0),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 0));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 1),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 1));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 3),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 3));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 5),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 5));
 }
 
 TEST_F(AlgorithmTest, LexicographicalCompareFuncTest)
 {
-	int		n[]	=	{10, 20,  30, 40, 50};
-	int		s[] =	{10, 2,   30, 40, 50};
-	int		l[] =	{10, 200, 30, 40, 50};
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 0, n_, n_ + 0, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 0, n_, n_ + 0, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 0, n_, n_ + 1, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 0, n_, n_ + 1, MyGreater));
 
-	EXPECT_EQ(std::lexicographical_compare(n, n + 0, n, n + 0, MyGreater),
-			   ft::lexicographical_compare(n, n + 0, n, n + 0, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 0, n, n + 1, MyGreater),
-			   ft::lexicographical_compare(n, n + 0, n, n + 1, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 0, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 0, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 1, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 1, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 3, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 3, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, n_, n_ + 5, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, n_, n_ + 5, MyGreater));
 
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 0, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, n, n + 0, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 1, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, n, n + 1, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 3, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, n, n + 3, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, n, n + 5, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, n, n + 5, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 0, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 0, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 1, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 1, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 3, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 3, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, small_, small_ + 5, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, small_, small_ + 5, MyGreater));
 
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 0, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, s, s + 0, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 1, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, s, s + 1, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 3, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, s, s + 3, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, s, s + 5, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, s, s + 5, MyGreater));
-
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 0, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, l, l + 0, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 1, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, l, l + 1, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 3, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, l, l + 3, MyGreater));
-	EXPECT_EQ(std::lexicographical_compare(n, n + 3, l, l + 5, MyGreater),
-			   ft::lexicographical_compare(n, n + 3, l, l + 5, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 0, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 0, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 1, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 1, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 3, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 3, MyGreater));
+	EXPECT_EQ(std::lexicographical_compare(n_, n_ + 3, large_, large_ + 5, MyGreater),
+			   ft::lexicographical_compare(n_, n_ + 3, large_, large_ + 5, MyGreater));
 }

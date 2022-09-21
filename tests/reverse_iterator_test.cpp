@@ -28,7 +28,7 @@ class ReverseIteratorTest : public ::testing::Test
 		ft::vector<int>		ft_vec_;
 };
 
-const int ReverseIteratorTest::nums[3] = {1, 2, 3};
+const int ReverseIteratorTest::nums[3] = {10, 20, 30};
 
 
 TEST_F(ReverseIteratorTest, ConstructorTest)
