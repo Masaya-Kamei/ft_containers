@@ -57,24 +57,24 @@ class avl_tree_iterator : public std::iterator<std::bidirectional_iterator_tag, 
 
 		avl_tree_iterator&	operator++()
 		{
-			node_ = node_->get_next_node();
+			node_ = node_->next_node();
 			return (*this);
 		}
 		avl_tree_iterator	operator++(int )
 		{
 			avl_tree_iterator	tmp(*this);
-			node_ = node_->get_next_node();
+			node_ = node_->next_node();
 			return (tmp);
 		}
 		avl_tree_iterator&	operator--()
 		{
-			node_ = node_->get_prev_node();
+			node_ = node_->prev_node();
 			return (*this);
 		}
 		avl_tree_iterator	operator--(int )
 		{
 			avl_tree_iterator	tmp(*this);
-			node_ = node_->get_prev_node();
+			node_ = node_->prev_node();
 			return (tmp);
 		}
 

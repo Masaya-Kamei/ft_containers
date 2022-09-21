@@ -77,7 +77,9 @@ class VectorTest : public ::testing::Test
 			std::cout << "]" << std::endl;
 		}
 
-		static const int	nums[3];
+		static const int				nums[3];
+		static const std::vector<int>	st_const_vec_;
+		static const ft::vector<int>	ft_const_vec_;
 		std::vector<int>	st_vec_;
 		ft::vector<int>		ft_vec_;
 
@@ -93,7 +95,9 @@ class VectorTest : public ::testing::Test
 		ft::vector<int>		ft_less_;
 };
 
-const int VectorTest::nums[3] = {1, 2, 3};
+const int 				VectorTest::nums[3] = {1, 2, 3};
+const std::vector<int>	VectorTest::st_const_vec_(nums, nums + 3);
+const ft::vector<int>	VectorTest::ft_const_vec_(nums, nums + 3);
 
 TEST_F(VectorTest, DefaultConstructorTest)
 {
@@ -172,10 +176,8 @@ TEST_F(VectorTest, BeginTest)
 	ft_const_itr = ft_vec_.begin();
 	EXPECT_EQ(*st_const_itr, *ft_const_itr);
 
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	st_const_itr = st_const_vec.begin();
-	ft_const_itr = ft_const_vec.begin();
+	st_const_itr = st_const_vec_.begin();
+	ft_const_itr = ft_const_vec_.begin();
 	EXPECT_EQ(*st_const_itr, *ft_const_itr);
 }
 
@@ -193,10 +195,8 @@ TEST_F(VectorTest, EndTest)
 	ft_const_itr = ft_vec_.end() - 1;
 	EXPECT_EQ(*st_const_itr, *ft_const_itr);
 
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	st_const_itr = st_const_vec.end() - 1;
-	ft_const_itr = ft_const_vec.end() - 1;
+	st_const_itr = st_const_vec_.end() - 1;
+	ft_const_itr = ft_const_vec_.end() - 1;
 	EXPECT_EQ(*st_const_itr, *ft_const_itr);
 }
 
@@ -214,10 +214,8 @@ TEST_F(VectorTest, RbeginTest)
 	ft_const_ritr = ft_vec_.rbegin();
 	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
 
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	st_const_ritr = st_const_vec.rbegin();
-	ft_const_ritr = ft_const_vec.rbegin();
+	st_const_ritr = st_const_vec_.rbegin();
+	ft_const_ritr = ft_const_vec_.rbegin();
 	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
 }
 
@@ -235,10 +233,8 @@ TEST_F(VectorTest, RendTest)
 	ft_const_ritr = ft_vec_.rend() - 1;
 	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
 
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	st_const_ritr = st_const_vec.rend() - 1;
-	ft_const_ritr = ft_const_vec.rend() - 1;
+	st_const_ritr = st_const_vec_.rend() - 1;
+	ft_const_ritr = ft_const_vec_.rend() - 1;
 	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
 }
 
@@ -326,11 +322,9 @@ TEST_F(VectorTest, OpeBracketsTest)
 	EXPECT_EQ(st_vec_[1], ft_vec_[1]);
 	EXPECT_EQ(st_vec_[2], ft_vec_[2]);
 
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	EXPECT_EQ(st_const_vec[0], ft_const_vec[0]);
-	EXPECT_EQ(st_const_vec[1], ft_const_vec[1]);
-	EXPECT_EQ(st_const_vec[2], ft_const_vec[2]);
+	EXPECT_EQ(st_const_vec_[0], ft_const_vec_[0]);
+	EXPECT_EQ(st_const_vec_[1], ft_const_vec_[1]);
+	EXPECT_EQ(st_const_vec_[2], ft_const_vec_[2]);
 }
 
 TEST_F(VectorTest, AtTest)
@@ -341,22 +335,17 @@ TEST_F(VectorTest, AtTest)
 	EXPECT_THROW(st_vec_.at(3), std::out_of_range);
 	EXPECT_THROW(ft_vec_.at(3), std::out_of_range);
 
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	EXPECT_EQ(st_const_vec.at(0), ft_const_vec.at(0));
-	EXPECT_EQ(st_const_vec.at(1), ft_const_vec.at(1));
-	EXPECT_EQ(st_const_vec.at(2), ft_const_vec.at(2));
-	EXPECT_THROW(st_const_vec.at(3), std::out_of_range);
-	EXPECT_THROW(ft_const_vec.at(3), std::out_of_range);
+	EXPECT_EQ(st_const_vec_.at(0), ft_const_vec_.at(0));
+	EXPECT_EQ(st_const_vec_.at(1), ft_const_vec_.at(1));
+	EXPECT_EQ(st_const_vec_.at(2), ft_const_vec_.at(2));
+	EXPECT_THROW(st_const_vec_.at(3), std::out_of_range);
+	EXPECT_THROW(ft_const_vec_.at(3), std::out_of_range);
 }
 
 TEST_F(VectorTest, FrontTest)
 {
 	EXPECT_EQ(st_vec_.front(), ft_vec_.front());
-
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	EXPECT_EQ(st_const_vec.front(), ft_const_vec.front());
+	EXPECT_EQ(st_const_vec_.front(), ft_const_vec_.front());
 
 	// std::vector<int>	st_zero_vec;
 	// ft::vector<int>		ft_zero_vec;
@@ -367,10 +356,7 @@ TEST_F(VectorTest, FrontTest)
 TEST_F(VectorTest, BackTest)
 {
 	EXPECT_EQ(st_vec_.back(), ft_vec_.back());
-
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	EXPECT_EQ(st_const_vec.back(), ft_const_vec.back());
+	EXPECT_EQ(st_const_vec_.back(), ft_const_vec_.back());
 
 	// std::vector<int>	st_zero_vec;
 	// ft::vector<int>		ft_zero_vec;
@@ -381,10 +367,7 @@ TEST_F(VectorTest, BackTest)
 TEST_F(VectorTest, DataTest)
 {
 	EXPECT_EQ(*(st_vec_.data()), *(ft_vec_.data()));
-
-	const std::vector<int>	st_const_vec(st_vec_);
-	const ft::vector<int>	ft_const_vec(ft_vec_);
-	EXPECT_EQ(*(st_const_vec.data()), *(ft_const_vec.data()));
+	EXPECT_EQ(*(st_const_vec_.data()), *(ft_const_vec_.data()));
 
 	std::vector<int>	st_zero_vec;
 	ft::vector<int>		ft_zero_vec;

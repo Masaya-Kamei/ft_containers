@@ -49,7 +49,7 @@ class	avl_tree
 
 		~avl_tree()
 		{
-			delete_tree(get_root());
+			delete_tree(root());
 			delete_node(end_);
 		}
 
@@ -86,7 +86,7 @@ class	avl_tree
 		ft::pair<iterator, bool>	insert(const value_type& val)
 		{
 			node_pointer	parent_node = end_;
-			node_pointer	node = get_root();
+			node_pointer	node = root();
 
 			while (node)
 			{
@@ -129,15 +129,15 @@ class	avl_tree
 			node_pointer	erase_node = position.base();
 
 			if (erase_node == begin_)
-				begin_ = erase_node->get_next_node();  // TODO(mkamei)
+				begin_ = erase_node->next_node();  // TODO(mkamei)
 
 			node_pointer	alt_node;
 			if (erase_node->left_ == NULL && erase_node->right_ == NULL)
 				alt_node = NULL;
-			else if (erase_node->get_balance() >= 0)
-				alt_node = erase_node->left_->get_max_node();
+			else if (erase_node->balance() >= 0)
+				alt_node = erase_node->left_->max_node();
 			else
-				alt_node = erase_node->right_->get_min_node();
+				alt_node = erase_node->right_->min_node();
 
 			node_pointer	bottom_node;
 			if (alt_node == NULL)
@@ -156,7 +156,7 @@ class	avl_tree
 	private:
 		node_pointer	find_node(const key_type& k) const
 		{
-			node_pointer	node = get_root();
+			node_pointer	node = root();
 			while (node)
 			{
 				if (comp_(k, node->value_))
@@ -190,7 +190,7 @@ class	avl_tree
 	private:
 		node_pointer	lower_bound_node(const key_type& k) const
 		{
-			node_pointer	node = get_root();
+			node_pointer	node = root();
 			node_pointer	result = end_;
 			while (node)
 			{
@@ -221,7 +221,7 @@ class	avl_tree
 	private:
 		node_pointer	upper_bound_node(const key_type& k) const
 		{
-			node_pointer	node = get_root();
+			node_pointer	node = root();
 			node_pointer	result = end_;
 			while (node)
 			{
@@ -249,7 +249,7 @@ class	avl_tree
 			return (const_iterator(node));
 		}
 
-		node_pointer	get_root() const { return (end_->left_); }
+		node_pointer	root() const { return (end_->left_); }
 
 	private:
 		void	delete_node(node_pointer node)
@@ -315,16 +315,16 @@ class	avl_tree
 			while (node != end_)
 			{
 				parent_node = node->parent_;
-				difference_type	balance = node->get_balance();
+				difference_type	balance = node->balance();
 				if (balance == 2)
 				{
-					if (node->left_->get_balance() == -1)
+					if (node->left_->balance() == -1)
 						rotate_left(node->left_);
 					rotate_right(node);
 				}
 				else if (balance == -2)
 				{
-					if (node->right_->get_balance() == 1)
+					if (node->right_->balance() == 1)
 						rotate_right(node->right_);
 					rotate_left(node);
 				}

@@ -58,7 +58,7 @@ class AvlTreeTest : public ::testing::Test
 		void	print_tree(const tree_type& tree)
 		{
 			std::cout << "size: " << tree.size() << std::endl;
-			print_node_rec(tree.get_root());
+			print_node_rec(tree.root());
 		}
 
 		void	check_node_rec(node_pointer node)
@@ -70,7 +70,7 @@ class AvlTreeTest : public ::testing::Test
 			if (node->right_)
 				EXPECT_LT(node->value_.first, node->right_->value_.first);
 			EXPECT_EQ(node->height_, calc_height_from_child(node));
-			EXPECT_LT(abs(node->get_balance()), 2);
+			EXPECT_LT(abs(node->balance()), 2);
 			EXPECT_TRUE(node->parent_->left_ == node || node->parent_->right_ == node);
 			check_node_rec(node->left_);
 			check_node_rec(node->right_);
@@ -79,7 +79,7 @@ class AvlTreeTest : public ::testing::Test
 		void	check_tree(const tree_type& tree, size_t expect_size)
 		{
 			EXPECT_EQ(expect_size, tree.size());
-			check_node_rec(tree.get_root());
+			check_node_rec(tree.root());
 		}
 };
 

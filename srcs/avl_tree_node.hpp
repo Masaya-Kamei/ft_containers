@@ -34,7 +34,7 @@ class	avl_tree_node
 		{
 		}
 
-		difference_type	get_balance() const
+		difference_type	balance() const
 		{
 			size_type	left_height = left_ ? left_->height_ : 0;
 			size_type	right_height = right_ ? right_->height_ : 0;
@@ -83,7 +83,7 @@ class	avl_tree_node
 			parent_ = NULL;
 		}
 
-		node_pointer	get_max_node()
+		node_pointer	max_node()
 		{
 			node_pointer	node = this;
 			while (node->right_)
@@ -91,7 +91,7 @@ class	avl_tree_node
 			return (node);
 		}
 
-		node_pointer	get_min_node()
+		node_pointer	min_node()
 		{
 			node_pointer	node = this;
 			while (node->left_)
@@ -99,10 +99,10 @@ class	avl_tree_node
 			return (node);
 		}
 
-		node_pointer	get_next_node()
+		node_pointer	next_node()
 		{
 			if (right_)
-				return (right_->get_min_node());
+				return (right_->min_node());
 			else
 			{
 				node_pointer	node = this;
@@ -112,10 +112,10 @@ class	avl_tree_node
 			}
 		}
 
-		node_pointer	get_prev_node()
+		node_pointer	prev_node()
 		{
 			if (left_)
-				return (left_->get_max_node());
+				return (left_->max_node());
 			else
 			{
 				node_pointer	node = this;
