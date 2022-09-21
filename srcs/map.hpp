@@ -3,7 +3,7 @@
 
 #include <functional>
 #include "pair.hpp"
-// #include "reverse_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "avl_tree.hpp"
 
 namespace ft
@@ -75,9 +75,9 @@ class map
 
 	public:
 		typedef typename tree_type::iterator				iterator;
-		// typedef typename tree_type::const_iterator			const_iterator;
-		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef typename tree_type::const_iterator			const_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 		explicit map(const key_compare& comp = key_compare(),
 						const allocator_type& alloc = allocator_type())
@@ -98,23 +98,25 @@ class map
 		// ~map();
 		// map& operator= (const map& x);
 
-		iterator begin()	{ return (tree_.begin()); }
-		// const_iterator begin() const;
-		iterator end()		{ return (tree_.end()); }
-		// const_iterator end() const;
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		iterator begin()						{ return (tree_.begin()); }
+		const_iterator begin()			const	{ return (tree_.begin()); }
+		iterator end()							{ return (tree_.end()); }
+		const_iterator end()			const	{ return (tree_.end()); }
+		reverse_iterator rbegin()				{ return (reverse_iterator(tree_.end())); }
+		const_reverse_iterator rbegin()	const	{ return (const_reverse_iterator(tree_.end())); }
+		reverse_iterator rend()					{ return (reverve_iterator(tree_.begin())); }
+		const_reverse_iterator rend()	const	{ return (const_reverse_iterator(tree_.begin())); }
 
 		bool empty() const
 		{
 			return (tree_.size() == 0);
 		}
+
 		size_type size() const
 		{
 			return (tree_.size());
 		}
+
 		size_type max_size() const
 		{
 			return (tree_.max_size());
@@ -139,6 +141,7 @@ class map
 		{
 			tree_.erase(position);
 		}
+
 		size_type erase(const key_type& k)
 		{
 			iterator position = tree_.find(k);
@@ -147,31 +150,53 @@ class map
 			tree_.erase(position);
 			return (1);
 		}
+
 		void erase(iterator first, iterator last)
 		{
 			for (iterator itr = first; itr != last; ++itr)
 				tree_.erase(itr);
 		}
+
 		// void swap(map& x);
 		// void clear();
 		// key_compare key_comp() const;
 		// value_compare value_comp() const;
+
 		iterator find(const key_type& k)
 		{
 			return (tree_.find(k));
 		}
-		// const_iterator find(const key_type& k) const;
-		// size_type count(const key_type& k) const;
+
+		const_iterator find(const key_type& k) const
+		{
+			return (tree_.find(k));
+		}
+
+		size_type count(const key_type& k) const
+		{
+			return (tree_.count(k));
+		}
+
 		iterator lower_bound(const key_type& k)
 		{
 			return (tree_.lower_bound(k));
 		}
-		// const_iterator lower_bound(const key_type& k) const;
+
+		const_iterator lower_bound(const key_type& k) const
+		{
+			return (tree_.lower_bound(k));
+		}
+
 		iterator upper_bound(const key_type& k)
 		{
 			return (tree_.upper_bound(k));
 		}
-		// const_iterator upper_bound(const key_type& k) const;
+
+		const_iterator upper_bound(const key_type& k) const
+		{
+			return (tree_.upper_bound(k));
+		}
+
 		// pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
 		// pair<iterator, iterator>             equal_range(const key_type& k);
 		// allocator_type get_allocator() const;

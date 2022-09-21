@@ -21,8 +21,8 @@ class	avl_tree
 		typedef ptrdiff_t										difference_type;
 		typedef size_t											size_type;
 
-		typedef avl_tree_iterator<value_type>						iterator;
-		// typedef avl_tree_const_iterator<value_type>					const_iterator;
+		typedef avl_tree_iterator<value_type>					iterator;
+		typedef avl_tree_iterator<const value_type>				const_iterator;
 
 	private:
 		typedef avl_tree_node<Val>									node_type;
@@ -42,8 +42,7 @@ class	avl_tree
 		avl_tree(map_value_compare comp, allocator_type alloc)
 			: comp_(comp), node_alloc_(alloc), size_(0)
 		{
-			end_ = node_alloc_.allocate(1);
-			node_alloc_.construct(end_);  // TODO(mkamei)
+			end_ = create_node();
 			end_->left_ = NULL;
 			begin_ = end_;
 		}
@@ -54,8 +53,10 @@ class	avl_tree
 			delete_node(end_);
 		}
 
-		iterator	begin()	{ return (iterator(begin_)); }
-		iterator	end()	{ return (iterator(end_)); }
+		iterator		begin()			{ return (iterator(begin_)); }
+		const_iterator	begin() const	{ return (const_iterator(begin_)); }
+		iterator		end()			{ return (iterator(end_)); }
+		const_iterator	end()	const	{ return (const_iterator(end_)); }
 
 		size_type	size() const
 		{
@@ -66,6 +67,22 @@ class	avl_tree
 			return (std::min<size_type>(node_alloc_.max_size(), std::numeric_limits<difference_type>::max()));
 		}
 
+	private:
+		node_pointer	create_node_at(const value_type& val, node_pointer parent_node)
+		{
+			node_pointer	new_node = create_node(val);
+
+			bool	is_left = (parent_node == end_ || comp_(val, parent_node->value_));
+			new_node->connect_parent(parent_node, is_left);
+
+			if (is_left && parent_node == begin_)
+				begin_ = new_node;
+
+			++size_;
+			return (new_node);
+		}
+
+	public:
 		ft::pair<iterator, bool>	insert(const value_type& val)
 		{
 			node_pointer	parent_node = end_;
@@ -87,6 +104,26 @@ class	avl_tree
 			return (ft::make_pair(iterator(new_node), true));
 		}
 
+	private:
+		void	replace_node(node_pointer erase_node, node_pointer alt_node)
+		{
+			if (alt_node == NULL)
+				erase_node->disconnect_parent();
+			else
+			{
+				if (alt_node->left_ == NULL && alt_node->right_ == NULL)
+					alt_node->disconnect_parent();
+				else if (alt_node->left_)
+					alt_node->left_->connect_parent(alt_node->parent_, alt_node->is_left());
+				else
+					alt_node->right_->connect_parent(alt_node->parent_, alt_node->is_left());
+				alt_node->connect_parent(erase_node->parent_, erase_node->is_left());
+				alt_node->connect_left(erase_node->left_);
+				alt_node->connect_right(erase_node->right_);
+			}
+		}
+
+	public:
 		void	erase(iterator position)
 		{
 			node_pointer	erase_node = position.base();
@@ -116,7 +153,8 @@ class	avl_tree
 			rebalance_tree(bottom_node);
 		}
 
-		iterator	find(const key_type& k)
+	private:
+		node_pointer	find_node(const key_type& k) const
 		{
 			node_pointer	node = get_root();
 			while (node)
@@ -126,12 +164,31 @@ class	avl_tree
 				else if (comp_(node->value_, k))
 					node = node->right_;
 				else
-					return (iterator(node));
+					return (node);
 			}
-			return (end());
+			return (end_);
 		}
 
-		iterator	lower_bound(const key_type& k)
+	public:
+		iterator	find(const key_type& k)
+		{
+			node_pointer	node = find_node(k);
+			return (iterator(node));
+		}
+
+		const_iterator	find(const key_type& k) const
+		{
+			node_pointer	node = find_node(k);
+			return (const_iterator(node));
+		}
+
+		size_type count(const key_type& k) const
+		{
+			return (find_node(k) != end_);
+		}
+
+	private:
+		node_pointer	lower_bound_node(const key_type& k) const
 		{
 			node_pointer	node = get_root();
 			node_pointer	result = end_;
@@ -145,10 +202,24 @@ class	avl_tree
 				else
 					node = node->right_;
 			}
-			return (iterator(result));
+			return (result);
 		}
 
-		iterator	upper_bound(const key_type& k)
+	public:
+		iterator	lower_bound(const key_type& k)
+		{
+			node_pointer	node = lower_bound_node(k);
+			return (iterator(node));
+		}
+
+		const_iterator	lower_bound(const key_type& k) const
+		{
+			node_pointer	node = lower_bound_node(k);
+			return (const_iterator(node));
+		}
+
+	private:
+		node_pointer	upper_bound_node(const key_type& k) const
 		{
 			node_pointer	node = get_root();
 			node_pointer	result = end_;
@@ -162,7 +233,20 @@ class	avl_tree
 				else
 					node = node->left_;
 			}
-			return (iterator(result));
+			return (result);
+		}
+
+	public:
+		iterator	upper_bound(const key_type& k)
+		{
+			node_pointer	node = upper_bound_node(k);
+			return (iterator(node));
+		}
+
+		const_iterator	upper_bound(const key_type& k) const
+		{
+			node_pointer	node = upper_bound_node(k);
+			return (const_iterator(node));
 		}
 
 		node_pointer	get_root() const { return (end_->left_); }
@@ -185,43 +269,18 @@ class	avl_tree
 			}
 		}
 
+		node_pointer	create_node()
+		{
+			node_pointer	new_node = node_alloc_.allocate(1);
+			node_alloc_.construct(new_node);
+			return (new_node);
+		}
+
 		node_pointer	create_node(const value_type& val)
 		{
 			node_pointer	new_node = node_alloc_.allocate(1);
 			node_alloc_.construct(new_node, node_type(val));
 			return (new_node);
-		}
-
-		node_pointer	create_node_at(const value_type& val, node_pointer parent_node)
-		{
-			node_pointer	new_node = create_node(val);
-
-			bool	is_left = (parent_node == end_ || comp_(val, parent_node->value_));
-			new_node->connect_parent(parent_node, is_left);
-
-			if (is_left && parent_node == begin_)
-				begin_ = new_node;
-
-			++size_;
-			return (new_node);
-		}
-
-		void	replace_node(node_pointer erase_node, node_pointer alt_node)
-		{
-			if (alt_node == NULL)
-				erase_node->disconnect_parent();
-			else
-			{
-				if (alt_node->left_ == NULL && alt_node->right_ == NULL)
-					alt_node->disconnect_parent();
-				else if (alt_node->left_)
-					alt_node->left_->connect_parent(alt_node->parent_, alt_node->is_left());
-				else
-					alt_node->right_->connect_parent(alt_node->parent_, alt_node->is_left());
-				alt_node->connect_parent(erase_node->parent_, erase_node->is_left());
-				alt_node->connect_left(erase_node->left_);
-				alt_node->connect_right(erase_node->right_);
-			}
 		}
 
 		void	rotate_left(node_pointer node)

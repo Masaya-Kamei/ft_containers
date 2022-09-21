@@ -158,3 +158,16 @@ TEST_F(VectorIteratorTest, OpeOthersTest)
 	EXPECT_EQ(st_itr[1], ft_itr[1]);
 	EXPECT_EQ(st_itr->length(), ft_itr->length());
 }
+
+// TEST_F(VectorIteratorTest, ConstIteratorTest)
+// {
+// 	std::vector<int>::iterator			st_itr = st_vec_.begin();
+// 	ft::vector<int>::iterator			ft_itr = ft_vec_.begin();
+// 	*st_itr = 42;
+// 	*ft_itr = 42;
+
+// 	std::vector<int>::const_iterator	st_citr = st_vec_.begin();
+// 	ft::vector<int>::const_iterator		ft_citr = ft_vec_.begin();
+// 	*st_citr = 42;
+// 	*ft_citr = 42;
+// }

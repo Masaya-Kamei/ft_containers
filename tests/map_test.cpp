@@ -164,6 +164,15 @@ TEST_F(MapTest, FindTest)
 	EXPECT_EQ(ft_map_.find(42), ft_map_.end());
 }
 
+// TEST_F(MapTest, CountTest)
+// {
+// 	EXPECT_EQ(st_map_.count(5), ft_map_.count(5));
+// 	EXPECT_EQ(st_map_.count(6), ft_map_.count(6));
+// 	EXPECT_EQ(st_map_.count(1), ft_map_.count(1));
+// 	EXPECT_EQ(st_map_.count(12), ft_map_.count(12));
+// 	EXPECT_EQ(st_map_.count(42), ft_map_.count(42));
+// }
+
 TEST_F(MapTest, LowerBoundTest)
 {
 	EXPECT_EQ((st_map_.lower_bound(5))->first, (ft_map_.lower_bound(5))->first);
