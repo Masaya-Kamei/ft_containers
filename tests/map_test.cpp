@@ -149,6 +149,33 @@ TEST_F(MapTest, OpeAssignTest)
 	EXPECT_NE(ft_map_.begin(), ft_map_copy.begin());
 }
 
+TEST_F(MapTest, EmptyTest)
+{
+	EXPECT_EQ(st_map_.empty(), ft_map_.empty());
+	EXPECT_EQ(st_zero_map_.empty(), ft_zero_map_.empty());
+	EXPECT_EQ(st_const_map_.empty(), ft_const_map_.empty());
+
+	st_map_.clear();
+	ft_map_.clear();
+	EXPECT_EQ(st_map_.empty(), ft_map_.empty());
+}
+
+TEST_F(MapTest, SizeTest)
+{
+	EXPECT_EQ(st_map_.size(), ft_map_.size());
+	EXPECT_EQ(st_zero_map_.size(), ft_zero_map_.size());
+	EXPECT_EQ(st_const_map_.size(), ft_const_map_.size());
+}
+
+TEST_F(MapTest, MaxSizeTest)
+{
+	typedef ft::avl_tree_node<ft::pair<int, std::string> >	node_type;
+	std::allocator<node_type>	node_alloc;
+	size_t	result = std::min<size_t>(node_alloc.max_size(), std::numeric_limits<ptrdiff_t>::max());
+
+	EXPECT_EQ(result, ft_map_.max_size());
+}
+
 TEST_F(MapTest, BeginTest)
 {
 	std::map<int, std::string>::iterator		st_itr;
