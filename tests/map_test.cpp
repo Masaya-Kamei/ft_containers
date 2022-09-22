@@ -67,14 +67,6 @@ class MapTest : public ::testing::Test
 			}
 		}
 
-		template <class Iter1, class Iter2>
-		void	CompareInsertReturn(std::pair<Iter1, bool> st_ret, ft::pair<Iter2, bool> ft_ret)
-		{
-			EXPECT_EQ((st_ret.first)->first, (ft_ret.first)->first);
-			EXPECT_EQ((st_ret.first)->second, (ft_ret.first)->second);
-			EXPECT_EQ(st_ret.second, ft_ret.second);
-		}
-
 		template <class Map>
 		void PrintMap(const Map& map)
 		{
@@ -169,19 +161,24 @@ TEST_F(MapTest, InsertSingleTest)
 
 	st_ret = st_map.insert(std::make_pair(1, "A"));
 	ft_ret = ft_map.insert(ft::make_pair(1, "A"));
-	CompareInsertReturn(st_ret, ft_ret);
+	EXPECT_EQ((st_ret.first)->first, (ft_ret.first)->first);
+	EXPECT_EQ(st_ret.second, ft_ret.second);
 	st_ret = st_map.insert(std::make_pair(3, "C"));
 	ft_ret = ft_map.insert(ft::make_pair(3, "C"));
-	CompareInsertReturn(st_ret, ft_ret);
+	EXPECT_EQ((st_ret.first)->first, (ft_ret.first)->first);
+	EXPECT_EQ(st_ret.second, ft_ret.second);
 	st_ret = st_map.insert(std::make_pair(4, "D"));
 	ft_ret = ft_map.insert(ft::make_pair(4, "D"));
-	CompareInsertReturn(st_ret, ft_ret);
+	EXPECT_EQ((st_ret.first)->first, (ft_ret.first)->first);
+	EXPECT_EQ(st_ret.second, ft_ret.second);
 	st_ret = st_map.insert(std::make_pair(2, "B"));
 	ft_ret = ft_map.insert(ft::make_pair(2, "B"));
-	CompareInsertReturn(st_ret, ft_ret);
+	EXPECT_EQ((st_ret.first)->first, (ft_ret.first)->first);
+	EXPECT_EQ(st_ret.second, ft_ret.second);
 	st_ret = st_map.insert(std::make_pair(1, "Z"));
 	ft_ret = ft_map.insert(ft::make_pair(1, "Z"));
-	CompareInsertReturn(st_ret, ft_ret);
+	EXPECT_EQ((st_ret.first)->first, (ft_ret.first)->first);
+	EXPECT_EQ(st_ret.second, ft_ret.second);
 
 	CompareSizeCapElem(st_map, ft_map);
 }
@@ -374,6 +371,51 @@ TEST_F(MapTest, UpperBoundTest)
 	EXPECT_EQ((st_const_map_.upper_bound(1))->first,  (ft_const_map_.upper_bound(1))->first);
 	EXPECT_EQ(st_const_map_.upper_bound(420), st_const_map_.end());
 	EXPECT_EQ(ft_const_map_.upper_bound(420), ft_const_map_.end());
+}
+
+TEST_F(MapTest, EqualRangeTest)
+{
+	typedef std::map<int, std::string>::iterator	st_iterator;
+	typedef ft::map<int, std::string>::iterator		ft_iterator;
+	std::pair<st_iterator, st_iterator>		st_ret;
+	ft::pair<ft_iterator, ft_iterator>		ft_ret;
+
+	st_ret = st_map_.equal_range(30);
+	ft_ret = ft_map_.equal_range(30);
+	EXPECT_EQ(st_ret.first->first, ft_ret.first->first);
+	EXPECT_EQ(st_ret.second->first, ft_ret.second->first);
+	EXPECT_EQ((++(ft_ret.first))->first, ft_ret.second->first);
+	st_ret = st_map_.equal_range(42);
+	ft_ret = ft_map_.equal_range(42);
+	EXPECT_EQ(st_ret.first->first, ft_ret.first->first);
+	EXPECT_EQ(st_ret.second->first, ft_ret.second->first);
+	EXPECT_EQ(ft_ret.first->first, ft_ret.second->first);
+	st_ret = st_map_.equal_range(120);
+	ft_ret = ft_map_.equal_range(120);
+	EXPECT_EQ(st_ret.first->first, ft_ret.first->first);
+	EXPECT_EQ(st_ret.second, st_map_.end());
+	EXPECT_EQ(ft_ret.second, ft_map_.end());
+	st_ret = st_map_.equal_range(1);
+	ft_ret = ft_map_.equal_range(1);
+	EXPECT_EQ(st_ret.first->first, ft_ret.first->first);
+	EXPECT_EQ(st_ret.second->first, ft_ret.second->first);
+	EXPECT_EQ(ft_ret.first->first, ft_ret.second->first);
+	st_ret = st_map_.equal_range(122);
+	ft_ret = ft_map_.equal_range(122);
+	EXPECT_EQ(st_ret.first, st_map_.end());
+	EXPECT_EQ(ft_ret.first, ft_map_.end());
+	EXPECT_EQ(st_ret.second, st_map_.end());
+	EXPECT_EQ(ft_ret.second, ft_map_.end());
+
+	typedef std::map<int, std::string>::const_iterator	st_const_iterator;
+	typedef ft::map<int, std::string>::const_iterator	ft_const_iterator;
+	std::pair<st_const_iterator, st_const_iterator>		st_const_ret;
+	ft::pair<ft_const_iterator,  ft_const_iterator>		ft_const_ret;
+	st_const_ret = st_const_map_.equal_range(30);
+	ft_const_ret = ft_const_map_.equal_range(30);
+	EXPECT_EQ(st_const_ret.first->first,		ft_const_ret.first->first);
+	EXPECT_EQ(st_const_ret.second->first,		ft_const_ret.second->first);
+	EXPECT_EQ((++(ft_const_ret.first))->first,	ft_const_ret.second->first);
 }
 
 TEST_F(MapTest, OpeEqualTest)

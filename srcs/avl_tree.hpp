@@ -219,6 +219,21 @@ class	avl_tree
 			rebalance_tree(bottom_node);
 		}
 
+		size_type erase(const key_type& k)
+		{
+			iterator position = find(k);
+			if (position == end())
+				return (0);
+			erase(position);
+			return (1);
+		}
+
+		void erase(iterator first, iterator last)
+		{
+			for (iterator itr = first; itr != last; ++itr)
+				erase(itr);
+		}
+
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last)
 		{
@@ -320,6 +335,39 @@ class	avl_tree
 		{
 			node_pointer	node = upper_bound_node(k);
 			return (const_iterator(node));
+		}
+
+	private:
+		pair<node_pointer, node_pointer>	equal_range_node(const key_type& k) const
+		{
+			node_pointer	right_parent = end_;
+			node_pointer	node = root();
+			while (node)
+			{
+				if (comp_(k, node->value_))
+				{
+					right_parent = node;
+					node = node->left_;
+				}
+				else if (comp_(node->value_, k))
+					node = node->right_;
+				else
+					return (ft::make_pair(node, node->right_ ? node->right_->min_node() : right_parent));
+			}
+			return (ft::make_pair(right_parent, right_parent));
+		}
+
+	public:
+		pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
+		{
+			pair<node_pointer, node_pointer>	pair = equal_range_node(k);
+			return (ft::make_pair(const_iterator(pair.first), const_iterator(pair.second)));
+		}
+
+		pair<iterator, iterator>	equal_range(const key_type& k)
+		{
+			pair<node_pointer, node_pointer>	pair = equal_range_node(k);
+			return (ft::make_pair(iterator(pair.first), iterator(pair.second)));
 		}
 
 		node_pointer	root() const { return (end_->left_); }

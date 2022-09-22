@@ -162,17 +162,12 @@ class map
 
 		size_type erase(const key_type& k)
 		{
-			iterator position = tree_.find(k);
-			if (position == end())
-				return (0);
-			tree_.erase(position);
-			return (1);
+			return (tree_.erase(k));
 		}
 
 		void erase(iterator first, iterator last)
 		{
-			for (iterator itr = first; itr != last; ++itr)
-				tree_.erase(itr);
+			tree_.erase(first, last);
 		}
 
 		void swap(map& x)
@@ -230,8 +225,16 @@ class map
 			return (tree_.upper_bound(k));
 		}
 
-		// pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
-		// pair<iterator, iterator>             equal_range(const key_type& k);
+		pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
+		{
+			return (tree_.equal_range(k));
+		}
+
+		pair<iterator, iterator>	equal_range(const key_type& k)
+		{
+			return (tree_.equal_range(k));
+		}
+
 		// allocator_type get_allocator() const;
 };
 
