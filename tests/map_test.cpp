@@ -28,6 +28,29 @@ class MapTest : public ::testing::Test
 		{
 		}
 
+		void SetupMapForRelationalOpe()
+		{
+			st_large_.insert(st_map_.begin(), st_map_.end());
+			st_large_.erase(20);	st_large_.insert(std::make_pair(22, "X"));
+			ft_large_.insert(ft_map_.begin(), ft_map_.end());
+			ft_large_.erase(20);	ft_large_.insert(ft::make_pair(22, "X"));
+
+			st_small_.insert(st_map_.begin(), st_map_.end());
+			st_small_.erase(20);	st_small_.insert(std::make_pair(18, "X"));
+			ft_small_.insert(ft_map_.begin(), ft_map_.end());
+			ft_small_.erase(20);	ft_small_.insert(ft::make_pair(18, "X"));
+
+			st_more_.insert(st_map_.begin(),  st_map_.end());
+			st_more_.insert(std::make_pair(130, "X"));
+			ft_more_.insert(ft_map_.begin(),  ft_map_.end());
+			ft_more_.insert(ft::make_pair(130, "X"));
+
+			st_less_.insert(st_map_.begin(),  st_map_.end());
+			st_less_.erase(120);
+			ft_less_.insert(ft_map_.begin(),  ft_map_.end());
+			ft_less_.erase(120);
+		}
+
 		template <class T1, class T2>
 		void CompareSizeCapElem(const std::map<T1, T2>& st_map, const ft::map<T1, T2>& ft_map)
 		{
@@ -73,6 +96,15 @@ class MapTest : public ::testing::Test
 		std::map<int, std::string>	st_map_;
 		ft::map<int, std::string>	ft_map_;
 		unsigned int				seed_;
+
+		std::map<int, std::string>	st_large_;
+		ft::map<int, std::string>	ft_large_;
+		std::map<int, std::string>	st_small_;
+		ft::map<int, std::string>	ft_small_;
+		std::map<int, std::string>	st_more_;
+		ft::map<int, std::string>	ft_more_;
+		std::map<int, std::string>	st_less_;
+		ft::map<int, std::string>	ft_less_;
 };
 
 const std::pair<int, std::string>	MapTest::st_pairs_[12]
@@ -262,4 +294,64 @@ TEST_F(MapTest, UpperBoundTest)
 	EXPECT_EQ((st_const_map_.upper_bound(1))->first,  (ft_const_map_.upper_bound(1))->first);
 	EXPECT_EQ(st_const_map_.upper_bound(420), st_const_map_.end());
 	EXPECT_EQ(ft_const_map_.upper_bound(420), ft_const_map_.end());
+}
+
+TEST_F(MapTest, OpeEqualTest)
+{
+	SetupMapForRelationalOpe();
+	EXPECT_EQ(st_map_ == st_map_,	ft_map_ == ft_map_);
+	EXPECT_EQ(st_map_ == st_large_,	ft_map_ == ft_large_);
+	EXPECT_EQ(st_map_ == st_small_,	ft_map_ == ft_small_);
+	EXPECT_EQ(st_map_ == st_more_,	ft_map_ == ft_more_);
+	EXPECT_EQ(st_map_ == st_less_,	ft_map_ == ft_less_);
+}
+
+TEST_F(MapTest, OpeNotEqualTest)
+{
+	SetupMapForRelationalOpe();
+	EXPECT_EQ(st_map_ != st_map_,	ft_map_ != ft_map_);
+	EXPECT_EQ(st_map_ != st_large_,	ft_map_ != ft_large_);
+	EXPECT_EQ(st_map_ != st_small_,	ft_map_ != ft_small_);
+	EXPECT_EQ(st_map_ != st_more_,	ft_map_ != ft_more_);
+	EXPECT_EQ(st_map_ != st_less_,	ft_map_ != ft_less_);
+}
+
+TEST_F(MapTest, OpeLessTest)
+{
+	SetupMapForRelationalOpe();
+	EXPECT_EQ(st_map_ < st_map_,	ft_map_ < ft_map_);
+	EXPECT_EQ(st_map_ < st_large_,	ft_map_ < ft_large_);
+	EXPECT_EQ(st_map_ < st_small_,	ft_map_ < ft_small_);
+	EXPECT_EQ(st_map_ < st_more_,	ft_map_ < ft_more_);
+	EXPECT_EQ(st_map_ < st_less_,	ft_map_ < ft_less_);
+}
+
+TEST_F(MapTest, OpeLessEqualTest)
+{
+	SetupMapForRelationalOpe();
+	EXPECT_EQ(st_map_ <= st_map_,	ft_map_ <= ft_map_);
+	EXPECT_EQ(st_map_ <= st_large_,	ft_map_ <= ft_large_);
+	EXPECT_EQ(st_map_ <= st_small_,	ft_map_ <= ft_small_);
+	EXPECT_EQ(st_map_ <= st_more_,	ft_map_ <= ft_more_);
+	EXPECT_EQ(st_map_ <= st_less_,	ft_map_ <= ft_less_);
+}
+
+TEST_F(MapTest, OpeGreaterTest)
+{
+	SetupMapForRelationalOpe();
+	EXPECT_EQ(st_map_ > st_map_,	ft_map_ > ft_map_);
+	EXPECT_EQ(st_map_ > st_large_,	ft_map_ > ft_large_);
+	EXPECT_EQ(st_map_ > st_small_,	ft_map_ > ft_small_);
+	EXPECT_EQ(st_map_ > st_more_,	ft_map_ > ft_more_);
+	EXPECT_EQ(st_map_ > st_less_,	ft_map_ > ft_less_);
+}
+
+TEST_F(MapTest, OpeGreaterEqualTest)
+{
+	SetupMapForRelationalOpe();
+	EXPECT_EQ(st_map_ >= st_map_,	ft_map_ >= ft_map_);
+	EXPECT_EQ(st_map_ >= st_large_,	ft_map_ >= ft_large_);
+	EXPECT_EQ(st_map_ >= st_small_,	ft_map_ >= ft_small_);
+	EXPECT_EQ(st_map_ >= st_more_,	ft_map_ >= ft_more_);
+	EXPECT_EQ(st_map_ >= st_less_,	ft_map_ >= ft_less_);
 }
