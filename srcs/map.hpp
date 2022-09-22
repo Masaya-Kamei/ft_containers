@@ -46,17 +46,18 @@ class map
 
 		class value_compare
 		{
-			friend class map;	// TODO
 			protected:
-				Compare comp;
-				value_compare(Compare c) : comp(c) {}
+				Compare	comp_;
 			public:
 				typedef bool		result_type;
 				typedef value_type	first_argument_type;
 				typedef value_type	second_argument_type;
+
+				explicit value_compare(Compare c) : comp_(c) {}
+
 				bool operator()(const value_type& x, const value_type& y) const
 				{
-					return comp(x.first, y.first);
+					return comp_(x.first, y.first);
 				}
 		};
 
@@ -110,14 +111,14 @@ class map
 			return (*this);
 		}
 
-		iterator begin()						{ return (tree_.begin()); }
-		const_iterator begin()			const	{ return (tree_.begin()); }
-		iterator end()							{ return (tree_.end()); }
-		const_iterator end()			const	{ return (tree_.end()); }
-		reverse_iterator rbegin()				{ return (reverse_iterator(tree_.end())); }
-		const_reverse_iterator rbegin()	const	{ return (const_reverse_iterator(tree_.end())); }
-		reverse_iterator rend()					{ return (reverve_iterator(tree_.begin())); }
-		const_reverse_iterator rend()	const	{ return (const_reverse_iterator(tree_.begin())); }
+		iterator 				begin()			{ return (tree_.begin()); }
+		const_iterator			begin()	 const	{ return (tree_.begin()); }
+		iterator				end()			{ return (tree_.end()); }
+		const_iterator			end()	 const	{ return (tree_.end()); }
+		reverse_iterator		rbegin()		{ return (reverse_iterator(tree_.end())); }
+		const_reverse_iterator	rbegin() const	{ return (const_reverse_iterator(tree_.end())); }
+		reverse_iterator		rend()			{ return (reverve_iterator(tree_.begin())); }
+		const_reverse_iterator	rend()	 const	{ return (const_reverse_iterator(tree_.begin())); }
 
 		bool empty() const
 		{

@@ -58,7 +58,7 @@ class	avl_tree
 
 		~avl_tree()
 		{
-			delete_tree(root());
+			delete_tree();
 			delete_node(end_);
 		}
 
@@ -164,7 +164,7 @@ class	avl_tree
 
 		void	clear()
 		{
-			delete_tree(root());
+			delete_tree();
 			size_ = 0;
 			end_->left_ = NULL;
 			begin_ = end_;
@@ -379,14 +379,25 @@ class	avl_tree
 			node_alloc_.deallocate(node, 1);
 		}
 
-		void	delete_tree(node_pointer node)
+		void	delete_tree()
 		{
-			if (node != NULL)
+			node_pointer	node = root();
+			if (node == NULL)
+				return;
+
+			while (node != end_)
 			{
-				delete_tree(node->left_);
-				delete_tree(node->right_);
-				delete_node(node);
-				--size_;
+				if (node->left_)
+					node = node->left_;
+				else if (node->right_)
+					node = node->right_;
+				else
+				{
+					node_pointer parent_node = node->parent_;
+					node->disconnect_parent();
+					delete_node(node);
+					node = parent_node;
+				}
 			}
 		}
 

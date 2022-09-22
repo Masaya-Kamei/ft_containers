@@ -125,6 +125,10 @@ TEST_F(MapTest, RangeConstructorTest)
 	std::map<int, std::string>	st_map(st_pairs_, st_pairs_ + 12);
 	ft::map<int, std::string>	ft_map(ft_pairs_, ft_pairs_ + 12);
 	CompareSizeCapElem(st_map, ft_map);
+
+	std::map<int, std::string>	st_zero_map(st_pairs_, st_pairs_);
+	ft::map<int, std::string>	ft_zero_map(ft_pairs_, ft_pairs_);
+	CompareSizeCapElem(st_zero_map, ft_zero_map);
 }
 
 TEST_F(MapTest, CopyConstructorTest)
