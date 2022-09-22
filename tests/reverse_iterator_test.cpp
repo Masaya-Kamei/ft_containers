@@ -46,66 +46,6 @@ TEST_F(ReverseIteratorTest, ConstructorTest)
 	EXPECT_EQ(ft_ritr, ft_rbegin);
 }
 
-TEST_F(ReverseIteratorTest, CopyConstructorConstTest)
-{
-	ft::vector<int>				vec(nums, nums + 3);
-	ft::vector<const int>		vec_const(nums, nums + 3);
-	const ft::vector<int>		const_vec(nums, nums + 3);
-
-	ft::vector<int>::reverse_iterator		ritr1(vec.rbegin());
-	// ft::vector<int>::reverse_iterator		ritr2(vec_const.rbegin());
-	// ft::vector<int>::reverse_iterator		ritr3(const_vec.rbegin());
-
-	ft::vector<const int>::reverse_iterator	ritr_const1(vec.rbegin());
-	ft::vector<const int>::reverse_iterator	ritr_const2(vec_const.rbegin());
-	ft::vector<const int>::reverse_iterator	ritr_const3(const_vec.rbegin());
-
-	ft::vector<int>::const_reverse_iterator	const_ritr1(vec.rbegin());
-	ft::vector<int>::const_reverse_iterator	const_ritr2(vec_const.rbegin());
-	ft::vector<int>::const_reverse_iterator	const_ritr3(const_vec.rbegin());
-}
-
-TEST_F(ReverseIteratorTest, OpeEqualConstTest)
-{
-	ft::vector<int>				vec(nums, nums + 3);
-	ft::vector<const int>		vec_const(nums, nums + 3);
-	const ft::vector<int>		const_vec(nums, nums + 3);
-
-	ft::vector<int>::reverse_iterator		ritr1(vec.rbegin());
-	// ft::vector<int>::reverse_iterator		ritr2(vec_const.rbegin());
-	// ft::vector<int>::reverse_iterator		ritr3(const_vec.rbegin());
-
-	ft::vector<const int>::reverse_iterator	ritr_const1; ritr_const1 = vec.rbegin();
-	ft::vector<const int>::reverse_iterator	ritr_const2; ritr_const2 = vec_const.rbegin();
-	ft::vector<const int>::reverse_iterator	ritr_const3; ritr_const3 = const_vec.rbegin();
-
-	ft::vector<int>::const_reverse_iterator	const_ritr1; const_ritr1 = vec.rbegin();
-	ft::vector<int>::const_reverse_iterator	const_ritr2; const_ritr2 = vec_const.rbegin();
-	ft::vector<int>::const_reverse_iterator	const_ritr3; const_ritr3 = const_vec.rbegin();
-}
-
-TEST_F(ReverseIteratorTest, OpeBothSidesTest)
-{
-	ft::vector<int>::reverse_iterator				ritr1 = ft_vec_.rbegin();
-	ft::vector<int>::const_reverse_iterator			ritr2 = ft_vec_.rbegin();
-	ft::vector<const int>::reverse_iterator			ritr3 = ft_vec_.rbegin();
-	ft::vector<const int>::const_reverse_iterator	ritr4 = ft_vec_.rbegin();
-	EXPECT_EQ(ritr1 == ritr2, true);	EXPECT_EQ(ritr2 == ritr1, true);
-	EXPECT_EQ(ritr2 == ritr3, true);	EXPECT_EQ(ritr3 == ritr2, true);
-	EXPECT_EQ(ritr3 == ritr4, true);	EXPECT_EQ(ritr4 == ritr3, true);
-	EXPECT_EQ(ritr1 + 1, ++ritr1);		EXPECT_EQ(1 + ritr1, ++ritr1);
-	EXPECT_EQ(ritr2 + 1, ++ritr2);		EXPECT_EQ(1 + ritr2, ++ritr2);
-	EXPECT_EQ(ritr3 + 1, ++ritr3);		EXPECT_EQ(1 + ritr3, ++ritr3);
-	EXPECT_EQ(ritr4 + 1, ++ritr4);		EXPECT_EQ(1 + ritr4, ++ritr4);
-	EXPECT_EQ(ritr1 - 1, --ritr1);
-	EXPECT_EQ(ritr2 - 1, --ritr2);
-	EXPECT_EQ(ritr3 - 1, --ritr3);
-	EXPECT_EQ(ritr4 - 1, --ritr4);
-	EXPECT_EQ(ritr1 - ritr2, 0);		EXPECT_EQ(ritr2 - ritr1, 0);
-	EXPECT_EQ(ritr2 - ritr3, 0);		EXPECT_EQ(ritr3 - ritr2, 0);
-	EXPECT_EQ(ritr3 - ritr4, 0);		EXPECT_EQ(ritr4 - ritr3, 0);
-}
-
 TEST_F(ReverseIteratorTest, OpeAddSubTest)
 {
 	std::vector<int>::reverse_iterator	st_ritr	= st_vec_.rbegin();
@@ -128,14 +68,18 @@ TEST_F(ReverseIteratorTest, OpeAddSubTest)
 	EXPECT_EQ(*st_ritr, *ft_ritr);
 	EXPECT_EQ(st_ritr, st_rbegin);
 	EXPECT_EQ(ft_ritr, ft_rbegin);
+
+	for (; st_ritr != st_vec_.rend(); ++st_ritr, ++ft_ritr)
+		EXPECT_EQ(*st_ritr, *ft_ritr);
+	EXPECT_EQ(ft_ritr, ft_vec_.rend());
 }
 
 TEST_F(ReverseIteratorTest, OpeRelationalTest)
 {
-	std::vector<int>::iterator	st_first_ritr = st_vec_.begin();
-	ft::vector<int>::iterator	ft_first_ritr = ft_vec_.begin();
-	std::vector<int>::iterator	st_second_ritr = st_first_ritr + 1;
-	ft::vector<int>::iterator	ft_second_ritr = ft_first_ritr + 1;
+	std::vector<int>::reverse_iterator	st_first_ritr = st_vec_.rbegin();
+	ft::vector<int>::reverse_iterator	ft_first_ritr = ft_vec_.rbegin();
+	std::vector<int>::reverse_iterator	st_second_ritr = st_first_ritr + 1;
+	ft::vector<int>::reverse_iterator	ft_second_ritr = ft_first_ritr + 1;
 
 	EXPECT_EQ(st_first_ritr == st_second_ritr,	ft_first_ritr == ft_second_ritr);
 	EXPECT_EQ(st_first_ritr != st_second_ritr,	ft_first_ritr != ft_second_ritr);
@@ -156,4 +100,105 @@ TEST_F(ReverseIteratorTest, OpeOthersTest)
 	EXPECT_EQ(*st_ritr, *ft_ritr);
 	EXPECT_EQ(st_ritr[1], ft_ritr[1]);
 	EXPECT_EQ(st_ritr->length(), ft_ritr->length());
+}
+
+TEST_F(ReverseIteratorTest, ConstIteratorTest)
+{
+	std::vector<int>::reverse_iterator	st_ritr = st_vec_.rbegin();
+	ft::vector<int>::reverse_iterator	ft_ritr = ft_vec_.rbegin();
+	*st_ritr = 42;
+	*ft_ritr = 42;
+	// std::vector<int>::const_reverse_iterator	st_citr = st_vec_.rbegin();
+	// ft::vector<int>::const_reverse_iterator		ft_citr = ft_vec_.rbegin();
+	// *st_citr = 42;
+	// *ft_citr = 42;
+}
+
+TEST_F(ReverseIteratorTest, CopyConstructorConstTest)
+{
+	std::vector<int>			st_vec(nums, nums + 3);
+	std::vector<const int>		st_vec_const(nums, nums + 3);
+	const std::vector<int>		st_const_vec(nums, nums + 3);
+	ft::vector<int>				ft_vec(nums, nums + 3);
+	ft::vector<const int>		ft_vec_const(nums, nums + 3);
+	const ft::vector<int>		ft_const_vec(nums, nums + 3);
+
+	std::vector<int>::reverse_iterator		st_ritr1(st_vec.rbegin());
+	// std::vector<int>::reverse_iterator		st_ritr2(st_vec_const.rbegin());
+	// std::vector<int>::reverse_iterator		st_ritr3(st_const_vec.rbegin());
+	ft::vector<int>::reverse_iterator		ft_ritr1(ft_vec.rbegin());
+	// ft::vector<int>::reverse_iterator		ft_ritr2(ft_vec_const.rbegin());
+	// ft::vector<int>::reverse_iterator		ft_ritr3(ft_const_vec.rbegin());
+
+	std::vector<const int>::reverse_iterator	st_ritr_const1(st_vec.rbegin());
+	std::vector<const int>::reverse_iterator	st_ritr_const2(st_vec_const.rbegin());
+	std::vector<const int>::reverse_iterator	st_ritr_const3(st_const_vec.rbegin());
+	ft::vector<const int>::reverse_iterator		ft_ritr_const1(ft_vec.rbegin());
+	ft::vector<const int>::reverse_iterator		ft_ritr_const2(ft_vec_const.rbegin());
+	ft::vector<const int>::reverse_iterator		ft_ritr_const3(ft_const_vec.rbegin());
+
+	std::vector<int>::const_reverse_iterator	st_const_ritr1(st_vec.rbegin());
+	std::vector<int>::const_reverse_iterator	st_const_ritr2(st_vec_const.rbegin());
+	std::vector<int>::const_reverse_iterator	st_const_ritr3(st_const_vec.rbegin());
+	ft::vector<int>::const_reverse_iterator		ft_const_ritr1(ft_vec.rbegin());
+	ft::vector<int>::const_reverse_iterator		ft_const_ritr2(ft_vec_const.rbegin());
+	ft::vector<int>::const_reverse_iterator		ft_const_ritr3(ft_const_vec.rbegin());
+
+	(void)st_ritr1;
+	(void)st_ritr_const1; (void)st_ritr_const2; (void)st_ritr_const3;
+	(void)st_const_ritr1; (void)st_const_ritr2; (void)st_const_ritr3;
+}
+
+TEST_F(ReverseIteratorTest, OpeEqualConstTest)
+{
+	std::vector<int>			st_vec(nums, nums + 3);
+	std::vector<const int>		st_vec_const(nums, nums + 3);
+	const std::vector<int>		st_const_vec(nums, nums + 3);
+	ft::vector<int>				ft_vec(nums, nums + 3);
+	ft::vector<const int>		ft_vec_const(nums, nums + 3);
+	const ft::vector<int>		ft_const_vec(nums, nums + 3);
+
+	std::vector<int>::reverse_iterator		st_ritr1; st_ritr1 = st_vec.rbegin();
+	// std::vector<int>::reverse_iterator		st_ritr2; st_ritr2 = st_vec_const.rbegin();
+	// std::vector<int>::reverse_iterator		st_ritr3; st_ritr3 = st_const_vec.rbegin();
+	ft::vector<int>::reverse_iterator		ft_ritr1; ft_ritr1 = ft_vec.rbegin();
+	// ft::vector<int>::reverse_iterator		ft_ritr2; ft_ritr2 = ft_vec_const.rbegin();
+	// ft::vector<int>::reverse_iterator		ft_ritr3; ft_ritr3 = ft_const_vec.rbegin();
+
+	std::vector<const int>::reverse_iterator st_ritr_const1; st_ritr_const1 = st_vec.rbegin();
+	std::vector<const int>::reverse_iterator st_ritr_const2; st_ritr_const2 = st_vec_const.rbegin();
+	std::vector<const int>::reverse_iterator st_ritr_const3; st_ritr_const3 = st_const_vec.rbegin();
+	ft::vector<const int>::reverse_iterator	 ft_ritr_const1; ft_ritr_const1 = ft_vec.rbegin();
+	ft::vector<const int>::reverse_iterator	 ft_ritr_const2; ft_ritr_const2 = ft_vec_const.rbegin();
+	ft::vector<const int>::reverse_iterator	 ft_ritr_const3; ft_ritr_const3 = ft_const_vec.rbegin();
+
+	std::vector<int>::const_reverse_iterator st_const_ritr1; st_const_ritr1 = st_vec.rbegin();
+	std::vector<int>::const_reverse_iterator st_const_ritr2; st_const_ritr2 = st_vec_const.rbegin();
+	std::vector<int>::const_reverse_iterator st_const_ritr3; st_const_ritr3 = st_const_vec.rbegin();
+	ft::vector<int>::const_reverse_iterator	 ft_const_ritr1; ft_const_ritr1 = ft_vec.rbegin();
+	ft::vector<int>::const_reverse_iterator	 ft_const_ritr2; ft_const_ritr2 = ft_vec_const.rbegin();
+	ft::vector<int>::const_reverse_iterator	 ft_const_ritr3; ft_const_ritr3 = ft_const_vec.rbegin();
+}
+
+TEST_F(ReverseIteratorTest, OpeBothSidesConstTest)
+{
+	std::vector<int>::reverse_iterator				st_ritr1 = st_vec_.rbegin();
+	std::vector<int>::const_reverse_iterator		st_ritr2 = st_vec_.rbegin();
+	std::vector<const int>::reverse_iterator		st_ritr3 = st_vec_.rbegin();
+	ft::vector<int>::reverse_iterator				ft_ritr1 = ft_vec_.rbegin();
+	ft::vector<int>::const_reverse_iterator			ft_ritr2 = ft_vec_.rbegin();
+	ft::vector<const int>::reverse_iterator			ft_ritr3 = ft_vec_.rbegin();
+	EXPECT_EQ(st_ritr1 == st_ritr2, ft_ritr1 == ft_ritr2);	EXPECT_EQ(st_ritr2 == st_ritr1, ft_ritr2 == ft_ritr1);
+	EXPECT_EQ(st_ritr1 == st_ritr3, ft_ritr1 == ft_ritr3);	EXPECT_EQ(st_ritr3 == st_ritr1, ft_ritr3 == ft_ritr1);
+	EXPECT_EQ(st_ritr2 == st_ritr3, ft_ritr2 == ft_ritr3);	EXPECT_EQ(st_ritr3 == st_ritr2, ft_ritr3 == ft_ritr2);
+
+	EXPECT_EQ(*(st_ritr1 + 1), *(ft_ritr1 + 1));	EXPECT_EQ(*(1 + st_ritr1), *(1 + ft_ritr1));
+	EXPECT_EQ(*(st_ritr2 + 1), *(ft_ritr2 + 1));	EXPECT_EQ(*(1 + st_ritr2), *(1 + ft_ritr2));
+	EXPECT_EQ(*(st_ritr3 + 1), *(ft_ritr3 + 1));	EXPECT_EQ(*(1 + st_ritr3), *(1 + ft_ritr3));
+	EXPECT_EQ(*(++st_ritr1 - 1), *(++ft_ritr1 - 1));
+	EXPECT_EQ(*(++st_ritr2 - 1), *(++ft_ritr2 - 1));
+	EXPECT_EQ(*(++st_ritr3 - 1), *(++ft_ritr3 - 1));
+	EXPECT_EQ(st_ritr1 - st_ritr2, ft_ritr1 - ft_ritr2);	EXPECT_EQ(st_ritr2 - st_ritr1, ft_ritr2 - ft_ritr1);
+	EXPECT_EQ(st_ritr1 - st_ritr3, ft_ritr1 - ft_ritr3);	EXPECT_EQ(st_ritr3 - st_ritr1, ft_ritr3 - ft_ritr1);
+	EXPECT_EQ(st_ritr2 - st_ritr3, ft_ritr2 - ft_ritr3);	EXPECT_EQ(st_ritr3 - st_ritr2, ft_ritr3 - ft_ritr2);
 }

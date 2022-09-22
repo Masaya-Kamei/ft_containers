@@ -29,11 +29,11 @@ class MapTest : public ::testing::Test
 		}
 
 		template <class T1, class T2>
-		void CompareSizeCapElem(std::map<T1, T2>& st_map, ft::map<T1, T2>& ft_map)
+		void CompareSizeCapElem(const std::map<T1, T2>& st_map, const ft::map<T1, T2>& ft_map)
 		{
-			typename std::map<T1, T2>::iterator	st_itr = st_map.begin();
-			typename ft::map<T1, T2>::iterator	ft_itr = ft_map.begin();
-			typename std::map<T1, T2>::iterator	st_end = st_map.end();
+			typename std::map<T1, T2>::const_iterator	st_itr = st_map.begin();
+			typename ft::map<T1, T2>::const_iterator	ft_itr = ft_map.begin();
+			typename std::map<T1, T2>::const_iterator	st_end = st_map.end();
 
 			EXPECT_EQ(st_map.size(),	ft_map.size());
 			EXPECT_EQ(st_map.empty(),	ft_map.empty());

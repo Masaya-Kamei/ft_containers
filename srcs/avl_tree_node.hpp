@@ -112,6 +112,19 @@ class	avl_tree_node
 			}
 		}
 
+		node_pointer	next_node() const
+		{
+			if (right_)
+				return (right_->min_node());
+			else
+			{
+				const avl_tree_node*	node = this;
+				while (node->is_right())
+					node = node->parent_;
+				return (node->parent_);
+			}
+		}
+
 		node_pointer	prev_node()
 		{
 			if (left_)
@@ -119,6 +132,19 @@ class	avl_tree_node
 			else
 			{
 				node_pointer	node = this;
+				while (node->is_left())
+					node = node->parent_;
+				return (node->parent_);
+			}
+		}
+
+		node_pointer	prev_node() const
+		{
+			if (left_)
+				return (left_->max_node());
+			else
+			{
+				const avl_tree_node* node = this;
 				while (node->is_left())
 					node = node->parent_;
 				return (node->parent_);

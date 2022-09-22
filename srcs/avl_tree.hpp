@@ -28,8 +28,8 @@ class	avl_tree
 		typedef node_type*											node_pointer;
 		typedef typename Alloc::template rebind<node_type>::other	node_allocator_type;
 
-		typedef avl_tree_iterator<value_type, node_type>			iterator;
-		typedef avl_tree_iterator<const value_type, node_type>		const_iterator;
+		typedef avl_tree_iterator<value_type, node_type>				iterator;
+		typedef avl_tree_iterator<const value_type, const node_type>	const_iterator;
 
 	private:
 		map_value_compare	comp_;
