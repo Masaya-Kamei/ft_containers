@@ -151,6 +151,15 @@ TEST_F(MapTest, OpeAssignTest)
 	EXPECT_NE(ft_map_.begin(), ft_map_copy.begin());
 }
 
+TEST_F(MapTest, OpeBracketsTest)
+{
+	EXPECT_EQ(st_map_[10], ft_map_[10]);
+	EXPECT_EQ(st_map_[-1], ft_map_[-1]);
+	// EXPECT_EQ(st_const_map_[10], ft_const_map_[10]);
+	// EXPECT_EQ(st_const_map_[-1], ft_const_map_[-1]);
+	CompareSizeCapElem(st_map_, ft_map_);
+}
+
 TEST_F(MapTest, InsertSingleTest)
 {
 	std::map<int, std::string>	st_map;

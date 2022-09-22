@@ -133,7 +133,11 @@ class map
 		{
 			return (tree_.max_size());
 		}
-		// mapped_type& operator[] (const key_type& k);
+
+		mapped_type& operator[] (const key_type& k)
+		{
+			return (tree_.insert(value_type(k, mapped_type())).first->second);
+		}
 
 		pair<iterator, bool>	insert(const value_type& val)
 		{
