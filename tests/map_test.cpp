@@ -135,6 +135,22 @@ TEST_F(MapTest, RangeConstructorTest)
 	CompareSizeCapElem(st_map, ft_map);
 }
 
+TEST_F(MapTest, CopyConstructorTest)
+{
+	std::map<int, std::string>	st_map_copy(st_map_);
+	ft::map<int, std::string>	ft_map_copy(ft_map_);
+	CompareSizeCapElem(st_map_copy, ft_map_copy);
+	EXPECT_NE(ft_map_.begin(), ft_map_copy.begin());
+}
+
+TEST_F(MapTest, OpeAssignTest)
+{
+	std::map<int, std::string>	st_map_copy;	st_map_copy = st_map_;
+	ft::map<int, std::string>	ft_map_copy;	ft_map_copy = ft_map_;
+	CompareSizeCapElem(st_map_copy, ft_map_copy);
+	EXPECT_NE(ft_map_.begin(), ft_map_copy.begin());
+}
+
 TEST_F(MapTest, InsertSingleTest)
 {
 	std::map<int, std::string>	st_map;
@@ -224,6 +240,23 @@ TEST_F(MapTest, EraseSingleIteratorTest)
 		ft_map_.erase(ft_erase_itr);
 		CompareSizeCapElem(st_map_, ft_map_);
 	}
+}
+
+TEST_F(MapTest, ClearTest)
+{
+	st_map_.clear();
+	ft_map_.clear();
+	CompareSizeCapElem(st_map_, ft_map_);
+
+	st_map_.insert(st_pairs_, st_pairs_ + 12);
+	ft_map_.insert(ft_pairs_, ft_pairs_ + 12);
+	CompareSizeCapElem(st_map_, ft_map_);
+
+	std::map<int, std::string>	st_zero_map;
+	ft::map<int, std::string>	ft_zero_map;
+	st_zero_map.clear();
+	ft_zero_map.clear();
+	CompareSizeCapElem(st_zero_map, ft_zero_map);
 }
 
 TEST_F(MapTest, MaxSizeTest)

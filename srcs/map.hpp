@@ -95,9 +95,20 @@ class map
 			insert(first, last);
 		}
 
-		// map(const map& x);
-		// ~map();
-		// map& operator= (const map& x);
+		map(const map& x)
+			: tree_(x.tree_)
+		{
+		}
+
+		~map()
+		{
+		}
+
+		map& operator=(const map& rhs)
+		{
+			tree_ = rhs.tree_;
+			return (*this);
+		}
 
 		iterator begin()						{ return (tree_.begin()); }
 		const_iterator begin()			const	{ return (tree_.begin()); }
@@ -137,8 +148,7 @@ class map
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last)
 		{
-			for (InputIterator p = first; p != last; ++p)
-				tree_.insert(*p);
+			tree_.insert(first, last);
 		}
 
 		void erase(iterator position)
@@ -162,7 +172,10 @@ class map
 		}
 
 		// void swap(map& x);
-		// void clear();
+		void clear()
+		{
+			tree_.clear();
+		}
 		// key_compare key_comp() const;
 		// value_compare value_comp() const;
 

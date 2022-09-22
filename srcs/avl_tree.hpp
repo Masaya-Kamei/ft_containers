@@ -47,10 +47,31 @@ class	avl_tree
 			begin_ = end_;
 		}
 
+		avl_tree(const avl_tree& rhs)
+			: comp_(rhs.comp_), node_alloc_(rhs.node_alloc_), size_(0)
+		{
+			end_ = create_node();
+			end_->left_ = NULL;
+			begin_ = end_;
+			insert(rhs.begin(), rhs.end());
+		}
+
 		~avl_tree()
 		{
 			delete_tree(root());
 			delete_node(end_);
+		}
+
+		avl_tree& operator=(const avl_tree& rhs)
+		{
+			if (this != &rhs)
+			{
+				clear();
+				comp_ = rhs.comp_;
+				node_alloc_ = rhs.node_alloc_;
+				insert(rhs.begin(), rhs.end());
+			}
+			return (*this);
 		}
 
 		iterator		begin()			{ return (iterator(begin_)); }
@@ -132,6 +153,14 @@ class	avl_tree
 			return (iterator(new_node));
 		}
 
+		void	clear()
+		{
+			delete_tree(root());
+			size_ = 0;
+			end_->left_ = NULL;
+			begin_ = end_;
+		}
+
 	private:
 		void	replace_node(node_pointer erase_node, node_pointer alt_node)
 		{
@@ -179,6 +208,13 @@ class	avl_tree
 			delete_node(erase_node);
 			--size_;
 			rebalance_tree(bottom_node);
+		}
+
+		template <class InputIterator>
+		void	insert(InputIterator first, InputIterator last)
+		{
+			for (InputIterator p = first; p != last; ++p)
+				insert(*p);
 		}
 
 	private:

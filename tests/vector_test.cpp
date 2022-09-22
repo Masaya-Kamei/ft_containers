@@ -145,20 +145,18 @@ TEST_F(VectorTest, RangeConstructorTest)
 
 TEST_F(VectorTest, CopyConstructorTest)
 {
-	std::vector<int>	st_vec(nums, nums + 3);
-	ft::vector<int>		ft_vec(nums, nums + 3);
-	std::vector<int>	st_vec_copy(st_vec);
-	ft::vector<int>		ft_vec_copy(ft_vec);
+	std::vector<int>	st_vec_copy(st_vec_);
+	ft::vector<int>		ft_vec_copy(ft_vec_);
 	CompareSizeCapElem(st_vec_copy, ft_vec_copy);
-	EXPECT_NE(ft_vec.begin(), ft_vec_copy.begin());
+	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
 }
 
 TEST_F(VectorTest, OpeAssignTest)
 {
-	std::vector<int>	st_vec_copy;
-	ft::vector<int>		ft_vec_copy;
+	std::vector<int> st_vec_copy;	st_vec_copy = st_vec_;
+	ft::vector<int>	 ft_vec_copy;	ft_vec_copy = ft_vec_;
 
-	CompareSizeCapElem((st_vec_copy = st_vec_), (ft_vec_copy = ft_vec_));
+	CompareSizeCapElem(st_vec_copy, ft_vec_copy);
 	EXPECT_NE(ft_vec_.begin(), ft_vec_copy.begin());
 }
 
@@ -575,6 +573,10 @@ TEST_F(VectorTest, ClearTest)
 {
 	st_vec_.clear();
 	ft_vec_.clear();
+	CompareSizeCapElem(st_vec_, ft_vec_);
+
+	st_vec_.assign(nums, nums + 3);
+	ft_vec_.assign(nums, nums + 3);
 	CompareSizeCapElem(st_vec_, ft_vec_);
 
 	std::vector<int>	st_zero_vec;
