@@ -78,10 +78,12 @@ class VectorTest : public ::testing::Test
 		}
 
 		static const int				nums[3];
+		std::vector<int>				st_vec_;
+		ft::vector<int>					ft_vec_;
 		static const std::vector<int>	st_const_vec_;
 		static const ft::vector<int>	ft_const_vec_;
-		std::vector<int>	st_vec_;
-		ft::vector<int>		ft_vec_;
+		std::vector<int>				st_zero_vec_;
+		ft::vector<int>					ft_zero_vec_;
 
 		std::vector<int>	st_nums_;
 		ft::vector<int>		ft_nums_;
@@ -239,41 +241,28 @@ TEST_F(VectorTest, RendTest)
 TEST_F(VectorTest, SizeTest)
 {
 	EXPECT_EQ(st_vec_.size(), ft_vec_.size());
-
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	EXPECT_EQ(st_zero_vec.size(), ft_zero_vec.size());
+	EXPECT_EQ(st_zero_vec_.size(), ft_zero_vec_.size());
 }
 
 TEST_F(VectorTest, MaxSizeTest)
 {
 	EXPECT_EQ(st_vec_.max_size(), ft_vec_.max_size());
-
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	EXPECT_EQ(st_zero_vec.max_size(), ft_zero_vec.max_size());
+	EXPECT_EQ(st_zero_vec_.max_size(), ft_zero_vec_.max_size());
 }
 
 TEST_F(VectorTest, CapacityTest)
 {
 	EXPECT_EQ(st_vec_.capacity(), ft_vec_.capacity());
-
 	st_vec_.push_back(42);
 	ft_vec_.push_back(42);
 	EXPECT_EQ(st_vec_.capacity(), ft_vec_.capacity());
-
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	EXPECT_EQ(st_zero_vec.capacity(), ft_zero_vec.capacity());
+	EXPECT_EQ(st_zero_vec_.capacity(), ft_zero_vec_.capacity());
 }
 
 TEST_F(VectorTest, EmptyTest)
 {
 	EXPECT_EQ(st_vec_.empty(), ft_vec_.empty());
-
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	EXPECT_EQ(st_zero_vec.empty(), ft_zero_vec.empty());
+	EXPECT_EQ(st_zero_vec_.empty(), ft_zero_vec_.empty());
 }
 
 TEST_F(VectorTest, ResizeTest)
@@ -345,10 +334,8 @@ TEST_F(VectorTest, FrontTest)
 	EXPECT_EQ(st_vec_.front(), ft_vec_.front());
 	EXPECT_EQ(st_const_vec_.front(), ft_const_vec_.front());
 
-	// std::vector<int>	st_zero_vec;
-	// ft::vector<int>		ft_zero_vec;
-	// std::cout << st_zero_vec.front() << std::endl;
-	// EXPECT_EQ(st_zero_vec.front(), ft_zero_vec.front());
+	// std::cout << st_zero_vec_.front() << std::endl;
+	// EXPECT_EQ(st_zero_vec_.front(), ft_zero_vec.front());
 }
 
 TEST_F(VectorTest, BackTest)
@@ -356,20 +343,15 @@ TEST_F(VectorTest, BackTest)
 	EXPECT_EQ(st_vec_.back(), ft_vec_.back());
 	EXPECT_EQ(st_const_vec_.back(), ft_const_vec_.back());
 
-	// std::vector<int>	st_zero_vec;
-	// ft::vector<int>		ft_zero_vec;
-	// std::cout << st_zero_vec.back() << std::endl;
-	// EXPECT_EQ(st_zero_vec.back(), ft_zero_vec.back());
+	// std::cout << st_zero_vec_.back() << std::endl;
+	// EXPECT_EQ(st_zero_vec_.back(), ft_zero_vec.back());
 }
 
 TEST_F(VectorTest, DataTest)
 {
 	EXPECT_EQ(*(st_vec_.data()), *(ft_vec_.data()));
 	EXPECT_EQ(*(st_const_vec_.data()), *(ft_const_vec_.data()));
-
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	EXPECT_EQ(st_zero_vec.data(), ft_zero_vec.data());
+	EXPECT_EQ(st_zero_vec_.data(), ft_zero_vec_.data());
 }
 
 TEST_F(VectorTest, AssignFillTest)
@@ -561,12 +543,10 @@ TEST_F(VectorTest, SwapTest)
 	CompareSizeCapElem(st_fill_vec,	ft_fill_vec);
 	EXPECT_EQ(st_begin == st_fill_vec.begin(), ft_begin == ft_fill_vec.begin());
 
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	st_vec_.swap(st_zero_vec);
-	ft_vec_.swap(ft_zero_vec);
-	CompareSizeCapElem(st_vec_,		ft_vec_);
-	CompareSizeCapElem(st_zero_vec,	ft_zero_vec);
+	st_vec_.swap(st_zero_vec_);
+	ft_vec_.swap(ft_zero_vec_);
+	CompareSizeCapElem(st_vec_,		 ft_vec_);
+	CompareSizeCapElem(st_zero_vec_, ft_zero_vec_);
 }
 
 TEST_F(VectorTest, ClearTest)
@@ -579,11 +559,9 @@ TEST_F(VectorTest, ClearTest)
 	ft_vec_.assign(nums, nums + 3);
 	CompareSizeCapElem(st_vec_, ft_vec_);
 
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	st_zero_vec.clear();
-	ft_zero_vec.clear();
-	CompareSizeCapElem(st_zero_vec, ft_zero_vec);
+	st_zero_vec_.clear();
+	ft_zero_vec_.clear();
+	CompareSizeCapElem(st_zero_vec_, ft_zero_vec_);
 }
 
 TEST_F(VectorTest, GetAllocatorTest)
@@ -663,17 +641,13 @@ TEST_F(VectorTest, NonMemberSwapTest)
 	CompareSizeCapElem(st_fill_vec,	ft_fill_vec);
 	EXPECT_EQ(st_begin == st_fill_vec.begin(), ft_begin == ft_fill_vec.begin());
 
-	std::vector<int>	st_zero_vec;
-	ft::vector<int>		ft_zero_vec;
-	swap(st_vec_, st_zero_vec);
-	swap(ft_vec_, ft_zero_vec);
-	CompareSizeCapElem(st_vec_,		ft_vec_);
-	CompareSizeCapElem(st_zero_vec,	ft_zero_vec);
+	swap(st_vec_, st_zero_vec_);
+	swap(ft_vec_, ft_zero_vec_);
+	CompareSizeCapElem(st_vec_,		 ft_vec_);
+	CompareSizeCapElem(st_zero_vec_, ft_zero_vec_);
 
-	// const std::vector<int>	st_const_vec;
-	// const ft::vector<int>	ft_const_vec;
-	// swap(st_vec_, st_const_vec);
-	// swap(ft_vec_, ft_const_vec);
+	// swap(st_vec_, st_const_vec_);
+	// swap(ft_vec_, ft_const_vec_);
 }
 
 // TEST_F(VectorTest, InputIteratorTest)

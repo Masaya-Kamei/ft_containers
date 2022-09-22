@@ -83,10 +83,12 @@ class MapTest : public ::testing::Test
 
 		static const std::pair<int, std::string>	st_pairs_[12];
 		static const ft::pair<int, std::string>		ft_pairs_[12];
-		static const std::map<int, std::string>		st_const_map_;
-		static const ft::map<int, std::string>		ft_const_map_;
-		std::map<int, std::string>	st_map_;
-		ft::map<int, std::string>	ft_map_;
+		std::map<int, std::string>				st_map_;
+		ft::map<int, std::string>				ft_map_;
+		static const std::map<int, std::string>	st_const_map_;
+		static const ft::map<int, std::string>	ft_const_map_;
+		std::map<int, std::string>				st_zero_map_;
+		ft::map<int, std::string>				ft_zero_map_;
 		unsigned int				seed_;
 
 		std::map<int, std::string>	st_large_;
@@ -340,12 +342,10 @@ TEST_F(MapTest, SwapTest)
 	CompareSizeCapElem(st_map2,	ft_map2);
 	EXPECT_EQ(st_begin == st_map2.begin(), ft_begin == ft_map2.begin());
 
-	std::map<int, std::string>	st_zero_map;
-	ft::map<int, std::string>	ft_zero_map;
-	st_map_.swap(st_zero_map);
-	ft_map_.swap(ft_zero_map);
-	CompareSizeCapElem(st_map_,		ft_map_);
-	CompareSizeCapElem(st_zero_map,	ft_zero_map);
+	st_map_.swap(st_zero_map_);
+	ft_map_.swap(ft_zero_map_);
+	CompareSizeCapElem(st_map_,		 ft_map_);
+	CompareSizeCapElem(st_zero_map_, ft_zero_map_);
 }
 
 TEST_F(MapTest, ClearTest)
@@ -358,11 +358,9 @@ TEST_F(MapTest, ClearTest)
 	ft_map_.insert(ft_pairs_, ft_pairs_ + 12);
 	CompareSizeCapElem(st_map_, ft_map_);
 
-	std::map<int, std::string>	st_zero_map;
-	ft::map<int, std::string>	ft_zero_map;
-	st_zero_map.clear();
-	ft_zero_map.clear();
-	CompareSizeCapElem(st_zero_map, ft_zero_map);
+	st_zero_map_.clear();
+	ft_zero_map_.clear();
+	CompareSizeCapElem(st_zero_map_, ft_zero_map_);
 }
 
 TEST_F(MapTest, KeyCompTest)
@@ -381,14 +379,6 @@ TEST_F(MapTest, ValueCompTest)
 	EXPECT_EQ(st_value_comp(st_pairs_[0], st_pairs_[0]), ft_value_comp(ft_pairs_[0], ft_pairs_[0]));
 	EXPECT_EQ(st_value_comp(st_pairs_[0], st_pairs_[1]), ft_value_comp(ft_pairs_[0], ft_pairs_[1]));
 	EXPECT_EQ(st_value_comp(st_pairs_[1], st_pairs_[0]), ft_value_comp(ft_pairs_[1], ft_pairs_[0]));
-}
-
-TEST_F(MapTest, MaxSizeTest)
-{
-	typedef ft::avl_tree_node<ft::pair<int, std::string> > node_type;
-	ft::map<int, std::string>	ft_map;
-	std::allocator<node_type>	alloc;
-	EXPECT_EQ(ft_map.max_size(), alloc.max_size());
 }
 
 TEST_F(MapTest, FindTest)
@@ -577,15 +567,11 @@ TEST_F(MapTest, NonMemberSwapTest)
 	CompareSizeCapElem(st_map2,	ft_map2);
 	EXPECT_EQ(st_begin == st_map2.begin(), ft_begin == ft_map2.begin());
 
-	std::map<int, std::string>	st_zero_map;
-	ft::map<int, std::string>	ft_zero_map;
-	swap(st_map_, st_zero_map);
-	swap(ft_map_, ft_zero_map);
-	CompareSizeCapElem(st_map_,		ft_map_);
-	CompareSizeCapElem(st_zero_map,	ft_zero_map);
+	swap(st_map_, st_zero_map_);
+	swap(ft_map_, ft_zero_map_);
+	CompareSizeCapElem(st_map_,		 ft_map_);
+	CompareSizeCapElem(st_zero_map_, ft_zero_map_);
 
-	// const std::map<int, std::string>	st_const_map;
-	// const ft::map<int, std::string>		ft_const_map;
-	// swap(st_map_, st_const_map);
-	// swap(ft_map_, ft_const_map);
+	// swap(st_map_, st_const_map_);
+	// swap(ft_map_, ft_const_map_);
 }
