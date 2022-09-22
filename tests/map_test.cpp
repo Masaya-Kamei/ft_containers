@@ -147,6 +147,82 @@ TEST_F(MapTest, OpeAssignTest)
 	EXPECT_NE(ft_map_.begin(), ft_map_copy.begin());
 }
 
+TEST_F(MapTest, BeginTest)
+{
+	std::map<int, std::string>::iterator		st_itr;
+	ft::map<int, std::string>::iterator			ft_itr;
+	std::map<int, std::string>::const_iterator	st_const_itr;
+	ft::map<int, std::string>::const_iterator	ft_const_itr;
+
+	st_itr = st_map_.begin();
+	ft_itr = ft_map_.begin();
+	EXPECT_EQ(st_itr->first, ft_itr->first);
+	st_const_itr = st_map_.begin();
+	ft_const_itr = ft_map_.begin();
+	EXPECT_EQ(st_const_itr->first, ft_const_itr->first);
+
+	st_const_itr = st_const_map_.begin();
+	ft_const_itr = ft_const_map_.begin();
+	EXPECT_EQ(st_const_itr->first, ft_const_itr->first);
+}
+
+TEST_F(MapTest, EndTest)
+{
+	std::map<int, std::string>::iterator		st_itr;
+	ft::map<int, std::string>::iterator			ft_itr;
+	std::map<int, std::string>::const_iterator	st_const_itr;
+	ft::map<int, std::string>::const_iterator	ft_const_itr;
+
+	st_itr = --st_map_.end();
+	ft_itr = --ft_map_.end();
+	EXPECT_EQ(st_itr->first, ft_itr->first);
+	st_const_itr = --st_map_.end();
+	ft_const_itr = --ft_map_.end();
+	EXPECT_EQ(st_const_itr->first, ft_const_itr->first);
+
+	st_const_itr = --st_const_map_.end();
+	ft_const_itr = --ft_const_map_.end();
+	EXPECT_EQ(st_const_itr->first, ft_const_itr->first);
+}
+
+TEST_F(MapTest, RbeginTest)
+{
+	std::map<int, std::string>::reverse_iterator		st_ritr;
+	ft::map<int, std::string>::reverse_iterator			ft_ritr;
+	std::map<int, std::string>::const_reverse_iterator	st_const_ritr;
+	ft::map<int, std::string>::const_reverse_iterator	ft_const_ritr;
+
+	st_ritr = st_map_.rbegin();
+	ft_ritr = ft_map_.rbegin();
+	EXPECT_EQ(st_ritr->first, ft_ritr->first);
+	st_const_ritr = st_map_.rbegin();
+	ft_const_ritr = ft_map_.rbegin();
+	EXPECT_EQ(st_const_ritr->first, ft_const_ritr->first);
+
+	st_const_ritr = st_const_map_.rbegin();
+	ft_const_ritr = ft_const_map_.rbegin();
+	EXPECT_EQ(st_const_ritr->first, ft_const_ritr->first);
+}
+
+TEST_F(MapTest, RendTest)
+{
+	std::map<int, std::string>::reverse_iterator		st_ritr;
+	ft::map<int, std::string>::reverse_iterator			ft_ritr;
+	std::map<int, std::string>::const_reverse_iterator	st_const_ritr;
+	ft::map<int, std::string>::const_reverse_iterator	ft_const_ritr;
+
+	st_ritr = --st_map_.rend();
+	ft_ritr = --ft_map_.rend();
+	EXPECT_EQ(st_ritr->first, ft_ritr->first);
+	st_const_ritr = --st_map_.rend();
+	ft_const_ritr = --ft_map_.rend();
+	EXPECT_EQ(st_const_ritr->first, ft_const_ritr->first);
+
+	st_const_ritr = --st_const_map_.rend();
+	ft_const_ritr = --ft_const_map_.rend();
+	EXPECT_EQ(st_const_ritr->first, ft_const_ritr->first);
+}
+
 TEST_F(MapTest, OpeBracketsTest)
 {
 	EXPECT_EQ(st_map_[10], ft_map_[10]);

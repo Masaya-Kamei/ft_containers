@@ -117,7 +117,7 @@ class map
 		const_iterator			end()	 const	{ return (tree_.end()); }
 		reverse_iterator		rbegin()		{ return (reverse_iterator(tree_.end())); }
 		const_reverse_iterator	rbegin() const	{ return (const_reverse_iterator(tree_.end())); }
-		reverse_iterator		rend()			{ return (reverve_iterator(tree_.begin())); }
+		reverse_iterator		rend()			{ return (reverse_iterator(tree_.begin())); }
 		const_reverse_iterator	rend()	 const	{ return (const_reverse_iterator(tree_.begin())); }
 
 		bool empty() const
