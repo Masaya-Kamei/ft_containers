@@ -175,7 +175,11 @@ class map
 				tree_.erase(itr);
 		}
 
-		// void swap(map& x);
+		void swap(map& x)
+		{
+			tree_.swap(x.tree_);
+		}
+
 		void clear()
 		{
 			tree_.clear();
@@ -259,8 +263,11 @@ bool	operator>=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compar
 	return (!(lhs < rhs));
 }
 
-// template <class Key, class T, class Compare, class Alloc>
-// void	swap(map<Key, T, Compare, Alloc>& x, map<Key, T, Compare, Alloc>& y);
+template <class Key, class T, class Compare, class Alloc>
+void	swap(map<Key, T, Compare, Alloc>& x, map<Key, T, Compare, Alloc>& y)
+{
+	x.swap(y);
+}
 
 }  // namespace ft
 

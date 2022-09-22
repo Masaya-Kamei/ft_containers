@@ -251,6 +251,26 @@ TEST_F(MapTest, EraseSingleIteratorTest)
 	}
 }
 
+TEST_F(MapTest, SwapTest)
+{
+	std::map<int, std::string>::iterator	st_begin = st_map_.begin();
+	ft::map<int, std::string>::iterator		ft_begin = ft_map_.begin();
+	std::map<int, std::string>				st_map2(st_pairs_, st_pairs_ + 5);
+	ft::map<int, std::string>				ft_map2(ft_pairs_, ft_pairs_ + 5);
+	st_map_.swap(st_map2);
+	ft_map_.swap(ft_map2);
+	CompareSizeCapElem(st_map_,	ft_map_);
+	CompareSizeCapElem(st_map2,	ft_map2);
+	EXPECT_EQ(st_begin == st_map2.begin(), ft_begin == ft_map2.begin());
+
+	std::map<int, std::string>	st_zero_map;
+	ft::map<int, std::string>	ft_zero_map;
+	st_map_.swap(st_zero_map);
+	ft_map_.swap(ft_zero_map);
+	CompareSizeCapElem(st_map_,		ft_map_);
+	CompareSizeCapElem(st_zero_map,	ft_zero_map);
+}
+
 TEST_F(MapTest, ClearTest)
 {
 	st_map_.clear();
@@ -396,4 +416,29 @@ TEST_F(MapTest, OpeGreaterEqualTest)
 	EXPECT_EQ(st_map_ >= st_small_,	ft_map_ >= ft_small_);
 	EXPECT_EQ(st_map_ >= st_more_,	ft_map_ >= ft_more_);
 	EXPECT_EQ(st_map_ >= st_less_,	ft_map_ >= ft_less_);
+}
+
+TEST_F(MapTest, NonMemberSwapTest)
+{
+	std::map<int, std::string>::iterator	st_begin = st_map_.begin();
+	ft::map<int, std::string>::iterator		ft_begin = ft_map_.begin();
+	std::map<int, std::string>	st_map2(st_pairs_, st_pairs_ + 5);
+	ft::map<int, std::string>	ft_map2(ft_pairs_, ft_pairs_ + 5);
+	swap(st_map_, st_map2);
+	swap(ft_map_, ft_map2);
+	CompareSizeCapElem(st_map_,	ft_map_);
+	CompareSizeCapElem(st_map2,	ft_map2);
+	EXPECT_EQ(st_begin == st_map2.begin(), ft_begin == ft_map2.begin());
+
+	std::map<int, std::string>	st_zero_map;
+	ft::map<int, std::string>	ft_zero_map;
+	swap(st_map_, st_zero_map);
+	swap(ft_map_, ft_zero_map);
+	CompareSizeCapElem(st_map_,		ft_map_);
+	CompareSizeCapElem(st_zero_map,	ft_zero_map);
+
+	// const std::map<int, std::string>	st_const_map;
+	// const ft::map<int, std::string>		ft_const_map;
+	// swap(st_map_, st_const_map);
+	// swap(ft_map_, ft_const_map);
 }

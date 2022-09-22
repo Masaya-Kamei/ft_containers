@@ -671,9 +671,9 @@ TEST_F(VectorTest, NonMemberSwapTest)
 	CompareSizeCapElem(st_zero_vec,	ft_zero_vec);
 
 	// const std::vector<int>	st_const_vec;
-	// std::vector<const int>	st_const_vec;
+	// const ft::vector<int>	ft_const_vec;
 	// swap(st_vec_, st_const_vec);
-	// swap(st_const_vec, st_vec_);
+	// swap(ft_vec_, ft_const_vec);
 }
 
 // TEST_F(VectorTest, InputIteratorTest)

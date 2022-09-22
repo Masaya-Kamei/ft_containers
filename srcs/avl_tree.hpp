@@ -153,6 +153,15 @@ class	avl_tree
 			return (iterator(new_node));
 		}
 
+		void swap(avl_tree& x)
+		{
+			std::swap(node_alloc_, x.node_alloc_);
+			std::swap(comp_, x.comp_);
+			std::swap(size_, x.size_);
+			std::swap(begin_, x.begin_);
+			std::swap(end_, x.end_);
+		}
+
 		void	clear()
 		{
 			delete_tree(root());
