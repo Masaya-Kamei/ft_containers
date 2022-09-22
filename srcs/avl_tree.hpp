@@ -195,7 +195,7 @@ class	avl_tree
 			node_pointer	erase_node = position.base();
 
 			if (erase_node == begin_)
-				begin_ = erase_node->next_node();  // TODO(mkamei)
+				begin_ = erase_node->next_node();
 
 			node_pointer	alt_node;
 			if (erase_node->left_ == NULL && erase_node->right_ == NULL)
@@ -230,8 +230,8 @@ class	avl_tree
 
 		void erase(iterator first, iterator last)
 		{
-			for (iterator itr = first; itr != last; ++itr)
-				erase(itr);
+			while (first != last)
+				erase(first++);
 		}
 
 		template <class InputIterator>

@@ -339,6 +339,28 @@ TEST_F(MapTest, InsertHintTest)
 	CompareSizeCapElem(st_map_, ft_map_);
 }
 
+TEST_F(MapTest, InsertRangeTest)
+{
+	std::map<int, std::string>	st_map;
+	ft::map<int, std::string>	ft_map;
+
+	st_map.insert(st_pairs_, 	  st_pairs_ + 3);
+	ft_map.insert(ft_pairs_, 	  ft_pairs_ + 3);
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map.insert(st_pairs_ + 3,  st_pairs_ + 9);
+	ft_map.insert(ft_pairs_ + 3,  ft_pairs_ + 9);
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map.insert(st_pairs_ + 9,  st_pairs_ + 10);
+	ft_map.insert(ft_pairs_ + 9,  ft_pairs_ + 10);
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map.insert(st_pairs_ + 10, st_pairs_ + 10);
+	ft_map.insert(ft_pairs_ + 10, ft_pairs_ + 10);
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map.insert(st_pairs_ + 12, st_pairs_ + 12);
+	ft_map.insert(ft_pairs_ + 12, ft_pairs_ + 12);
+	CompareSizeCapElem(st_map_, ft_map_);
+}
+
 TEST_F(MapTest, EraseSingleIteratorTest)
 {
 	// st_map_.erase(st_map_.end());
@@ -355,6 +377,47 @@ TEST_F(MapTest, EraseSingleIteratorTest)
 		ft_map_.erase(ft_erase_itr);
 		CompareSizeCapElem(st_map_, ft_map_);
 	}
+}
+
+TEST_F(MapTest, EraseSingleKeyTest)
+{
+	st_map_.erase(-1);
+	ft_map_.erase(-1);
+	CompareSizeCapElem(st_map_, ft_map_);
+
+	int		keys[12] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120};
+	// shuffle
+	for (int i = 0; i < 12; ++i)
+	{
+		int	r = rand_r(&seed_) % st_map_.size();
+		int	tmp = keys[i];
+		keys[i] = keys[r];
+		keys[r] = tmp;
+	}
+
+	for (int i = 0; i < 12; ++i)
+	{
+		st_map_.erase(keys[i]);
+		ft_map_.erase(keys[i]);
+		CompareSizeCapElem(st_map_, ft_map_);
+	}
+	EXPECT_EQ(ft_map_.size(), (size_t)0);
+}
+
+TEST_F(MapTest, EraseRangeTest)
+{
+	st_map_.erase(st_map_.begin(), ++(++(++st_map_.begin())));
+	ft_map_.erase(ft_map_.begin(), ++(++(++ft_map_.begin())));
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map_.erase(++(++(++st_map_.begin())), --st_map_.end());
+	ft_map_.erase(++(++(++ft_map_.begin())), --ft_map_.end());
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map_.erase(st_map_.end(), st_map_.end());
+	ft_map_.erase(ft_map_.end(), ft_map_.end());
+	CompareSizeCapElem(st_map_, ft_map_);
+	st_map_.erase(st_map_.begin(), st_map_.end());
+	ft_map_.erase(ft_map_.begin(), ft_map_.end());
+	CompareSizeCapElem(st_map_, ft_map_);
 }
 
 TEST_F(MapTest, SwapTest)
