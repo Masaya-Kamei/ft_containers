@@ -288,6 +288,24 @@ TEST_F(MapTest, ClearTest)
 	CompareSizeCapElem(st_zero_map, ft_zero_map);
 }
 
+TEST_F(MapTest, KeyCompTest)
+{
+	std::map<int, std::string>::key_compare	st_key_comp = st_map_.key_comp();
+	ft::map<int, std::string>::key_compare	ft_key_comp = ft_map_.key_comp();
+	EXPECT_EQ(st_key_comp(1, 1), ft_key_comp(1, 1));
+	EXPECT_EQ(st_key_comp(1, 2), ft_key_comp(1, 2));
+	EXPECT_EQ(st_key_comp(2, 1), ft_key_comp(2, 1));
+}
+
+TEST_F(MapTest, ValueCompTest)
+{
+	std::map<int, std::string>::value_compare	st_value_comp = st_map_.value_comp();
+	ft::map<int, std::string>::value_compare	ft_value_comp = ft_map_.value_comp();
+	EXPECT_EQ(st_value_comp(st_pairs_[0], st_pairs_[0]), ft_value_comp(ft_pairs_[0], ft_pairs_[0]));
+	EXPECT_EQ(st_value_comp(st_pairs_[0], st_pairs_[1]), ft_value_comp(ft_pairs_[0], ft_pairs_[1]));
+	EXPECT_EQ(st_value_comp(st_pairs_[1], st_pairs_[0]), ft_value_comp(ft_pairs_[1], ft_pairs_[0]));
+}
+
 TEST_F(MapTest, MaxSizeTest)
 {
 	typedef ft::avl_tree_node<ft::pair<int, std::string> > node_type;
