@@ -418,6 +418,13 @@ TEST_F(MapTest, EqualRangeTest)
 	EXPECT_EQ((++(ft_const_ret.first))->first,	ft_const_ret.second->first);
 }
 
+TEST_F(MapTest, GetAllocatorTest)
+{
+	std::allocator<ft::pair<const int, std::string>	> alloc;
+	EXPECT_EQ(alloc, ft_map_.get_allocator());
+	EXPECT_EQ(st_map_.get_allocator(), ft_map_.get_allocator());
+}
+
 TEST_F(MapTest, OpeEqualTest)
 {
 	SetupMapForRelationalOpe();

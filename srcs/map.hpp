@@ -235,7 +235,10 @@ class map
 			return (tree_.equal_range(k));
 		}
 
-		// allocator_type get_allocator() const;
+		allocator_type get_allocator() const
+		{
+			return (allocator_type());
+		}
 };
 
 template <class Key, class T, class Compare, class Alloc>
