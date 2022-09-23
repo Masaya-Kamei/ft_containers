@@ -26,6 +26,18 @@ class StackTest : public ::testing::Test
 		{
 		}
 
+		void	SetupStackForRelationalOpe()
+		{
+			st_large_.push(10);	st_large_.push(200); st_large_.push(30);
+			ft_large_.push(10);	ft_large_.push(200); ft_large_.push(30);
+			st_small_.push(10);	st_small_.push(2);	 st_small_.push(30);
+			ft_small_.push(10);	ft_small_.push(2);	 ft_small_.push(30);
+			st_more_.push(10);	st_more_.push(20);	 st_more_.push(30);	 st_more_.push(40);
+			ft_more_.push(10);	ft_more_.push(20);	 ft_more_.push(30);	 ft_more_.push(40);
+			st_less_.push(10);	st_less_.push(20);
+			ft_less_.push(10);	ft_less_.push(20);
+		}
+
 		template <class T, class Container1, class Container2>
 		void CompareSizeTop(
 			const std::stack<T, Container1>& st_stack
@@ -53,6 +65,15 @@ class StackTest : public ::testing::Test
 		ft::stack<int, ft::vector<int> >				ft_stack_;
 		std::stack<int, std::vector<int> >				st_zero_stack_;
 		ft::stack<int, ft::vector<int> >				ft_zero_stack_;
+
+		std::stack<int, std::vector<int> >	st_large_;
+		ft::stack<int, ft::vector<int> >	ft_large_;
+		std::stack<int, std::vector<int> >	st_small_;
+		ft::stack<int, ft::vector<int> >	ft_small_;
+		std::stack<int, std::vector<int> >	st_more_;
+		ft::stack<int, ft::vector<int> >	ft_more_;
+		std::stack<int, std::vector<int> >	st_less_;
+		ft::stack<int, ft::vector<int> >	ft_less_;
 };
 
 const int				StackTest::nums[3] = {10, 20, 30};
@@ -154,4 +175,64 @@ TEST_F(StackTest, PopTest)
 	// st_stack_.pop();
 	// ft_stack_.pop();
 	// CompareSizeTop(st_stack_, ft_stack_);
+}
+
+TEST_F(StackTest, OpeEqualTest)
+{
+	SetupStackForRelationalOpe();
+	EXPECT_EQ(st_stack_ == st_stack_,	ft_stack_ == ft_stack_);
+	EXPECT_EQ(st_stack_ == st_large_,	ft_stack_ == ft_large_);
+	EXPECT_EQ(st_stack_ == st_small_,	ft_stack_ == ft_small_);
+	EXPECT_EQ(st_stack_ == st_more_,	ft_stack_ == ft_more_);
+	EXPECT_EQ(st_stack_ == st_less_,	ft_stack_ == ft_less_);
+}
+
+TEST_F(StackTest, OpeNotEqualTest)
+{
+	SetupStackForRelationalOpe();
+	EXPECT_EQ(st_stack_ != st_stack_,	ft_stack_ != ft_stack_);
+	EXPECT_EQ(st_stack_ != st_large_,	ft_stack_ != ft_large_);
+	EXPECT_EQ(st_stack_ != st_small_,	ft_stack_ != ft_small_);
+	EXPECT_EQ(st_stack_ != st_more_,	ft_stack_ != ft_more_);
+	EXPECT_EQ(st_stack_ != st_less_,	ft_stack_ != ft_less_);
+}
+
+TEST_F(StackTest, OpeLessTest)
+{
+	SetupStackForRelationalOpe();
+	EXPECT_EQ(st_stack_ < st_stack_,	ft_stack_ < ft_stack_);
+	EXPECT_EQ(st_stack_ < st_large_,	ft_stack_ < ft_large_);
+	EXPECT_EQ(st_stack_ < st_small_,	ft_stack_ < ft_small_);
+	EXPECT_EQ(st_stack_ < st_more_,		ft_stack_ < ft_more_);
+	EXPECT_EQ(st_stack_ < st_less_,		ft_stack_ < ft_less_);
+}
+
+TEST_F(StackTest, OpeLessEqualTest)
+{
+	SetupStackForRelationalOpe();
+	EXPECT_EQ(st_stack_ <= st_stack_,	ft_stack_ <= ft_stack_);
+	EXPECT_EQ(st_stack_ <= st_large_,	ft_stack_ <= ft_large_);
+	EXPECT_EQ(st_stack_ <= st_small_,	ft_stack_ <= ft_small_);
+	EXPECT_EQ(st_stack_ <= st_more_,	ft_stack_ <= ft_more_);
+	EXPECT_EQ(st_stack_ <= st_less_,	ft_stack_ <= ft_less_);
+}
+
+TEST_F(StackTest, OpeGreaterTest)
+{
+	SetupStackForRelationalOpe();
+	EXPECT_EQ(st_stack_ > st_stack_,	ft_stack_ > ft_stack_);
+	EXPECT_EQ(st_stack_ > st_large_,	ft_stack_ > ft_large_);
+	EXPECT_EQ(st_stack_ > st_small_,	ft_stack_ > ft_small_);
+	EXPECT_EQ(st_stack_ > st_more_,		ft_stack_ > ft_more_);
+	EXPECT_EQ(st_stack_ > st_less_,		ft_stack_ > ft_less_);
+}
+
+TEST_F(StackTest, OpeGreaterEqualTest)
+{
+	SetupStackForRelationalOpe();
+	EXPECT_EQ(st_stack_ >= st_stack_,	ft_stack_ >= ft_stack_);
+	EXPECT_EQ(st_stack_ >= st_large_,	ft_stack_ >= ft_large_);
+	EXPECT_EQ(st_stack_ >= st_small_,	ft_stack_ >= ft_small_);
+	EXPECT_EQ(st_stack_ >= st_more_,	ft_stack_ >= ft_more_);
+	EXPECT_EQ(st_stack_ >= st_less_,	ft_stack_ >= ft_less_);
 }

@@ -28,22 +28,19 @@ class VectorTest : public ::testing::Test
 
 		void SetupVectorForRelationalOpe()
 		{
-			int	nums[]	= {10, 20,  30, 40, 50};
-			int	large[] = {10, 200, 30, 40, 50};
-			int	small[] = {10, 2,   30, 40, 50};
-			int	more[]	= {10, 20,  30, 40, 50, 60, 70};
-			int	less[]	= {10, 20,  30};
+			int	large[] = {10, 200, 30};
+			int	small[] = {10, 2,   30};
+			int	more[]	= {10, 20,  30, 40};
+			int	less[]	= {10, 20};
 
-			st_nums_.assign(nums, nums + 5);
-			ft_nums_.assign(nums, nums + 5);
-			st_large_.assign(large, large + 5);
-			ft_large_.assign(large, large + 5);
-			st_small_.assign(small, small + 5);
-			ft_small_.assign(small, small + 5);
-			st_more_.assign(more, more + 7);
-			ft_more_.assign(more, more + 7);
-			st_less_.assign(less, less + 3);
-			ft_less_.assign(less, less + 3);
+			st_large_.assign(large, large + 3);
+			ft_large_.assign(large, large + 3);
+			st_small_.assign(small, small + 3);
+			ft_small_.assign(small, small + 3);
+			st_more_.assign(more, more + 4);
+			ft_more_.assign(more, more + 4);
+			st_less_.assign(less, less + 2);
+			ft_less_.assign(less, less + 2);
 		}
 
 		template <class T>
@@ -85,8 +82,6 @@ class VectorTest : public ::testing::Test
 		std::vector<int>				st_zero_vec_;
 		ft::vector<int>					ft_zero_vec_;
 
-		std::vector<int>	st_nums_;
-		ft::vector<int>		ft_nums_;
 		std::vector<int>	st_large_;
 		ft::vector<int>		ft_large_;
 		std::vector<int>	st_small_;
@@ -572,61 +567,61 @@ TEST_F(VectorTest, GetAllocatorTest)
 TEST_F(VectorTest, OpeEqualTest)
 {
 	SetupVectorForRelationalOpe();
-	EXPECT_EQ(st_nums_ == st_nums_,		ft_nums_ == ft_nums_);
-	EXPECT_EQ(st_nums_ == st_large_,	ft_nums_ == ft_large_);
-	EXPECT_EQ(st_nums_ == st_small_,	ft_nums_ == ft_small_);
-	EXPECT_EQ(st_nums_ == st_more_,		ft_nums_ == ft_more_);
-	EXPECT_EQ(st_nums_ == st_less_,		ft_nums_ == ft_less_);
+	EXPECT_EQ(st_vec_ == st_vec_,	ft_vec_ == ft_vec_);
+	EXPECT_EQ(st_vec_ == st_large_,	ft_vec_ == ft_large_);
+	EXPECT_EQ(st_vec_ == st_small_,	ft_vec_ == ft_small_);
+	EXPECT_EQ(st_vec_ == st_more_,	ft_vec_ == ft_more_);
+	EXPECT_EQ(st_vec_ == st_less_,	ft_vec_ == ft_less_);
 }
 
 TEST_F(VectorTest, OpeNotEqualTest)
 {
 	SetupVectorForRelationalOpe();
-	EXPECT_EQ(st_nums_ != st_nums_,		ft_nums_ != ft_nums_);
-	EXPECT_EQ(st_nums_ != st_large_,	ft_nums_ != ft_large_);
-	EXPECT_EQ(st_nums_ != st_small_,	ft_nums_ != ft_small_);
-	EXPECT_EQ(st_nums_ != st_more_,		ft_nums_ != ft_more_);
-	EXPECT_EQ(st_nums_ != st_less_,		ft_nums_ != ft_less_);
+	EXPECT_EQ(st_vec_ != st_vec_,	ft_vec_ != ft_vec_);
+	EXPECT_EQ(st_vec_ != st_large_,	ft_vec_ != ft_large_);
+	EXPECT_EQ(st_vec_ != st_small_,	ft_vec_ != ft_small_);
+	EXPECT_EQ(st_vec_ != st_more_,	ft_vec_ != ft_more_);
+	EXPECT_EQ(st_vec_ != st_less_,	ft_vec_ != ft_less_);
 }
 
 TEST_F(VectorTest, OpeLessTest)
 {
 	SetupVectorForRelationalOpe();
-	EXPECT_EQ(st_nums_ < st_nums_,		ft_nums_ < ft_nums_);
-	EXPECT_EQ(st_nums_ < st_large_,		ft_nums_ < ft_large_);
-	EXPECT_EQ(st_nums_ < st_small_,		ft_nums_ < ft_small_);
-	EXPECT_EQ(st_nums_ < st_more_,		ft_nums_ < ft_more_);
-	EXPECT_EQ(st_nums_ < st_less_,		ft_nums_ < ft_less_);
+	EXPECT_EQ(st_vec_ < st_vec_,	ft_vec_ < ft_vec_);
+	EXPECT_EQ(st_vec_ < st_large_,	ft_vec_ < ft_large_);
+	EXPECT_EQ(st_vec_ < st_small_,	ft_vec_ < ft_small_);
+	EXPECT_EQ(st_vec_ < st_more_,	ft_vec_ < ft_more_);
+	EXPECT_EQ(st_vec_ < st_less_,	ft_vec_ < ft_less_);
 }
 
 TEST_F(VectorTest, OpeLessEqualTest)
 {
 	SetupVectorForRelationalOpe();
-	EXPECT_EQ(st_nums_ <= st_nums_,		ft_nums_ <= ft_nums_);
-	EXPECT_EQ(st_nums_ <= st_large_,	ft_nums_ <= ft_large_);
-	EXPECT_EQ(st_nums_ <= st_small_,	ft_nums_ <= ft_small_);
-	EXPECT_EQ(st_nums_ <= st_more_,		ft_nums_ <= ft_more_);
-	EXPECT_EQ(st_nums_ <= st_less_,		ft_nums_ <= ft_less_);
+	EXPECT_EQ(st_vec_ <= st_vec_,	ft_vec_ <= ft_vec_);
+	EXPECT_EQ(st_vec_ <= st_large_,	ft_vec_ <= ft_large_);
+	EXPECT_EQ(st_vec_ <= st_small_,	ft_vec_ <= ft_small_);
+	EXPECT_EQ(st_vec_ <= st_more_,	ft_vec_ <= ft_more_);
+	EXPECT_EQ(st_vec_ <= st_less_,	ft_vec_ <= ft_less_);
 }
 
 TEST_F(VectorTest, OpeGreaterTest)
 {
 	SetupVectorForRelationalOpe();
-	EXPECT_EQ(st_nums_ > st_nums_,		ft_nums_ > ft_nums_);
-	EXPECT_EQ(st_nums_ > st_large_,		ft_nums_ > ft_large_);
-	EXPECT_EQ(st_nums_ > st_small_,		ft_nums_ > ft_small_);
-	EXPECT_EQ(st_nums_ > st_more_,		ft_nums_ > ft_more_);
-	EXPECT_EQ(st_nums_ > st_less_,		ft_nums_ > ft_less_);
+	EXPECT_EQ(st_vec_ > st_vec_,	ft_vec_ > ft_vec_);
+	EXPECT_EQ(st_vec_ > st_large_,	ft_vec_ > ft_large_);
+	EXPECT_EQ(st_vec_ > st_small_,	ft_vec_ > ft_small_);
+	EXPECT_EQ(st_vec_ > st_more_,	ft_vec_ > ft_more_);
+	EXPECT_EQ(st_vec_ > st_less_,	ft_vec_ > ft_less_);
 }
 
 TEST_F(VectorTest, OpeGreaterEqualTest)
 {
 	SetupVectorForRelationalOpe();
-	EXPECT_EQ(st_nums_ >= st_nums_,		ft_nums_ >= ft_nums_);
-	EXPECT_EQ(st_nums_ >= st_large_,	ft_nums_ >= ft_large_);
-	EXPECT_EQ(st_nums_ >= st_small_,	ft_nums_ >= ft_small_);
-	EXPECT_EQ(st_nums_ >= st_more_,		ft_nums_ >= ft_more_);
-	EXPECT_EQ(st_nums_ >= st_less_,		ft_nums_ >= ft_less_);
+	EXPECT_EQ(st_vec_ >= st_vec_,	ft_vec_ >= ft_vec_);
+	EXPECT_EQ(st_vec_ >= st_large_,	ft_vec_ >= ft_large_);
+	EXPECT_EQ(st_vec_ >= st_small_,	ft_vec_ >= ft_small_);
+	EXPECT_EQ(st_vec_ >= st_more_,	ft_vec_ >= ft_more_);
+	EXPECT_EQ(st_vec_ >= st_less_,	ft_vec_ >= ft_less_);
 }
 
 TEST_F(VectorTest, NonMemberSwapTest)
