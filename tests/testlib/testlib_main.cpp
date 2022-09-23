@@ -9,6 +9,8 @@ testf_func_vec_type testf_functions;
 /***** Include all the files that use GoogleTest to test *****/
 
 #include "algorithm_test.cpp"
+#include "avl_tree_iterator_test.cpp"
+#include "avl_tree_test.cpp"
 #include "map_test.cpp"
 #include "pair_test.cpp"
 #include "vector_iterator_test.cpp"

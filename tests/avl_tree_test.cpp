@@ -28,10 +28,10 @@ class AvlTreeTest : public ::testing::Test
 		typedef int									key_type;
 		typedef std::string							mapped_type;
 		typedef ft::map<key_type, mapped_type>		map_type;
-		typedef typename map_type::value_type		value_type;
-		typedef typename map_type::key_compare		key_compare;
+		typedef map_type::value_type				value_type;
+		typedef map_type::key_compare				key_compare;
 		typedef ft::map_value_compare<key_type, value_type, key_compare>	map_value_compare;
-		typedef typename map_type::allocator_type							allocator_type;
+		typedef map_type::allocator_type			allocator_type;
 		typedef ft::avl_tree<key_type, value_type, map_value_compare, allocator_type>	tree_type;
 		typedef tree_type::node_pointer				node_pointer;
 		typedef ptrdiff_t							difference_type;
@@ -101,6 +101,7 @@ TEST_F(AvlTreeTest, Test)
 		std::advance(hint_itr, rand_r(&seed) % tree.size());
 		tree.insert(hint_itr, ft::make_pair(rand_r(&seed) % 1000, "A"));
 	}
+
 	tree.insert(tree.begin(), ft::make_pair(rand_r(&seed) % 1000, "A"));
 	tree.insert(tree.end(),	  ft::make_pair(rand_r(&seed) % 1000, "A"));
 	// print_tree(tree);

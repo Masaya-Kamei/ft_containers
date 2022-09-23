@@ -105,6 +105,9 @@ bool MakeAndRegisterTestInfo(std::string test_name, testing::Test *func);
 #define EXPECT_FALSE(arg) \
   { assert(!(arg)); }
 
+#define EXPECT_LT(arg1, arg2) \
+  { assert((arg1) < (arg2)); }
+
 #define EXPECT_THROW(expr, exception_type) \
   {                                        \
     bool has_caught_error = false;         \

@@ -3,6 +3,7 @@
 #else
 # include "testlib.hpp"
 #endif
+#include <map>
 #include "map.hpp"
 
 class AvlTreeIteratorTest : public ::testing::Test
