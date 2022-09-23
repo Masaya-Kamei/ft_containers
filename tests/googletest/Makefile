@@ -1,5 +1,4 @@
-SRCSDIR	= ../srcs
-vpath	%.cpp	$(SRCSDIR)
+INCLUDESDIR	= ../../includes
 
 SRCS	=	type_traits_test.cpp \
 			vector_iterator_test.cpp \
@@ -16,7 +15,7 @@ OBJSDIR	=	objs
 OBJS	=	$(addprefix $(OBJSDIR)/, $(SRCS:.cpp=.o))
 DEPS    =	$(addprefix $(OBJSDIR)/, $(SRCS:.cpp=.d))
 
-INCLUDE =	-I$(SRCSDIR)
+INCLUDE =	-I$(INCLUDESDIR)
 
 NAME	=	unit_test
 
@@ -60,7 +59,7 @@ leak		:	re
 
 testlib		:
 				c++ -Wall -Wextra -Werror -g -fsanitize=address -std=c++98 \
-					-I../srcs -Itestlib -I./ -DTESTLIB \
+					-I../../includes -Itestlib -I./ -DTESTLIB \
 					-o unit_test testlib/testlib_main.cpp
 				@./$(NAME) || :
 
