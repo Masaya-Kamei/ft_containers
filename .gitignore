@@ -4,3 +4,4 @@ unit_test*
 test.cpp
 a.out
 subject_test
+bench_test
