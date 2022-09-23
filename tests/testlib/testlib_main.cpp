@@ -13,9 +13,10 @@ testf_func_vec_type testf_functions;
 #include "avl_tree_test.cpp"
 #include "map_test.cpp"
 #include "pair_test.cpp"
-#include "vector_iterator_test.cpp"
 #include "reverse_iterator_test.cpp"
+#include "stack_test.cpp"
 #include "type_traits_test.cpp"
+#include "vector_iterator_test.cpp"
 #include "vector_test.cpp"
 
 namespace ft {
