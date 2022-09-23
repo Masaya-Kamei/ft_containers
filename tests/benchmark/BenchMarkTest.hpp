@@ -17,12 +17,12 @@ class BenchMarkTest
 	private:
 		const unsigned int	seed_;
 
-		void	MeasureLoop(
+		void	MeasureMemFunc(
 					const std::string& container_name,
 					const std::string& memfunc_name,
 					void (*memfunc)(unsigned int),
 					const int count);
-		void	PutElapsedMTimeMsg(
+		void	PutElapsedTimeMsg(
 					const Timer& timer,
 					const std::string& container_name,
 					const std::string& memfunc_name = "");

@@ -14,7 +14,7 @@ void	BenchMarkTest::RunVectorTest()
 {
 	Timer	timer;
 
-	MeasureLoop("Vector", "Default Constructor", DefaultConstructor, COUNT);
+	MeasureMemFunc("Vector", "Default Constructor", DefaultConstructor, COUNT);
 
-	PutElapsedMTimeMsg(timer, "Vector");
+	PutElapsedTimeMsg(timer, "Vector");
 }

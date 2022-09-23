@@ -9,7 +9,7 @@ BenchMarkTest::BenchMarkTest()
 	std::cout << "Seed: " << seed_ << std::endl;
 }
 
-void	BenchMarkTest::MeasureLoop(
+void	BenchMarkTest::MeasureMemFunc(
 	const std::string& container_name,
 	const std::string& memfunc_name,
 	void (*memfunc)(const unsigned int),
@@ -19,10 +19,10 @@ void	BenchMarkTest::MeasureLoop(
 	for (int i = 0; i < count; ++i)
 		memfunc(seed_);
 
-	PutElapsedMTimeMsg(timer, container_name, memfunc_name);
+	PutElapsedTimeMsg(timer, container_name, memfunc_name);
 }
 
-void	BenchMarkTest::PutElapsedMTimeMsg(
+void	BenchMarkTest::PutElapsedTimeMsg(
 			const Timer& timer,
 			const std::string& container_name,
 			const std::string& memfunc_name)
@@ -41,5 +41,5 @@ void	BenchMarkTest::RunAllTest()
 
 	RunVectorTest();
 
-	PutElapsedMTimeMsg(timer, "All");
+	PutElapsedTimeMsg(timer, "All");
 }
