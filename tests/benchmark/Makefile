@@ -30,7 +30,7 @@ $(OBJSDIR)/%.o	:	%.cpp
 
 test		:	all
 				@echo
-				@./$(NAME) || :
+				@./$(NAME) $(SEED) || :
 
 clean		:
 				-$(RM) $(OBJS) $(DEPS)

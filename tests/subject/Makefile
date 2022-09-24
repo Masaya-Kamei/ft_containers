@@ -28,6 +28,10 @@ $(OBJSDIR)/%.o	:	%.cpp
 
 -include $(DEPS)
 
+test		:	all
+				@echo
+				@./$(NAME) $(SEED) || :
+
 clean		:
 				-$(RM) $(OBJS) $(DEPS)
 

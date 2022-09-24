@@ -8,7 +8,8 @@ class Timer
 	public:
 		Timer();
 
-		long	ElapsedMTime() const;
+		unsigned long	ElapsedMTime() const;
+		unsigned long	ElapsedUTime() const;
 
 	private:
 		struct timeval	start_;
