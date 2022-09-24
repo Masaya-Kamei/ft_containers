@@ -3,9 +3,16 @@
 
 #include <string>
 #include "Timer.hpp"
-#include "vector.hpp"
-// #include <vector>
-// namespace ft = std;
+#ifdef NAMESPACE_STD
+	#include <vector>
+	#include <stack>
+	#include <map>
+	namespace ft = std;
+#else
+	#include "vector.hpp"
+	#include "stack.hpp"
+	#include "map.hpp"
+#endif
 
 class BenchMarkTest
 {

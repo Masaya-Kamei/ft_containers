@@ -1,7 +1,10 @@
-objs
+objs*
 *.o
+*.d
 unit_test*
 test.cpp
 a.out
-subject_test
-bench_test
+benchmark_ft
+benchmark_std
+subject_ft
+subject_std

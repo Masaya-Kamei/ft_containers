@@ -5,8 +5,13 @@
 BenchMarkTest::BenchMarkTest(const unsigned int seed)
 	: seed_(seed)
 {
+	#ifdef NAMESPACE_STD
+		std::cout << "NameSpace : std" << std::endl;
+	#else
+		std::cout << "NameSpace : ft" << std::endl;
+	#endif
 	srand(seed_);
-	std::cout << "Seed: " << seed_ << std::endl;
+	std::cout << "Seed      : " << seed_ << std::endl;
 }
 
 void	BenchMarkTest::MeasureMemFunc(
@@ -31,8 +36,9 @@ void	BenchMarkTest::PutElapsedTimeMsg(
 		std::cout << " " << memfunc_name;
 
 	int	 width = container_name.size() + memfunc_name.size() + !memfunc_name.empty();
-	// std::cout << std::setw(30 - width) << ": " << timer.ElapsedMTime() << " [ms]" << std::endl;
-	std::cout << std::setw(30 - width) << ": " << timer.ElapsedUTime() << " [us]" << std::endl;
+	std::cout << std::setw(30 - width) << ": ";
+	// std::cout << std::setw(10) << timer.ElapsedMTime() << " [ms]" << std::endl;
+	std::cout << std::setw(10) << timer.ElapsedUTime() << " [us]" << std::endl;
 }
 
 void	BenchMarkTest::RunAllTest()

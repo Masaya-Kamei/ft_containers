@@ -1,14 +1,18 @@
-INCLUDESDIR	= ../../includes
-
 SRCS	=	main.cpp
 
-OBJSDIR	=	objs
-OBJS	=	$(addprefix $(OBJSDIR)/, $(SRCS:.cpp=.o))
-DEPS    =	$(addprefix $(OBJSDIR)/, $(SRCS:.cpp=.d))
+FT_OBJSDIR	=	objs_ft
+FT_OBJS		=	$(addprefix $(FT_OBJSDIR)/, $(SRCS:.cpp=.o))
+FT_DEPS		=	$(addprefix $(FT_OBJSDIR)/, $(SRCS:.cpp=.d))
 
+STD_OBJSDIR	=	objs_std
+STD_OBJS	=	$(addprefix $(STD_OBJSDIR)/, $(SRCS:.cpp=.o))
+STD_DEPS	=	$(addprefix $(STD_OBJSDIR)/, $(SRCS:.cpp=.d))
+
+INCLUDESDIR	= ../../includes
 INCLUDE =	-I$(INCLUDESDIR)
 
-NAME	=	subject_test
+FT_NAME		=	subject_ft
+STD_NAME	=	subject_std
 
 CC		=	c++
 CFLAGS	=	-Wall -Wextra -Werror
@@ -17,26 +21,40 @@ CFLAGS	+=	-MMD -MP
 CFLAGS	+=	-std=c++98
 RM		=	rm -rf
 
-all			:	$(NAME)
+all			:	$(FT_NAME) $(STD_NAME)
 
-$(NAME)		:	$(OBJS)
-				$(CC) $(CFLAGS) $(INCLUDE) -o $@ $(OBJS)
+$(FT_NAME)	:	$(FT_OBJS)
+				$(CC) $(CFLAGS) $(INCLUDE) -o $@ $(FT_OBJS)
 
-$(OBJSDIR)/%.o	:	%.cpp
+$(STD_NAME)	:	$(STD_OBJS)
+				$(CC) $(CFLAGS) $(INCLUDE) -o $@ $(STD_OBJS)
+
+$(FT_OBJSDIR)/%.o	:	%.cpp
 			@mkdir -p $(dir $@)
 			$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
--include $(DEPS)
+$(STD_OBJSDIR)/%.o	:	%.cpp
+			@mkdir -p $(dir $@)
+			$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
-test		:	all
+-include $(FT_DEPS) $(STD_DEPS)
+
+test		:	ft_test std_test
+
+ft_test		:	$(FT_NAME)
 				@echo
-				@./$(NAME) $(SEED) || :
+				@./$(FT_NAME) $(SEED) || :
+
+std_test	:	CFLAGS += -D NAMESPACE_STD
+std_test	:	$(STD_NAME)
+				@echo
+				@./$(STD_NAME) $(SEED) || :
 
 clean		:
-				-$(RM) $(OBJS) $(DEPS)
+				-$(RM) $(FT_OBJS) $(FT_DEPS) $(STD_OBJS) $(STD_DEPS)
 
 fclean		:	clean
-				-$(RM) $(NAME)
+				-$(RM) $(FT_NAME) $(STD_NAME)
 
 re			:	fclean all
 
@@ -46,4 +64,4 @@ endif
 leak		:	CFLAGS	+=	-g -fsanitize=leak
 leak		:	re
 
-.PHONY		:	all clean fclean re leak
+.PHONY		:	all clean fclean re leak test ft_test std_test
