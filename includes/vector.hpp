@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iterator>
+#include <algorithm>
 #include "type_traits.hpp"
 #include "vector_iterator.hpp"
 #include "reverse_iterator.hpp"
