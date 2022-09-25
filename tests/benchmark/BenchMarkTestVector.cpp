@@ -1,9 +1,8 @@
-#include <iostream>
 #include "BenchMarkTest.hpp"
 
 void BenchMarkTest::VectorDefaultConstructor()	{ ft::vector<int> v; }
 void BenchMarkTest::VectorFillConstructor() 	{ ft::vector<int> v(rand() % 1000, 42); }
-void BenchMarkTest::VectorRangeConstructor()	{ ft::vector<int> v(cv_.begin(), RandomItr(cv_)); }
+void BenchMarkTest::VectorRangeConstructor()	{ ft::vector<int> v(v_.begin(), RandomItr(v_)); }
 void BenchMarkTest::VectorCopyConstructor()		{ ft::vector<int> v(v_); }
 void BenchMarkTest::VectorOpeAssign()			{ ft::vector<int> v; v = v_; }
 void BenchMarkTest::VectorBegin()				{ v_.begin(); }
@@ -22,12 +21,12 @@ void BenchMarkTest::VectorFront()				{ v_.front(); }
 void BenchMarkTest::VectorBack()				{ v_.back(); }
 void BenchMarkTest::VectorData()				{ v_.data(); }
 void BenchMarkTest::VectorAssignFill()			{ v_.assign(rand() % 1000, 42); }
-void BenchMarkTest::VectorAssignRange()			{ v_.assign(cv_.begin(), RandomItr(cv_)); }
+void BenchMarkTest::VectorAssignRange()			{ v_.assign(v1_.begin(), RandomItr(v1_)); }
 void BenchMarkTest::VectorPushBack()			{ v_.push_back(42); }
 void BenchMarkTest::VectorPopBack()				{ v_.pop_back(); }
 void BenchMarkTest::VectorInsertSingle()		{ v_.insert(RandomItr(v_), 42); }
 void BenchMarkTest::VectorInsertFill()			{ v_.insert(RandomItr(v_), rand() % 100, 42); }
-void BenchMarkTest::VectorInsertRange()			{ v_.insert(RandomItr(v_), cv_.begin(), RandomItr(cv_)); }
+void BenchMarkTest::VectorInsertRange()			{ v_.insert(RandomItr(v_), v1_.begin(), RandomItr(v1_)); }
 void BenchMarkTest::VectorEraseSingle()			{ v_.erase(RandomItr(v_)); }
 void BenchMarkTest::VectorEraseRange()			{ v_.erase((v_itr_ = RandomItr(v_)), RandomItr(v_, v_itr_)); }
 void BenchMarkTest::VectorSwap()				{ v_.swap(v1_); }
@@ -46,7 +45,6 @@ void	BenchMarkTest::RunVectorTest()
 {
 	v_.assign(rand() % 1000, 42);
 	v1_.assign(rand() % 1000, 42);
-	cv_.assign(1000, 42);
 
 	Timer	timer;
 

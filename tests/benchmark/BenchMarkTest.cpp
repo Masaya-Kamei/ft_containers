@@ -37,8 +37,8 @@ void	BenchMarkTest::PutElapsedTimeMsg(
 
 	int	 width = container_name.size() + memfunc_name.size() + !memfunc_name.empty();
 	std::cout << std::setw(30 - width) << ": ";
-	// std::cout << std::setw(10) << timer.ElapsedMTime() << " [ms]" << std::endl;
-	std::cout << std::setw(10) << timer.ElapsedUTime() << " [us]" << std::endl;
+	std::cout << std::setw(10) << timer.ElapsedMTime() << " [ms]" << std::endl;
+	// std::cout << std::setw(10) << timer.ElapsedUTime() << " [us]" << std::endl;
 }
 
 void	BenchMarkTest::RunAllTest()
@@ -46,6 +46,7 @@ void	BenchMarkTest::RunAllTest()
 	Timer	timer;
 
 	RunVectorTest();
+	RunMapTest();
 
 	PutElapsedTimeMsg(timer, "All");
 }

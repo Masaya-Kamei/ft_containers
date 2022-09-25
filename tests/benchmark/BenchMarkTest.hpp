@@ -21,8 +21,8 @@ class BenchMarkTest
 
 		void	RunAllTest();
 		void	RunVectorTest();
+		void	RunMapTest();
 		// RunStackTest();
-		// RunMapTest();
 
 	private:
 		const unsigned int	seed_;
@@ -38,7 +38,6 @@ class BenchMarkTest
 
 		ft::vector<int>				v_;
 		ft::vector<int>				v1_;
-		ft::vector<int>				cv_;
 		ft::vector<int>::iterator	v_itr_;
 		void	VectorDefaultConstructor();
 		void	VectorFillConstructor();
@@ -80,6 +79,45 @@ class BenchMarkTest
 		void	VectorOpeGreaterEqual();
 		void	VectorNonMemberSwap();
 
+		ft::map<int, std::string>			m_;
+		ft::map<int, std::string>			m1_;
+		ft::map<int, std::string>::iterator	m_itr_;
+		void	MapDefaultConstructor();
+		void	MapRangeConstructor();
+		void	MapCopyConstructor();
+		void	MapOpeAssign();
+		void	MapEmpty();
+		void	MapSize();
+		void	MapMaxSize();
+		void	MapBegin();
+		void	MapEnd();
+		void	MapRBegin();
+		void	MapREnd();
+		void	MapOpeBrackets();
+		void	MapInsertSingle();
+		void	MapInsertHint();
+		void	MapInsertRange();
+		void	MapEraseSingleIter();
+		void	MapEraseSingleKey();
+		void	MapEraseRange();
+		void	MapSwap();
+		void	MapClear();
+		void	MapKeyComp();
+		void	MapValueComp();
+		void	MapFind();
+		void	MapCount();
+		void	MapLowerBound();
+		void	MapUpperBound();
+		void	MapEqualRange();
+		void	MapGetAllocator();
+		void	MapOpeEqual();
+		void	MapOpeNotEqual();
+		void	MapOpeLess();
+		void	MapOpeLessEqual();
+		void	MapOpeGreater();
+		void	MapOpeGreaterEqual();
+		void	MapNonMemberSwap();
+
 		template <class Container>
 		typename Container::iterator	RandomItr(Container& v);
 		template <class Container>
@@ -89,12 +127,15 @@ class BenchMarkTest
 template <class Container>
 typename Container::iterator	BenchMarkTest::RandomItr(Container& v)
 {
-	return (v.begin() + rand() % v.size());
+	typename Container::iterator	start = v.begin();
+	std::advance(start, rand() % v.size());
+	return (start);
 }
 template <class Container>
 typename Container::iterator	BenchMarkTest::RandomItr(Container& v, typename Container::iterator start)
 {
-	return (start + rand() % (v.end() - start));
+	std::advance(start, rand() % std::distance(start, v.end()));
+	return (start);
 }
 
 #endif  // BENCHMARKTEST_HPP
