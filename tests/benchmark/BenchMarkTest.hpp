@@ -79,6 +79,22 @@ class BenchMarkTest
 		void	VectorOpeGreater();
 		void	VectorOpeGreaterEqual();
 		void	VectorNonMemberSwap();
+
+		template <class Container>
+		typename Container::iterator	RandomItr(Container& v);
+		template <class Container>
+		typename Container::iterator	RandomItr(Container& v, typename Container::iterator start);
 };
+
+template <class Container>
+typename Container::iterator	BenchMarkTest::RandomItr(Container& v)
+{
+	return (v.begin() + rand() % v.size());
+}
+template <class Container>
+typename Container::iterator	BenchMarkTest::RandomItr(Container& v, typename Container::iterator start)
+{
+	return (start + rand() % (v.end() - start));
+}
 
 #endif  // BENCHMARKTEST_HPP

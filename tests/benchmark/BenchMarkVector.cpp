@@ -1,16 +1,6 @@
 #include <iostream>
 #include "BenchMarkTest.hpp"
 
-static ft::vector<int>::iterator	RandomItr(ft::vector<int>& v)
-{
-	return (v.begin() + rand() % v.size());
-}
-
-static ft::vector<int>::iterator	RandomItr(ft::vector<int>& v, ft::vector<int>::iterator start)
-{
-	return (start + rand() % (v.end() - start));
-}
-
 void BenchMarkTest::VectorDefaultConstructor()	{ ft::vector<int> v; }
 void BenchMarkTest::VectorFillConstructor() 	{ ft::vector<int> v(rand() % 1000, 42); }
 void BenchMarkTest::VectorRangeConstructor()	{ ft::vector<int> v(cv_.begin(), RandomItr(cv_)); }
