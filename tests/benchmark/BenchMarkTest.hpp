@@ -22,7 +22,7 @@ class BenchMarkTest
 		void	RunAllTest();
 		void	RunVectorTest();
 		void	RunMapTest();
-		// RunStackTest();
+		void	RunStackTest();
 
 	private:
 		const unsigned int	seed_;
@@ -117,6 +117,27 @@ class BenchMarkTest
 		void	MapOpeGreater();
 		void	MapOpeGreaterEqual();
 		void	MapNonMemberSwap();
+
+		ft::stack<int, ft::vector<int> >	s_;
+		ft::stack<int, ft::vector<int> >	s1_;
+		void	StackDefaultConstructor();
+		void	StackCopyConstructor();
+		void	StackOpeAssign();
+		void	StackEmpty();
+		void	StackSize();
+		void	StackTop();
+		void	StackPush();
+		void	StackPop();
+		void	StackOpeEqual();
+		void	StackOpeNotEqual();
+		void	StackOpeLess();
+		void	StackOpeLessEqual();
+		void	StackOpeGreater();
+		void	StackOpeGreaterEqual();
+
+		int		RandomSize();
+		int		RandomVal();
+		int		RandomKey();
 
 		template <class Container>
 		typename Container::iterator	RandomItr(Container& v);
