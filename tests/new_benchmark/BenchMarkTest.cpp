@@ -2,6 +2,8 @@
 #include <iomanip>
 #include "BenchMarkTest.hpp"
 #include "BenchMarkTestVector.hpp"
+#include "BenchMarkTestMap.hpp"
+#include "BenchMarkTestStack.hpp"
 #include "Random.hpp"
 
 BenchMarkTest::BenchMarkTest(const unsigned int seed)
@@ -85,13 +87,82 @@ unsigned long	BenchMarkTest::RunVectorTest()
 	return (utime);
 }
 
+unsigned long	BenchMarkTest::RunMapTest()
+{
+	BenchMarkTestMap::SetUp();
+	unsigned long	utime = 0;
+
+	utime += MeasureMemFunc("map", "default constructor", &BenchMarkTestMap::DefaultConstructor);
+	utime += MeasureMemFunc("map", "range constructor",	&BenchMarkTestMap::RangeConstructor);
+	utime += MeasureMemFunc("map", "copy constructor",	&BenchMarkTestMap::CopyConstructor);
+	utime += MeasureMemFunc("map", "=", 				&BenchMarkTestMap::OpeAssign);
+	utime += MeasureMemFunc("map", "empty",				&BenchMarkTestMap::Empty);
+	utime += MeasureMemFunc("map", "size",				&BenchMarkTestMap::Size);
+	utime += MeasureMemFunc("map", "max_size",			&BenchMarkTestMap::MaxSize);
+	utime += MeasureMemFunc("map", "begin", 			&BenchMarkTestMap::Begin);
+	utime += MeasureMemFunc("map", "end", 				&BenchMarkTestMap::End);
+	utime += MeasureMemFunc("map", "rbegin",			&BenchMarkTestMap::RBegin);
+	utime += MeasureMemFunc("map", "rend", 				&BenchMarkTestMap::REnd);
+	utime += MeasureMemFunc("map", "[]",				&BenchMarkTestMap::OpeBrackets);
+	utime += MeasureMemFunc("map", "insert single",		&BenchMarkTestMap::InsertSingle);
+	utime += MeasureMemFunc("map", "insert hint",		&BenchMarkTestMap::InsertHint);
+	utime += MeasureMemFunc("map", "insert range",		&BenchMarkTestMap::InsertRange);
+	utime += MeasureMemFunc("map", "erase single iter",	&BenchMarkTestMap::EraseSingleIter);
+	utime += MeasureMemFunc("map", "erase single key",	&BenchMarkTestMap::EraseSingleKey);
+	utime += MeasureMemFunc("map", "erase range",		&BenchMarkTestMap::EraseRange);
+	utime += MeasureMemFunc("map", "swap",				&BenchMarkTestMap::Swap);
+	utime += MeasureMemFunc("map", "clear",				&BenchMarkTestMap::Clear);
+	utime += MeasureMemFunc("map", "key_comp",			&BenchMarkTestMap::KeyComp);
+	utime += MeasureMemFunc("map", "value_comp",		&BenchMarkTestMap::ValueComp);
+	utime += MeasureMemFunc("map", "find",				&BenchMarkTestMap::Find);
+	utime += MeasureMemFunc("map", "count",				&BenchMarkTestMap::Count);
+	utime += MeasureMemFunc("map", "lower_bound",		&BenchMarkTestMap::LowerBound);
+	utime += MeasureMemFunc("map", "upper_bound",		&BenchMarkTestMap::UpperBound);
+	utime += MeasureMemFunc("map", "equal_range",		&BenchMarkTestMap::EqualRange);
+	utime += MeasureMemFunc("map", "get_allocator",		&BenchMarkTestMap::GetAllocator);
+	utime += MeasureMemFunc("map", "==",				&BenchMarkTestMap::OpeEqual);
+	utime += MeasureMemFunc("map", "!=",				&BenchMarkTestMap::OpeNotEqual);
+	utime += MeasureMemFunc("map", "<",					&BenchMarkTestMap::OpeLess);
+	utime += MeasureMemFunc("map", "<=",				&BenchMarkTestMap::OpeLessEqual);
+	utime += MeasureMemFunc("map", ">",					&BenchMarkTestMap::OpeGreater);
+	utime += MeasureMemFunc("map", ">=",				&BenchMarkTestMap::OpeGreaterEqual);
+	utime += MeasureMemFunc("map", "non member swap",	&BenchMarkTestMap::NonMemberSwap);
+
+	PutElapsedTimeMsg(utime, "Map");
+	return (utime);
+}
+
+unsigned long	BenchMarkTest::RunStackTest()
+{
+	BenchMarkTestStack::SetUp();
+	unsigned long	utime = 0;
+
+	utime += MeasureMemFunc("stack", "default constructor",	&BenchMarkTestStack::DefaultConstructor);
+	utime += MeasureMemFunc("stack", "copy constructor",	&BenchMarkTestStack::CopyConstructor);
+	utime += MeasureMemFunc("stack", "=", 					&BenchMarkTestStack::OpeAssign);
+	utime += MeasureMemFunc("stack", "empty",				&BenchMarkTestStack::Empty);
+	utime += MeasureMemFunc("stack", "size",				&BenchMarkTestStack::Size);
+	utime += MeasureMemFunc("stack", "top",					&BenchMarkTestStack::Top);
+	utime += MeasureMemFunc("stack", "push",				&BenchMarkTestStack::Push);
+	utime += MeasureMemFunc("stack", "pop",					&BenchMarkTestStack::Pop);
+	utime += MeasureMemFunc("stack", "==",					&BenchMarkTestStack::OpeEqual);
+	utime += MeasureMemFunc("stack", "!=",					&BenchMarkTestStack::OpeNotEqual);
+	utime += MeasureMemFunc("stack", "<",					&BenchMarkTestStack::OpeLess);
+	utime += MeasureMemFunc("stack", "<=",					&BenchMarkTestStack::OpeLessEqual);
+	utime += MeasureMemFunc("stack", ">",					&BenchMarkTestStack::OpeGreater);
+	utime += MeasureMemFunc("stack", ">=",					&BenchMarkTestStack::OpeGreaterEqual);
+
+	PutElapsedTimeMsg(utime, "Stack");
+	return (utime);
+}
+
 void	BenchMarkTest::RunAllTest()
 {
 	unsigned long	utime = 0;
 
 	utime += RunVectorTest();
-	// RunMapTest();
-	// RunStackTest();
+	utime += RunMapTest();
+	utime += RunStackTest();
 
 	PutElapsedTimeMsg(utime, "All");
 }

@@ -1,5 +1,5 @@
 SRCS	=	main.cpp BenchMarkTest.cpp \
-			BenchMarkTestVector.cpp
+			BenchMarkTestVector.cpp BenchMarkTestMap.cpp BenchMarkTestStack.cpp
 
 FT_OBJSDIR	=	objs_ft
 FT_OBJS		=	$(addprefix $(FT_OBJSDIR)/, $(SRCS:.cpp=.o))

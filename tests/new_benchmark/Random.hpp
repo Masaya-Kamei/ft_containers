@@ -1,12 +1,6 @@
 #ifndef RANDOM_HPP
 # define  RANDOM_HPP
 
-# include <cstdlib>
-
-inline int		RandomSize()	{ return (rand() % 10000); }
-inline int		RandomVal()		{ return (rand() % 100000); }
-inline int		RandomKey()		{ return (rand() % 100000); }
-
 template <class Container>
 inline typename Container::iterator	RandomItr(Container& v)
 {

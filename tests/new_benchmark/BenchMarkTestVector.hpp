@@ -61,7 +61,6 @@ class BenchMarkTestVector
 
 		ft::vector<int>				v_;
 		ft::vector<int>				v1_;
-		ft::vector<int>::iterator	v_itr_;
 };
 
 #endif  // BENCHMARKTESTVECTOR_HPP

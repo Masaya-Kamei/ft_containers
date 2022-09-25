@@ -1,6 +1,8 @@
 #ifndef AVL_TREE_NODE_HPP
 # define AVL_TREE_NODE_HPP
 
+# include <algorithm>
+
 namespace ft
 {
 

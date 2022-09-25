@@ -4,12 +4,14 @@
 ft::vector<int>	BenchMarkTestVector::base_v_;
 ft::vector<int>	BenchMarkTestVector::base_v1_;
 
+static int		RandomSize()	{ return (rand() % 20000); }
+
 void	BenchMarkTestVector::SetUp()
 {
 	for (int i = 0; i < 10000; ++i)
-		base_v_.push_back(RandomVal());
+		base_v_.push_back(42);
 	for (int i = 0; i < 20000; ++i)
-		base_v1_.push_back(RandomVal());
+		base_v1_.push_back(42);
 }
 
 BenchMarkTestVector::BenchMarkTestVector()
@@ -30,14 +32,14 @@ void BenchMarkTestVector::Size()				{ v_.size(); }
 void BenchMarkTestVector::MaxSize()				{ v_.max_size(); }
 void BenchMarkTestVector::Capacity()			{ v_.capacity(); }
 void BenchMarkTestVector::Empty()				{ v_.empty(); }
-void BenchMarkTestVector::Resize()				{ v_.resize(rand() % 20000); }
-void BenchMarkTestVector::Reserve()				{ v_.reserve(rand() % 20000); }
+void BenchMarkTestVector::Resize()				{ v_.resize(RandomSize()); }
+void BenchMarkTestVector::Reserve()				{ v_.reserve(RandomSize()); }
 void BenchMarkTestVector::OpeBrackets()			{ v_[rand() % v_.size()]; }
-void BenchMarkTestVector::At()					{ try { v_[rand() % 20000]; } catch(...) {} }
+void BenchMarkTestVector::At()					{ try { v_[RandomSize()]; } catch(...) {} }
 void BenchMarkTestVector::Front()				{ v_.front(); }
 void BenchMarkTestVector::Back()				{ v_.back(); }
 void BenchMarkTestVector::Data()				{ v_.data(); }
-void BenchMarkTestVector::AssignFill()			{ v_.assign(rand() % 20000, 42); }
+void BenchMarkTestVector::AssignFill()			{ v_.assign(RandomSize(), 42); }
 void BenchMarkTestVector::AssignRange()			{ v_.assign(v1_.begin(), RandomItr(v1_)); }
 void BenchMarkTestVector::PushBack()			{ v_.push_back(42); }
 void BenchMarkTestVector::PopBack()				{ v_.pop_back(); }
