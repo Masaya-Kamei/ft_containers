@@ -1,4 +1,4 @@
-SRCS	=	main.cpp BenchMarkTest.cpp Timer.cpp \
+SRCS	=	main.cpp BenchMarkTest.cpp \
 			BenchMarkTestVector.cpp BenchMarkTestMap.cpp BenchMarkTestStack.cpp
 
 FT_OBJSDIR	=	objs_ft
@@ -44,12 +44,12 @@ test		:	ft_test std_test
 
 ft_test		:	$(FT_NAME)
 				@echo
-				@./$(FT_NAME) $(SEED) || :
+				@./$(FT_NAME) $(SEED) | tee result_ft.txt
 
 std_test	:	CFLAGS += -D NAMESPACE_STD
 std_test	:	$(STD_NAME)
 				@echo
-				@./$(STD_NAME) $(SEED) || :
+				@./$(STD_NAME) $(SEED) | tee result_std.txt
 
 clean		:
 				-$(RM) $(FT_OBJS) $(FT_DEPS) $(STD_OBJS) $(STD_DEPS)
