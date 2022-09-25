@@ -23,23 +23,25 @@ class BenchMarkTest
 					const std::string& memfunc_name = "");
 
 		template <class TestClass>
-		unsigned long	MeasureMemFunc(
+		unsigned long	RunMemFunc(
 			const std::string& container_name,
 			const std::string& memfunc_name,
-			void (TestClass::*memfunc)());
+			void (TestClass::*memfunc)(),
+			bool setup_flag);
 };
 
 template <class TestClass>
-unsigned long	BenchMarkTest::MeasureMemFunc(
+unsigned long	BenchMarkTest::RunMemFunc(
 	const std::string& container_name,
 	const std::string& memfunc_name,
-	void (TestClass::*memfunc)())
+	void (TestClass::*memfunc)(),
+	bool setup_flag)
 {
 	Timer	timer;
 
 	for (int i = 0; i < 100; ++i)
 	{
-		TestClass	t;
+		TestClass	t(setup_flag);
 		timer.Start();
 		(t.*memfunc)();
 		timer.Stop();

@@ -13,9 +13,9 @@
 class BenchMarkTestStack
 {
 	public:
-		static void	SetUp();
+		static void	SetUpStatic();
 
-		BenchMarkTestStack();
+		explicit BenchMarkTestStack(bool setup_flag);
 
 		void	DefaultConstructor();
 		void	CopyConstructor();
@@ -33,11 +33,10 @@ class BenchMarkTestStack
 		void	OpeGreaterEqual();
 
 	private:
-		static ft::stack<int, ft::vector<int> >	base_s_;
-		static ft::stack<int, ft::vector<int> >	base_s1_;
+		static ft::stack<int, ft::vector<int> >	cs_;
+		static ft::stack<int, ft::vector<int> >	cs1_;
 
 		ft::stack<int, ft::vector<int> >	s_;
-		ft::stack<int, ft::vector<int> >	s1_;
 };
 
 #endif  // BENCHMARKTESTSTACK_HPP

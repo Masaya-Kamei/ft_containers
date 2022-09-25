@@ -11,9 +11,9 @@
 class BenchMarkTestVector
 {
 	public:
-		static void	SetUp();
+		static void	SetUpStatic();
 
-		BenchMarkTestVector();
+		explicit BenchMarkTestVector(bool setup_flag);
 
 		void	DefaultConstructor();
 		void	FillConstructor();
@@ -56,11 +56,10 @@ class BenchMarkTestVector
 		void	NonMemberSwap();
 
 	private:
-		static ft::vector<int>	base_v_;
-		static ft::vector<int>	base_v1_;
+		static ft::vector<int>	cv_;
+		static ft::vector<int>	cv1_;
 
-		ft::vector<int>				v_;
-		ft::vector<int>				v1_;
+		ft::vector<int>		v_;
 };
 
 #endif  // BENCHMARKTESTVECTOR_HPP

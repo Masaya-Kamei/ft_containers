@@ -13,9 +13,9 @@
 class BenchMarkTestMap
 {
 	public:
-		static void	SetUp();
+		static void	SetUpStatic();
 
-		BenchMarkTestMap();
+		explicit BenchMarkTestMap(bool setup_flag);
 
 		void	DefaultConstructor();
 		void	RangeConstructor();
@@ -54,11 +54,10 @@ class BenchMarkTestMap
 		void	NonMemberSwap();
 
 	private:
-		static ft::map<int, std::string>	base_m_;
-		static ft::map<int, std::string>	base_m1_;
+		static ft::map<int, std::string>	cm_;
+		static ft::map<int, std::string>	cm1_;
 
-		ft::map<int, std::string>			m_;
-		ft::map<int, std::string>			m1_;
+		ft::map<int, std::string>	m_;
 };
 
 #endif  // BENCHMARKTESTMAP_HPP
