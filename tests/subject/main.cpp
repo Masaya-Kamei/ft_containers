@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#ifdef NAMESPACE_STD //CREATE A REAL STL EXAMPLE
+#ifdef NAMESPACE_STD  // CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -28,20 +28,20 @@ struct Buffer
 template<typename T>
 class MutantStack : public ft::stack<T>
 {
-public:
-	MutantStack() {}
-	MutantStack(const MutantStack<T>& src) { *this = src; }
-	MutantStack<T>& operator=(const MutantStack<T>& rhs)
-	{
-		this->c = rhs.c;
-		return *this;
-	}
-	~MutantStack() {}
+	public:
+		MutantStack() {}
+		MutantStack(const MutantStack<T>& src) { *this = src; }
+		MutantStack<T>& operator=(const MutantStack<T>& rhs)
+		{
+			this->c = rhs.c;
+			return *this;
+		}
+		~MutantStack() {}
 
-	typedef typename ft::stack<T>::container_type::iterator iterator;
+		typedef typename ft::stack<T>::container_type::iterator iterator;
 
-	iterator begin() { return this->c.begin(); }
-	iterator end() { return this->c.end(); }
+		iterator begin() { return this->c.begin(); }
+		iterator end() { return this->c.end(); }
 };
 
 int main(int argc, char** argv) {
@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 	}
 	catch(const std::exception& e)
 	{
-		//NORMAL ! :P
+		// NORMAL ! :P
 	}
 
 	for (int i = 0; i < COUNT; ++i)
