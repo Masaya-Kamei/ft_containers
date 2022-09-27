@@ -404,7 +404,7 @@ class	avl_tree
 		node_pointer	create_node()
 		{
 			node_pointer	new_node = node_alloc_.allocate(1);
-			node_alloc_.construct(new_node);
+			node_alloc_.construct(new_node, node_type());
 			return (new_node);
 		}
 

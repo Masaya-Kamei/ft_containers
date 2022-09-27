@@ -24,8 +24,8 @@ class	vector
 		typedef const value_type&								const_reference;
 		typedef typename Allocator::pointer						pointer;
 		typedef typename Allocator::const_pointer				const_pointer;
-		typedef	ft::vector_iterator<value_type>					iterator;
-		typedef ft::vector_iterator<const value_type>			const_iterator;
+		typedef	ft::vector_iterator<pointer>					iterator;
+		typedef ft::vector_iterator<const_pointer>				const_iterator;
 		typedef ft::reverse_iterator<iterator> 					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
@@ -154,14 +154,14 @@ class	vector
 		reference	at(size_type n)
 		{
 			if (size() <= n)
-				throw std::out_of_range("ft::vector");
+				throw std::out_of_range("vector");
 			return (begin_[n]);
 		}
 
 		const_reference	at(size_type n) const
 		{
 			if (size() <= n)
-				throw std::out_of_range("ft::vector");
+				throw std::out_of_range("vector");
 			return (begin_[n]);
 		}
 
@@ -322,7 +322,7 @@ class	vector
 		void	allocate(size_type size)
 		{
 			if (size > max_size())
-				throw std::length_error("ft::vector");
+				throw std::length_error("vector");
 			begin_ = alloc_.allocate(size);
 			end_ = begin_ + size;
 			end_cap_ = end_;
@@ -342,7 +342,7 @@ class	vector
 		{
 			size_type	maxsize = max_size();
 			 if (maxsize < new_size)
-				throw std::length_error("ft::vector");
+				throw std::length_error("vector");
 			size_type	cap = capacity();
 			if (maxsize / 2 <= cap)
 				return (maxsize);

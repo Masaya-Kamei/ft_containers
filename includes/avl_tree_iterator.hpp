@@ -82,12 +82,6 @@ class avl_tree_iterator : public std::iterator<std::bidirectional_iterator_tag, 
 		{
 			return (node_);
 		}
-
-		// template <class T1, class Node1, class T2, class Node2>	// TODO(mkamei)
-		// friend bool operator==(const avl_tree_iterator<T1, Node1>& lhs, const avl_tree_iterator<T2, Node2>& rhs);
-
-		// template <class T1, class Node1, class T2, class Node2>
-		// friend bool operator!=(const avl_tree_iterator<T1, Node1>& lhs, const avl_tree_iterator<T2, Node2>& rhs);
 };
 
 template <class T1, class Node1, class T2, class Node2>

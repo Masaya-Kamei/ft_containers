@@ -8,12 +8,7 @@ namespace ft
 {
 
 template <class Iter>
-class reverse_iterator : public std::iterator<
-									typename ft::iterator_traits<Iter>::iterator_category
-									, typename ft::iterator_traits<Iter>::value_type
-									, typename ft::iterator_traits<Iter>::difference_type
-									, typename ft::iterator_traits<Iter>::pointer
-									, typename ft::iterator_traits<Iter>::reference>
+class reverse_iterator
 {
 	public:
 		typedef	Iter 													iterator_type;
@@ -23,6 +18,10 @@ class reverse_iterator : public std::iterator<
 		typedef	typename ft::iterator_traits<Iter>::pointer				pointer;
 		typedef	typename ft::iterator_traits<Iter>::reference			reference;
 
+	private:
+		Iter	iter_;
+
+	public:
 		reverse_iterator()
 			: iter_()
 		{
@@ -105,9 +104,6 @@ class reverse_iterator : public std::iterator<
 		{
 			return (reverse_iterator<Iter>(iter_ + n));
 		}
-
-	private:
-		Iter	iter_;
 };
 
 template <class Iter1, class Iter2>

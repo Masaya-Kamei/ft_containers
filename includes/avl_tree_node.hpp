@@ -22,6 +22,7 @@ class	avl_tree_node
 		size_type		height_;
 
 		avl_tree_node()
+			: parent_(NULL), left_(NULL), right_(NULL)
 		{
 		}
 

@@ -7,16 +7,21 @@
 namespace ft
 {
 
-template <class T>
-class vector_iterator : public std::iterator<std::random_access_iterator_tag, T>
+template <class Iter>
+class vector_iterator
 {
 	public:
-		typedef	typename std::iterator<std::random_access_iterator_tag, T>::iterator_category	iterator_category;
-		typedef	typename std::iterator<std::random_access_iterator_tag, T>::value_type			value_type;
-		typedef	typename std::iterator<std::random_access_iterator_tag, T>::difference_type		difference_type;
-		typedef	typename std::iterator<std::random_access_iterator_tag, T>::pointer				pointer;
-		typedef	typename std::iterator<std::random_access_iterator_tag, T>::reference			reference;
+		typedef	Iter 													iterator_type;
+		typedef	typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
+		typedef	typename ft::iterator_traits<Iter>::value_type			value_type;
+		typedef	typename ft::iterator_traits<Iter>::difference_type		difference_type;
+		typedef	typename ft::iterator_traits<Iter>::pointer				pointer;
+		typedef	typename ft::iterator_traits<Iter>::reference			reference;
 
+	private:
+		pointer		ptr_;
+
+	public:
 		vector_iterator()
 			: ptr_(NULL)
 		{
@@ -98,9 +103,6 @@ class vector_iterator : public std::iterator<std::random_access_iterator_tag, T>
 		{
 			return (vector_iterator(ptr_ - n));
 		}
-
-	private:
-		pointer		ptr_;
 };
 
 template <class T1, class T2>
