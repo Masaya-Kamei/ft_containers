@@ -2,6 +2,8 @@
 #include <iomanip>
 #include "OutputTest.hpp"
 #include "OutputTestVector.hpp"
+#include "OutputTestMap.hpp"
+#include "OutputTestStack.hpp"
 
 OutputTest::OutputTest(const unsigned int seed)
 	: seed_(seed)
@@ -51,16 +53,79 @@ void	OutputTest::RunVectorTest()
 	RunMemFunc("vector", "swap",				&OutputTestVector::Swap);
 	RunMemFunc("vector", "clear",				&OutputTestVector::Clear);
 	RunMemFunc("vector", "get_allocator",		&OutputTestVector::GetAllocator);
-	// RunMemFunc("vector", "==",					&OutputTestVector::OpeEqual);
-	// RunMemFunc("vector", "!=",					&OutputTestVector::OpeNotEqual);
-	// RunMemFunc("vector", "<",					&OutputTestVector::OpeLess);
-	// RunMemFunc("vector", "<=",					&OutputTestVector::OpeLessEqual);
-	// RunMemFunc("vector", ">",					&OutputTestVector::OpeGreater);
-	// RunMemFunc("vector", ">=",					&OutputTestVector::OpeGreaterEqual);
-	// RunMemFunc("vector", "non member swap",		&OutputTestVector::NonMemberSwap);
+	RunMemFunc("vector", "==",					&OutputTestVector::OpeEqual);
+	RunMemFunc("vector", "!=",					&OutputTestVector::OpeNotEqual);
+	RunMemFunc("vector", "<",					&OutputTestVector::OpeLess);
+	RunMemFunc("vector", "<=",					&OutputTestVector::OpeLessEqual);
+	RunMemFunc("vector", ">",					&OutputTestVector::OpeGreater);
+	RunMemFunc("vector", ">=",					&OutputTestVector::OpeGreaterEqual);
+	RunMemFunc("vector", "non member swap",		&OutputTestVector::NonMemberSwap);
+}
+
+void	OutputTest::RunMapTest()
+{
+	OutputTestMap::SetUpStatic();
+
+	RunMemFunc("map", "default constructor", &OutputTestMap::DefaultConstructor);
+	RunMemFunc("map", "range constructor",	&OutputTestMap::RangeConstructor);
+	RunMemFunc("map", "copy constructor",	&OutputTestMap::CopyConstructor);
+	RunMemFunc("map", "=", 					&OutputTestMap::OpeAssign);
+	RunMemFunc("map", "empty",				&OutputTestMap::Empty);
+	RunMemFunc("map", "size",				&OutputTestMap::Size);
+	RunMemFunc("map", "max_size",			&OutputTestMap::MaxSize);
+	RunMemFunc("map", "begin", 				&OutputTestMap::Begin);
+	RunMemFunc("map", "end", 				&OutputTestMap::End);
+	RunMemFunc("map", "rbegin",				&OutputTestMap::RBegin);
+	RunMemFunc("map", "rend", 				&OutputTestMap::REnd);
+	RunMemFunc("map", "[]",					&OutputTestMap::OpeBrackets);
+	RunMemFunc("map", "insert single",		&OutputTestMap::InsertSingle);
+	RunMemFunc("map", "insert hint",		&OutputTestMap::InsertHint);
+	RunMemFunc("map", "insert range",		&OutputTestMap::InsertRange);
+	RunMemFunc("map", "erase single iter",	&OutputTestMap::EraseSingleIter);
+	RunMemFunc("map", "erase single key",	&OutputTestMap::EraseSingleKey);
+	RunMemFunc("map", "erase range",		&OutputTestMap::EraseRange);
+	RunMemFunc("map", "swap",				&OutputTestMap::Swap);
+	RunMemFunc("map", "clear",				&OutputTestMap::Clear);
+	RunMemFunc("map", "key_comp",			&OutputTestMap::KeyComp);
+	RunMemFunc("map", "value_comp",			&OutputTestMap::ValueComp);
+	RunMemFunc("map", "find",				&OutputTestMap::Find);
+	RunMemFunc("map", "count",				&OutputTestMap::Count);
+	RunMemFunc("map", "lower_bound",		&OutputTestMap::LowerBound);
+	RunMemFunc("map", "upper_bound",		&OutputTestMap::UpperBound);
+	RunMemFunc("map", "equal_range",		&OutputTestMap::EqualRange);
+	RunMemFunc("map", "get_allocator",		&OutputTestMap::GetAllocator);
+	RunMemFunc("map", "==",					&OutputTestMap::OpeEqual);
+	RunMemFunc("map", "!=",					&OutputTestMap::OpeNotEqual);
+	RunMemFunc("map", "<",					&OutputTestMap::OpeLess);
+	RunMemFunc("map", "<=",					&OutputTestMap::OpeLessEqual);
+	RunMemFunc("map", ">",					&OutputTestMap::OpeGreater);
+	RunMemFunc("map", ">=",					&OutputTestMap::OpeGreaterEqual);
+	RunMemFunc("map", "non member swap",	&OutputTestMap::NonMemberSwap);
+}
+
+void	OutputTest::RunStackTest()
+{
+	OutputTestStack::SetUpStatic();
+
+	RunMemFunc("stack", "default constructor",	&OutputTestStack::DefaultConstructor);
+	RunMemFunc("stack", "copy constructor",		&OutputTestStack::CopyConstructor);
+	RunMemFunc("stack", "=", 					&OutputTestStack::OpeAssign);
+	RunMemFunc("stack", "empty",				&OutputTestStack::Empty);
+	RunMemFunc("stack", "size",					&OutputTestStack::Size);
+	RunMemFunc("stack", "top",					&OutputTestStack::Top);
+	RunMemFunc("stack", "push",					&OutputTestStack::Push);
+	RunMemFunc("stack", "pop",					&OutputTestStack::Pop);
+	RunMemFunc("stack", "==",					&OutputTestStack::OpeEqual);
+	RunMemFunc("stack", "!=",					&OutputTestStack::OpeNotEqual);
+	RunMemFunc("stack", "<",					&OutputTestStack::OpeLess);
+	RunMemFunc("stack", "<=",					&OutputTestStack::OpeLessEqual);
+	RunMemFunc("stack", ">",					&OutputTestStack::OpeGreater);
+	RunMemFunc("stack", ">=",					&OutputTestStack::OpeGreaterEqual);
 }
 
 void	OutputTest::RunAllTest()
 {
 	RunVectorTest();
+	RunMapTest();
+	RunStackTest();
 }

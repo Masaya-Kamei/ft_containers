@@ -10,6 +10,8 @@ class OutputTest
 
 		void	RunAllTest();
 		void	RunVectorTest();
+		void	RunMapTest();
+		void	RunStackTest();
 
 	private:
 		const unsigned int	seed_;

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip>
 #include "OutputTestVector.hpp"
 #include "Put.hpp"
 
@@ -19,22 +18,23 @@ void	OutputTestVector::SetUpVectorForRelationalOpe()
 	less_.assign(nums_, nums_ + 2);
 }
 
+void	OutputTestVector::PutSizeCapElem(const ft::vector<Fixed>& v)
+{
+	std::cout << "size     : " << v.size()	   << std::endl;
+	std::cout << "capacity : " << v.capacity() << std::endl;
+
+	ft::vector<Fixed>::const_iterator	itr = v.begin();
+	ft::vector<Fixed>::const_iterator	end = v.end();
+	std::cout << "elem     : " << "[";
+	for (; itr != end; ++itr)
+		std::cout << *itr << ", ";
+	std::cout << "]" << std::endl;
+}
+
 OutputTestVector::OutputTestVector()
 	: cv_(nums_, nums_ + 3), v_(nums_, nums_ + 3)
 {
 }
-
-void	OutputTestVector::PutSizeCapElem(const ft::vector<Fixed>& v)
-{
-	std::cout << "size"		<< std::setw(6) << ":" << std::setw(5) << v.size()	   << std::endl;
-	std::cout << "capacity"	<< std::setw(2) << ":" << std::setw(5) << v.capacity() << std::endl;
-
-	ft::vector<Fixed>::const_iterator	itr = v.begin();
-	ft::vector<Fixed>::const_iterator	end = v.end();
-	for (; itr < end; ++itr)
-		std::cout << *itr << std::endl;
-}
-
 
 void OutputTestVector::DefaultConstructor()
 {

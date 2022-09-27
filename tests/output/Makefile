@@ -1,5 +1,5 @@
 SRCS	=	main.cpp Fixed.cpp OutputTest.cpp \
-			OutputTestVector.cpp
+			OutputTestVector.cpp OutputTestMap.cpp OutputTestStack.cpp
 
 FT_OBJSDIR	=	objs_ft
 FT_OBJS		=	$(addprefix $(FT_OBJSDIR)/, $(SRCS:.cpp=.o))
