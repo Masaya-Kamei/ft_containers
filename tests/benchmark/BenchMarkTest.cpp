@@ -4,7 +4,6 @@
 #include "BenchMarkTestVector.hpp"
 #include "BenchMarkTestMap.hpp"
 #include "BenchMarkTestStack.hpp"
-#include "Random.hpp"
 
 BenchMarkTest::BenchMarkTest(const unsigned int seed)
 	: seed_(seed)

@@ -1,14 +1,14 @@
 #ifndef BENCHMARKTESTMAP_HPP
 # define BENCHMARKTESTMAP_HPP
 
-#include <string>
-
 #ifdef NAMESPACE_STD
 	#include <map>
 	namespace ft = std;
 #else
 	#include "map.hpp"
 #endif
+
+#include <string>
 
 class BenchMarkTestMap
 {
