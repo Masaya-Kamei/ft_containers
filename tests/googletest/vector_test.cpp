@@ -19,8 +19,8 @@ class VectorTest : public ::testing::Test
 		}
 		virtual void SetUp()
 		{
-			st_vec_.assign(nums, nums + 3);
-			ft_vec_.assign(nums, nums + 3);
+			st_vec_.assign(nums_, nums_ + 3);
+			ft_vec_.assign(nums_, nums_ + 3);
 		}
 		virtual void TearDown()
 		{
@@ -28,19 +28,14 @@ class VectorTest : public ::testing::Test
 
 		void SetupVectorForRelationalOpe()
 		{
-			int	large[] = {10, 200, 30};
-			int	small[] = {10, 2,   30};
-			int	more[]	= {10, 20,  30, 40};
-			int	less[]	= {10, 20};
-
-			st_large_.assign(large, large + 3);
-			ft_large_.assign(large, large + 3);
-			st_small_.assign(small, small + 3);
-			ft_small_.assign(small, small + 3);
-			st_more_.assign(more, more + 4);
-			ft_more_.assign(more, more + 4);
-			st_less_.assign(less, less + 2);
-			ft_less_.assign(less, less + 2);
+			st_large_.assign(nums_, nums_ + 3);	st_large_[1] = 200;
+			ft_large_.assign(nums_, nums_ + 3);	ft_large_[1] = 200;
+			st_small_.assign(nums_, nums_ + 3);	st_small_[1] = 2;
+			ft_small_.assign(nums_, nums_ + 3);	ft_small_[1] = 2;
+			st_more_.assign(nums_, nums_ + 4);
+			ft_more_.assign(nums_, nums_ + 4);
+			st_less_.assign(nums_, nums_ + 2);
+			ft_less_.assign(nums_, nums_ + 2);
 		}
 
 		template <class T>
@@ -74,13 +69,22 @@ class VectorTest : public ::testing::Test
 			std::cout << "]" << std::endl;
 		}
 
-		static const int				nums[3];
+		static const int				nums_[5];
 		std::vector<int>				st_vec_;
 		ft::vector<int>					ft_vec_;
 		static const std::vector<int>	st_const_vec_;
 		static const ft::vector<int>	ft_const_vec_;
 		std::vector<int>				st_zero_vec_;
 		ft::vector<int>					ft_zero_vec_;
+
+		std::vector<int>::iterator					st_itr_;
+		ft::vector<int>::iterator					ft_itr_;
+		std::vector<int>::const_iterator			st_citr_;
+		ft::vector<int>::const_iterator				ft_citr_;
+		std::vector<int>::reverse_iterator			st_ritr_;
+		ft::vector<int>::reverse_iterator			ft_ritr_;
+		std::vector<int>::const_reverse_iterator	st_critr_;
+		ft::vector<int>::const_reverse_iterator		ft_critr_;
 
 		std::vector<int>	st_large_;
 		ft::vector<int>		ft_large_;
@@ -92,9 +96,9 @@ class VectorTest : public ::testing::Test
 		ft::vector<int>		ft_less_;
 };
 
-const int 				VectorTest::nums[3] = {10, 20, 30};
-const std::vector<int>	VectorTest::st_const_vec_(nums, nums + 3);
-const ft::vector<int>	VectorTest::ft_const_vec_(nums, nums + 3);
+const int 				VectorTest::nums_[5] = {10, 20, 30, 40, 50};
+const std::vector<int>	VectorTest::st_const_vec_(nums_, nums_ + 3);
+const ft::vector<int>	VectorTest::ft_const_vec_(nums_, nums_ + 3);
 
 TEST_F(VectorTest, DefaultConstructorTest)
 {
@@ -127,16 +131,16 @@ TEST_F(VectorTest, FillConstructorTest)
 
 TEST_F(VectorTest, RangeConstructorTest)
 {
-	std::vector<int>	st_vec(nums, nums + 3);
-	ft::vector<int>		ft_vec(nums, nums + 3);
+	std::vector<int>	st_vec(nums_, nums_ + 3);
+	ft::vector<int>		ft_vec(nums_, nums_ + 3);
 	CompareSizeCapElem(st_vec, ft_vec);
-	EXPECT_NE(&(*nums), &(*ft_vec.begin()));
+	EXPECT_NE(&(*nums_), &(*ft_vec.begin()));
 
-	EXPECT_THROW(std::vector<int> st_invalid_vec(nums, nums - 1),	std::length_error);
-	EXPECT_THROW(ft::vector<int>  ft_invalid_vec(nums, nums - 1),	std::length_error);
+	EXPECT_THROW(std::vector<int> st_invalid_vec(nums_, nums_ - 1),	std::length_error);
+	EXPECT_THROW(ft::vector<int>  ft_invalid_vec(nums_, nums_ - 1),	std::length_error);
 
-	std::vector<int>	st_zero_vec(nums, nums);
-	ft::vector<int>		ft_zero_vec(nums, nums);
+	std::vector<int>	st_zero_vec(nums_, nums_);
+	ft::vector<int>		ft_zero_vec(nums_, nums_);
 	CompareSizeCapElem(st_zero_vec, ft_zero_vec);
 }
 
@@ -159,78 +163,58 @@ TEST_F(VectorTest, OpeAssignTest)
 
 TEST_F(VectorTest, BeginTest)
 {
-	std::vector<int>::iterator			st_itr;
-	ft::vector<int>::iterator			ft_itr;
-	std::vector<int>::const_iterator	st_const_itr;
-	ft::vector<int>::const_iterator		ft_const_itr;
+	st_itr_ = st_vec_.begin();
+	ft_itr_ = ft_vec_.begin();
+	EXPECT_EQ(*st_itr_, *ft_itr_);
+	st_citr_ = st_vec_.begin();
+	ft_citr_ = ft_vec_.begin();
+	EXPECT_EQ(*st_citr_, *ft_citr_);
 
-	st_itr = st_vec_.begin();
-	ft_itr = ft_vec_.begin();
-	EXPECT_EQ(*st_itr, *ft_itr);
-	st_const_itr = st_vec_.begin();
-	ft_const_itr = ft_vec_.begin();
-	EXPECT_EQ(*st_const_itr, *ft_const_itr);
-
-	st_const_itr = st_const_vec_.begin();
-	ft_const_itr = ft_const_vec_.begin();
-	EXPECT_EQ(*st_const_itr, *ft_const_itr);
+	st_citr_ = st_const_vec_.begin();
+	ft_citr_ = ft_const_vec_.begin();
+	EXPECT_EQ(*st_citr_, *ft_citr_);
 }
 
 TEST_F(VectorTest, EndTest)
 {
-	std::vector<int>::iterator			st_itr;
-	ft::vector<int>::iterator			ft_itr;
-	std::vector<int>::const_iterator	st_const_itr;
-	ft::vector<int>::const_iterator		ft_const_itr;
+	st_itr_ = st_vec_.end() - 1;
+	ft_itr_ = ft_vec_.end() - 1;
+	EXPECT_EQ(*st_itr_, *ft_itr_);
+	st_citr_ = st_vec_.end() - 1;
+	ft_citr_ = ft_vec_.end() - 1;
+	EXPECT_EQ(*st_citr_, *ft_citr_);
 
-	st_itr = st_vec_.end() - 1;
-	ft_itr = ft_vec_.end() - 1;
-	EXPECT_EQ(*st_itr, *ft_itr);
-	st_const_itr = st_vec_.end() - 1;
-	ft_const_itr = ft_vec_.end() - 1;
-	EXPECT_EQ(*st_const_itr, *ft_const_itr);
-
-	st_const_itr = st_const_vec_.end() - 1;
-	ft_const_itr = ft_const_vec_.end() - 1;
-	EXPECT_EQ(*st_const_itr, *ft_const_itr);
+	st_citr_ = st_const_vec_.end() - 1;
+	ft_citr_ = ft_const_vec_.end() - 1;
+	EXPECT_EQ(*st_citr_, *ft_citr_);
 }
 
 TEST_F(VectorTest, RbeginTest)
 {
-	std::vector<int>::reverse_iterator			st_ritr;
-	ft::vector<int>::reverse_iterator			ft_ritr;
-	std::vector<int>::const_reverse_iterator	st_const_ritr;
-	ft::vector<int>::const_reverse_iterator		ft_const_ritr;
+	st_ritr_ = st_vec_.rbegin();
+	ft_ritr_ = ft_vec_.rbegin();
+	EXPECT_EQ(*st_ritr_, *ft_ritr_);
+	st_critr_ = st_vec_.rbegin();
+	ft_critr_ = ft_vec_.rbegin();
+	EXPECT_EQ(*st_critr_, *ft_critr_);
 
-	st_ritr = st_vec_.rbegin();
-	ft_ritr = ft_vec_.rbegin();
-	EXPECT_EQ(*st_ritr, *ft_ritr);
-	st_const_ritr = st_vec_.rbegin();
-	ft_const_ritr = ft_vec_.rbegin();
-	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
-
-	st_const_ritr = st_const_vec_.rbegin();
-	ft_const_ritr = ft_const_vec_.rbegin();
-	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
+	st_critr_ = st_const_vec_.rbegin();
+	ft_critr_ = ft_const_vec_.rbegin();
+	EXPECT_EQ(*st_critr_, *ft_critr_);
 }
 
 TEST_F(VectorTest, RendTest)
 {
-	std::vector<int>::reverse_iterator			st_ritr;
-	ft::vector<int>::reverse_iterator			ft_ritr;
-	std::vector<int>::const_reverse_iterator	st_const_ritr;
-	ft::vector<int>::const_reverse_iterator		ft_const_ritr;
+	st_ritr_ = st_vec_.rend() - 1;
+	ft_ritr_ = ft_vec_.rend() - 1;
+	EXPECT_EQ(*st_ritr_, *ft_ritr_);
+	st_critr_ = st_vec_.rend() - 1;
+	ft_critr_ = ft_vec_.rend() - 1;
+	EXPECT_EQ(*st_critr_, *ft_critr_);
 
-	st_ritr = st_vec_.rend() - 1;
-	ft_ritr = ft_vec_.rend() - 1;
-	EXPECT_EQ(*st_ritr, *ft_ritr);
-	st_const_ritr = st_vec_.rend() - 1;
-	ft_const_ritr = ft_vec_.rend() - 1;
-	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
-
-	st_const_ritr = st_const_vec_.rend() - 1;
-	ft_const_ritr = ft_const_vec_.rend() - 1;
-	EXPECT_EQ(*st_const_ritr, *ft_const_ritr);
+	st_critr_ = st_const_vec_.rend() - 1;
+	ft_critr_ = ft_const_vec_.rend() - 1;
+	EXPECT_EQ(*st_critr_, *ft_critr_);
 }
 
 TEST_F(VectorTest, SizeTest)
@@ -351,46 +335,40 @@ TEST_F(VectorTest, DataTest)
 
 TEST_F(VectorTest, AssignFillTest)
 {
-	std::vector<int>	st_vec(nums, nums + 2);
-	ft::vector<int>		ft_vec(nums, nums + 2);
-
-	st_vec.assign(3, 42);
-	ft_vec.assign(3, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(1, 42);
-	ft_vec.assign(1, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(2, 42);
-	ft_vec.assign(2, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(0, 42);
-	ft_vec.assign(0, 42);
-	CompareSizeCapElem(st_vec, ft_vec);
-	EXPECT_THROW(st_vec.assign(-1, 42), std::length_error);
-	EXPECT_THROW(ft_vec.assign(-1, 42), std::length_error);
-	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec_.assign(4, 42);
+	ft_vec_.assign(4, 42);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.assign(1, 42);
+	ft_vec_.assign(1, 42);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.assign(3, 42);
+	ft_vec_.assign(3, 42);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.assign(0, 42);
+	ft_vec_.assign(0, 42);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	EXPECT_THROW(st_vec_.assign(-1, 42), std::length_error);
+	EXPECT_THROW(ft_vec_.assign(-1, 42), std::length_error);
+	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
 TEST_F(VectorTest, AssignRangeTest)
 {
-	std::vector<int>	st_vec(nums, nums + 2);
-	ft::vector<int>		ft_vec(nums, nums + 2);
-
-	st_vec.assign(nums, nums + 3);
-	ft_vec.assign(nums, nums + 3);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(nums, nums + 1);
-	ft_vec.assign(nums, nums + 1);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(nums, nums + 2);
-	ft_vec.assign(nums, nums + 2);
-	CompareSizeCapElem(st_vec, ft_vec);
-	st_vec.assign(nums, nums);
-	ft_vec.assign(nums, nums);
-	CompareSizeCapElem(st_vec, ft_vec);
-	EXPECT_THROW(st_vec.assign(nums, nums - 1), std::length_error);
-	EXPECT_THROW(ft_vec.assign(nums, nums - 1), std::length_error);
-	CompareSizeCapElem(st_vec, ft_vec);
+	st_vec_.assign(nums_, nums_ + 4);
+	ft_vec_.assign(nums_, nums_ + 4);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.assign(nums_, nums_ + 1);
+	ft_vec_.assign(nums_, nums_ + 1);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.assign(nums_, nums_ + 3);
+	ft_vec_.assign(nums_, nums_ + 3);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	st_vec_.assign(nums_, nums_);
+	ft_vec_.assign(nums_, nums_);
+	CompareSizeCapElem(st_vec_, ft_vec_);
+	EXPECT_THROW(st_vec_.assign(nums_, nums_ - 1), std::length_error);
+	EXPECT_THROW(ft_vec_.assign(nums_, nums_ - 1), std::length_error);
+	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
 TEST_F(VectorTest, PushBackTest)
@@ -423,24 +401,21 @@ TEST_F(VectorTest, PopBackTest)
 
 TEST_F(VectorTest, InsertSingleTest)
 {
-	std::vector<int>::iterator	st_itr;
-	ft::vector<int>::iterator	ft_itr;
-
-	st_itr = st_vec_.insert(st_vec_.begin(), 42);
-	ft_itr = ft_vec_.insert(ft_vec_.begin(), 42);
-	EXPECT_EQ(*st_itr, *ft_itr);
+	st_itr_ = st_vec_.insert(st_vec_.begin(), 42);
+	ft_itr_ = ft_vec_.insert(ft_vec_.begin(), 42);
+	EXPECT_EQ(*st_itr_, *ft_itr_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_itr = st_vec_.insert(st_vec_.begin() + 1, 43);
-	ft_itr = ft_vec_.insert(ft_vec_.begin() + 1, 43);
-	EXPECT_EQ(*st_itr, *ft_itr);
+	st_itr_ = st_vec_.insert(st_vec_.begin() + 1, 43);
+	ft_itr_ = ft_vec_.insert(ft_vec_.begin() + 1, 43);
+	EXPECT_EQ(*st_itr_, *ft_itr_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_itr = st_vec_.insert(st_vec_.begin() + 2, 44);
-	ft_itr = ft_vec_.insert(ft_vec_.begin() + 2, 44);
-	EXPECT_EQ(*st_itr, *ft_itr);
+	st_itr_ = st_vec_.insert(st_vec_.begin() + 2, 44);
+	ft_itr_ = ft_vec_.insert(ft_vec_.begin() + 2, 44);
+	EXPECT_EQ(*st_itr_, *ft_itr_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_itr = st_vec_.insert(st_vec_.end(), 45);
-	ft_itr = ft_vec_.insert(ft_vec_.end(), 45);
-	EXPECT_EQ(*st_itr, *ft_itr);
+	st_itr_ = st_vec_.insert(st_vec_.end(), 45);
+	ft_itr_ = ft_vec_.insert(ft_vec_.end(), 45);
+	EXPECT_EQ(*st_itr_, *ft_itr_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
@@ -465,20 +440,20 @@ TEST_F(VectorTest, InsertFillTest)
 
 TEST_F(VectorTest, InsertRangeTest)
 {
-	st_vec_.insert(st_vec_.begin(), nums, nums + 3);
-	ft_vec_.insert(ft_vec_.begin(), nums, nums + 3);
+	st_vec_.insert(st_vec_.begin(), nums_, nums_ + 3);
+	ft_vec_.insert(ft_vec_.begin(), nums_, nums_ + 3);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.insert(st_vec_.begin() + 1, nums, nums + 1);
-	ft_vec_.insert(ft_vec_.begin() + 1, nums, nums + 1);
+	st_vec_.insert(st_vec_.begin() + 1, nums_, nums_ + 1);
+	ft_vec_.insert(ft_vec_.begin() + 1, nums_, nums_ + 1);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.insert(st_vec_.begin() + 2, nums, nums);
-	ft_vec_.insert(ft_vec_.begin() + 2, nums, nums);
+	st_vec_.insert(st_vec_.begin() + 2, nums_, nums_);
+	ft_vec_.insert(ft_vec_.begin() + 2, nums_, nums_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_vec_.insert(st_vec_.end(), nums, nums + 2);
-	ft_vec_.insert(ft_vec_.end(), nums, nums + 2);
+	st_vec_.insert(st_vec_.end(), nums_, nums_ + 2);
+	ft_vec_.insert(ft_vec_.end(), nums_, nums_ + 2);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	// EXPECT_THROW(st_vec_.insert(st_vec_.begin(), nums, nums - 1), std::length_error);
-	// EXPECT_THROW(ft_vec_.insert(ft_vec_.begin(), nums, nums - 1), std::length_error);
+	// EXPECT_THROW(st_vec_.insert(st_vec_.begin(), nums_, nums_ - 1), std::length_error);
+	// EXPECT_THROW(ft_vec_.insert(ft_vec_.begin(), nums_, nums_ - 1), std::length_error);
 	// CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
@@ -486,20 +461,18 @@ TEST_F(VectorTest, EraseSingleTest)
 {
 	std::vector<int>::iterator	st_begin = st_vec_.begin();
 	ft::vector<int>::iterator	ft_begin = ft_vec_.begin();
-	std::vector<int>::iterator	st_itr;
-	ft::vector<int>::iterator	ft_itr;
 
-	st_itr = st_vec_.erase(st_begin + 1);
-	ft_itr = ft_vec_.erase(ft_begin + 1);
-	EXPECT_EQ(*st_itr, *ft_itr);
+	st_itr_ = st_vec_.erase(st_begin + 1);
+	ft_itr_ = ft_vec_.erase(ft_begin + 1);
+	EXPECT_EQ(*st_itr_, *ft_itr_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_itr = st_vec_.erase(st_begin + 1);
-	ft_itr = ft_vec_.erase(ft_begin + 1);
-	EXPECT_EQ(st_itr == st_vec_.end(), ft_itr == ft_vec_.end());
+	st_itr_ = st_vec_.erase(st_begin + 1);
+	ft_itr_ = ft_vec_.erase(ft_begin + 1);
+	EXPECT_EQ(st_itr_ == st_vec_.end(), ft_itr_ == ft_vec_.end());
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_itr = st_vec_.erase(st_begin);
-	ft_itr = ft_vec_.erase(ft_begin);
-	EXPECT_EQ(st_itr == st_vec_.end(), ft_itr == ft_vec_.end());
+	st_itr_ = st_vec_.erase(st_begin);
+	ft_itr_ = ft_vec_.erase(ft_begin);
+	EXPECT_EQ(st_itr_ == st_vec_.end(), ft_itr_ == ft_vec_.end());
 	CompareSizeCapElem(st_vec_, ft_vec_);
 }
 
@@ -509,20 +482,18 @@ TEST_F(VectorTest, EraseRangeTest)
 	std::vector<int>			st_vec3(st_vec_);
 	ft::vector<int>				ft_vec2(ft_vec_);
 	ft::vector<int>				ft_vec3(ft_vec_);
-	std::vector<int>::iterator	st_itr;
-	ft::vector<int>::iterator	ft_itr;
 
-	st_itr = st_vec_.erase(st_vec_.begin(), st_vec_.begin() + 2);
-	ft_itr = ft_vec_.erase(ft_vec_.begin(), ft_vec_.begin() + 2);
-	EXPECT_EQ(*st_itr, *ft_itr);
+	st_itr_ = st_vec_.erase(st_vec_.begin(), st_vec_.begin() + 2);
+	ft_itr_ = ft_vec_.erase(ft_vec_.begin(), ft_vec_.begin() + 2);
+	EXPECT_EQ(*st_itr_, *ft_itr_);
 	CompareSizeCapElem(st_vec_, ft_vec_);
-	st_itr = st_vec2.erase(st_vec2.begin() + 1, st_vec2.begin() + 3);
-	ft_itr = ft_vec2.erase(ft_vec2.begin() + 1, ft_vec2.begin() + 3);
-	EXPECT_EQ(st_itr == st_vec2.end(), ft_itr == ft_vec2.end());
+	st_itr_ = st_vec2.erase(st_vec2.begin() + 1, st_vec2.begin() + 3);
+	ft_itr_ = ft_vec2.erase(ft_vec2.begin() + 1, ft_vec2.begin() + 3);
+	EXPECT_EQ(st_itr_ == st_vec2.end(), ft_itr_ == ft_vec2.end());
 	CompareSizeCapElem(st_vec2, ft_vec2);
-	st_itr = st_vec3.erase(st_vec3.begin(), st_vec3.end());
-	ft_itr = ft_vec3.erase(ft_vec3.begin(), ft_vec3.end());
-	EXPECT_EQ(st_itr == st_vec3.end(), ft_itr == ft_vec3.end());
+	st_itr_ = st_vec3.erase(st_vec3.begin(), st_vec3.end());
+	ft_itr_ = ft_vec3.erase(ft_vec3.begin(), ft_vec3.end());
+	EXPECT_EQ(st_itr_ == st_vec3.end(), ft_itr_ == ft_vec3.end());
 	CompareSizeCapElem(st_vec3, ft_vec3);
 }
 
@@ -550,8 +521,8 @@ TEST_F(VectorTest, ClearTest)
 	ft_vec_.clear();
 	CompareSizeCapElem(st_vec_, ft_vec_);
 
-	st_vec_.assign(nums, nums + 3);
-	ft_vec_.assign(nums, nums + 3);
+	st_vec_.assign(nums_, nums_ + 3);
+	ft_vec_.assign(nums_, nums_ + 3);
 	CompareSizeCapElem(st_vec_, ft_vec_);
 
 	st_zero_vec_.clear();

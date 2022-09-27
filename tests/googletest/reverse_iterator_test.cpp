@@ -16,19 +16,19 @@ class ReverseIteratorTest : public ::testing::Test
 		}
 		virtual void SetUp()
 		{
-			st_vec_.assign(nums, nums + 3);
-			ft_vec_.assign(nums, nums + 3);
+			st_vec_.assign(nums_, nums_ + 3);
+			ft_vec_.assign(nums_, nums_ + 3);
 		}
 		virtual void TearDown()
 		{
 		}
 
-		static const int	nums[3];
+		static const int	nums_[5];
 		std::vector<int>	st_vec_;
 		ft::vector<int>		ft_vec_;
 };
 
-const int ReverseIteratorTest::nums[3] = {10, 20, 30};
+const int ReverseIteratorTest::nums_[5] = {10, 20, 30, 40, 50};
 
 
 TEST_F(ReverseIteratorTest, ConstructorTest)
@@ -116,12 +116,12 @@ TEST_F(ReverseIteratorTest, ConstIteratorTest)
 
 TEST_F(ReverseIteratorTest, CopyConstructorConstTest)
 {
-	std::vector<int>			st_vec(nums, nums + 3);
-	std::vector<const int>		st_vec_const(nums, nums + 3);
-	const std::vector<int>		st_const_vec(nums, nums + 3);
-	ft::vector<int>				ft_vec(nums, nums + 3);
-	ft::vector<const int>		ft_vec_const(nums, nums + 3);
-	const ft::vector<int>		ft_const_vec(nums, nums + 3);
+	std::vector<int>			st_vec(nums_, nums_ + 3);
+	std::vector<const int>		st_vec_const(nums_, nums_ + 3);
+	const std::vector<int>		st_const_vec(nums_, nums_ + 3);
+	ft::vector<int>				ft_vec(nums_, nums_ + 3);
+	ft::vector<const int>		ft_vec_const(nums_, nums_ + 3);
+	const ft::vector<int>		ft_const_vec(nums_, nums_ + 3);
 
 	std::vector<int>::reverse_iterator		st_ritr1(st_vec.rbegin());
 	// std::vector<int>::reverse_iterator		st_ritr2(st_vec_const.rbegin());
@@ -151,12 +151,12 @@ TEST_F(ReverseIteratorTest, CopyConstructorConstTest)
 
 TEST_F(ReverseIteratorTest, OpeEqualConstTest)
 {
-	std::vector<int>			st_vec(nums, nums + 3);
-	std::vector<const int>		st_vec_const(nums, nums + 3);
-	const std::vector<int>		st_const_vec(nums, nums + 3);
-	ft::vector<int>				ft_vec(nums, nums + 3);
-	ft::vector<const int>		ft_vec_const(nums, nums + 3);
-	const ft::vector<int>		ft_const_vec(nums, nums + 3);
+	std::vector<int>			st_vec(nums_, nums_ + 3);
+	std::vector<const int>		st_vec_const(nums_, nums_ + 3);
+	const std::vector<int>		st_const_vec(nums_, nums_ + 3);
+	ft::vector<int>				ft_vec(nums_, nums_ + 3);
+	ft::vector<const int>		ft_vec_const(nums_, nums_ + 3);
+	const ft::vector<int>		ft_const_vec(nums_, nums_ + 3);
 
 	std::vector<int>::reverse_iterator		st_ritr1; st_ritr1 = st_vec.rbegin();
 	// std::vector<int>::reverse_iterator		st_ritr2; st_ritr2 = st_vec_const.rbegin();

@@ -56,7 +56,7 @@ class StackTest : public ::testing::Test
 			std::cout << "empty: "	<< stack.empty() << std::endl;
 		}
 
-		static const int								nums[3];
+		static const int								nums_[5];
 		static const std::vector<int>					st_const_vec_;
 		static const ft::vector<int>					ft_const_vec_;
 		static const std::stack<int, std::vector<int> >	st_const_stack_;
@@ -76,9 +76,9 @@ class StackTest : public ::testing::Test
 		ft::stack<int, ft::vector<int> >	ft_less_;
 };
 
-const int				StackTest::nums[3] = {10, 20, 30};
-const std::vector<int>	StackTest::st_const_vec_(nums, nums + 3);
-const ft::vector<int>	StackTest::ft_const_vec_(nums, nums + 3);
+const int				StackTest::nums_[5] = {10, 20, 30, 40, 50};
+const std::vector<int>	StackTest::st_const_vec_(nums_, nums_ + 3);
+const ft::vector<int>	StackTest::ft_const_vec_(nums_, nums_ + 3);
 const std::stack<int, std::vector<int> >	StackTest::st_const_stack_(st_const_vec_);
 const ft::stack<int, ft::vector<int> >		StackTest::ft_const_stack_(ft_const_vec_);
 

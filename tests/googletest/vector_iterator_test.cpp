@@ -16,19 +16,19 @@ class VectorIteratorTest : public ::testing::Test
 		}
 		virtual void SetUp()
 		{
-			st_vec_.assign(nums, nums + 3);
-			ft_vec_.assign(nums, nums + 3);
+			st_vec_.assign(nums_, nums_ + 3);
+			ft_vec_.assign(nums_, nums_ + 3);
 		}
 		virtual void TearDown()
 		{
 		}
 
-		static const int	nums[3];
+		static const int	nums_[5];
 		std::vector<int>	st_vec_;
 		ft::vector<int>		ft_vec_;
 };
 
-const int VectorIteratorTest::nums[3] = {10, 20, 30};
+const int VectorIteratorTest::nums_[5] = {10, 20, 30, 40, 50};
 
 
 TEST_F(VectorIteratorTest, ConstructorTest)
@@ -116,12 +116,12 @@ TEST_F(VectorIteratorTest, ConstIteratorTest)
 
 TEST_F(VectorIteratorTest, CopyConstructorConstTest)
 {
-	std::vector<int>			st_vec(nums, nums + 3);
-	std::vector<const int>		st_vec_const(nums, nums + 3);
-	const std::vector<int>		st_const_vec(nums, nums + 3);
-	ft::vector<int>				ft_vec(nums, nums + 3);
-	ft::vector<const int>		ft_vec_const(nums, nums + 3);
-	const ft::vector<int>		ft_const_vec(nums, nums + 3);
+	std::vector<int>			st_vec(nums_, nums_ + 3);
+	std::vector<const int>		st_vec_const(nums_, nums_ + 3);
+	const std::vector<int>		st_const_vec(nums_, nums_ + 3);
+	ft::vector<int>				ft_vec(nums_, nums_ + 3);
+	ft::vector<const int>		ft_vec_const(nums_, nums_ + 3);
+	const ft::vector<int>		ft_const_vec(nums_, nums_ + 3);
 
 	std::vector<int>::iterator		st_itr1(st_vec.begin());
 	// std::vector<int>::iterator		st_itr2(st_vec_const.begin());
@@ -150,12 +150,12 @@ TEST_F(VectorIteratorTest, CopyConstructorConstTest)
 
 TEST_F(VectorIteratorTest, OpeEqualConstTest)
 {
-	std::vector<int>			st_vec(nums, nums + 3);
-	std::vector<const int>		st_vec_const(nums, nums + 3);
-	const std::vector<int>		st_const_vec(nums, nums + 3);
-	ft::vector<int>				ft_vec(nums, nums + 3);
-	ft::vector<const int>		ft_vec_const(nums, nums + 3);
-	const ft::vector<int>		ft_const_vec(nums, nums + 3);
+	std::vector<int>			st_vec(nums_, nums_ + 3);
+	std::vector<const int>		st_vec_const(nums_, nums_ + 3);
+	const std::vector<int>		st_const_vec(nums_, nums_ + 3);
+	ft::vector<int>				ft_vec(nums_, nums_ + 3);
+	ft::vector<const int>		ft_vec_const(nums_, nums_ + 3);
+	const ft::vector<int>		ft_const_vec(nums_, nums_ + 3);
 
 	std::vector<int>::iterator		st_itr1; st_itr1 = st_vec.begin();
 	// std::vector<int>::iterator		st_itr2; st_itr2 = st_vec_const.begin();
