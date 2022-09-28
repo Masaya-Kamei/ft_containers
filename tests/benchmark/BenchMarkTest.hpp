@@ -39,7 +39,7 @@ unsigned long	BenchMarkTest::RunMemFunc(
 {
 	Timer	timer;
 
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 1000; ++i)
 	{
 		TestClass	t(setup_flag);
 		timer.Start();

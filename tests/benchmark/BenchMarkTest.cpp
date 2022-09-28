@@ -29,12 +29,12 @@ void	BenchMarkTest::PutElapsedTimeMsg(
 	int	 width = container_name.size() + memfunc_name.size() + !memfunc_name.empty();
 	std::cout << std::setw(30 - width) << ": ";
 
-	if (utime >= 10000000)
-		std::cout << std::setw(8) << utime / 1000000 << " [ s]" << std::endl;
-	else if (utime >= 10000)
-		std::cout << std::setw(8) << utime / 1000 << " [ms]" << std::endl;
-	else
-		std::cout << std::setw(8) << utime << " [us]" << std::endl;
+	// if (utime >= 10000000)
+	// 	std::cout << std::setw(8) << utime / 1000000 << " [ s]" << std::endl;
+	// else if (utime >= 10000)
+	// 	std::cout << std::setw(8) << utime / 1000 << " [ms]" << std::endl;
+	// else
+	std::cout << std::setw(8) << utime << " [us]" << std::endl;
 }
 
 unsigned long	BenchMarkTest::RunVectorTest()

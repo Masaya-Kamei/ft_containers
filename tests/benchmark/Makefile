@@ -41,6 +41,7 @@ $(STD_OBJSDIR)/%.o	:	%.cpp
 -include $(FT_DEPS) $(STD_DEPS)
 
 test		:	ft_test std_test
+				./result.sh
 
 ft_test		:	$(FT_NAME)
 				@echo

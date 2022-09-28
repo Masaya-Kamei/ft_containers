@@ -4,13 +4,13 @@
 ft::map<int, std::string>	BenchMarkTestMap::cm_;
 ft::map<int, std::string>	BenchMarkTestMap::cm1_;
 
-static int		RandomKey()	{ return (rand() % 100000); }
+static int		RandomKey()	{ return (rand() % 10000); }
 
 void	BenchMarkTestMap::SetUpStatic()
 {
-	for (int i = 0; i < 10000; ++i)
+	for (int i = 0; i < 1000; ++i)
 		cm_.insert(ft::make_pair(RandomKey(), "X"));
-	for (int i = 0; i < 10000; ++i)
+	for (int i = 0; i < 1000; ++i)
 		cm1_.insert(ft::make_pair(RandomKey(), "X"));
 }
 
