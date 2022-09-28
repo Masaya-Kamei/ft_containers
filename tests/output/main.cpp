@@ -13,5 +13,10 @@ int		main(int argc, char **argv)
 	OutputTest	output_test(atoi(argv[1]));
 	output_test.RunAllTest();
 
+#ifdef NAMESPACE_STD
+	system("leaks output_std 1>&2");
+#else
+	system("leaks output_ft 1>&2");
+#endif
 	return (0);
 }
