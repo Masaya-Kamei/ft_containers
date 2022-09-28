@@ -55,7 +55,7 @@ clean		:
 				-$(RM) $(FT_OBJS) $(FT_DEPS) $(STD_OBJS) $(STD_DEPS)
 
 fclean		:	clean
-				-$(RM) $(FT_NAME) $(STD_NAME)
+				-$(RM) $(FT_NAME) $(STD_NAME) result_ft.txt result_std.txt
 
 re			:	fclean all
 

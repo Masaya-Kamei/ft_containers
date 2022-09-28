@@ -43,12 +43,12 @@ test		:	ft_test std_test
 
 ft_test		:	$(FT_NAME)
 				@echo
-				@./$(FT_NAME) $(SEED) || :
+				@(time ./$(FT_NAME) $(SEED))
 
 std_test	:	CFLAGS += -D NAMESPACE_STD
 std_test	:	$(STD_NAME)
 				@echo
-				@./$(STD_NAME) $(SEED) || :
+				@(time ./$(STD_NAME) $(SEED))
 
 clean		:
 				-$(RM) $(FT_OBJS) $(FT_DEPS) $(STD_OBJS) $(STD_DEPS)

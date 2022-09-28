@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm result.txt
+rm -rf result.txt
 IFS="
 "
 

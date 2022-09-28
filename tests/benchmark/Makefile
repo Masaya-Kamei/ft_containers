@@ -41,7 +41,7 @@ $(STD_OBJSDIR)/%.o	:	%.cpp
 -include $(FT_DEPS) $(STD_DEPS)
 
 test		:	ft_test std_test
-				./result.sh
+				@./result.sh
 
 ft_test		:	$(FT_NAME)
 				@echo
@@ -56,7 +56,7 @@ clean		:
 				-$(RM) $(FT_OBJS) $(FT_DEPS) $(STD_OBJS) $(STD_DEPS)
 
 fclean		:	clean
-				-$(RM) $(FT_NAME) $(STD_NAME)
+				-$(RM) $(FT_NAME) $(STD_NAME) result_ft.txt result_std.txt result.txt
 
 re			:	fclean all
 

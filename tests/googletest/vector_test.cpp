@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>
 #include "vector.hpp"
 
 class VectorTest : public ::testing::Test
@@ -631,8 +632,8 @@ TEST_F(VectorTest, InputIteratorTest)
 	ft::vector<int>		ft_vec(ft_first, ft_last);
 	CompareSizeCapElem(st_vec, ft_vec);
 
-	std::stringstream st_ss2;	st_ss2 << 1 << std::endl << 2 << std::endl << 3;
-	std::stringstream ft_ss2;	ft_ss2 << 1 << std::endl << 2 << std::endl << 3;
+	std::stringstream st_ss2;	st_ss2 << 1 << std::endl << 2 << std::endl << 3 << std::endl << 4;
+	std::stringstream ft_ss2;	ft_ss2 << 1 << std::endl << 2 << std::endl << 3 << std::endl << 4;
 	st_first = st_ss2;
 	ft_first = ft_ss2;
 	st_vec_.assign(st_first, st_last);

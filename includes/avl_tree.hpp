@@ -5,8 +5,6 @@
 # include "avl_tree_node.hpp"
 # include "avl_tree_iterator.hpp"
 
-# define PUT(X) std::cout << X << std::endl;
-
 namespace ft
 {
 
