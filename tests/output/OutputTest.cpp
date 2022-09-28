@@ -60,6 +60,7 @@ void	OutputTest::RunVectorTest()
 	RunMemFunc("vector", ">",					&OutputTestVector::OpeGreater);
 	RunMemFunc("vector", ">=",					&OutputTestVector::OpeGreaterEqual);
 	RunMemFunc("vector", "non member swap",		&OutputTestVector::NonMemberSwap);
+	RunMemFunc("vector", "input iterator",		&OutputTestVector::InputIterator);
 }
 
 void	OutputTest::RunMapTest()

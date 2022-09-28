@@ -8,6 +8,7 @@
 #include "vector_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "algorithm.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
@@ -52,17 +53,32 @@ class	vector
 			std::uninitialized_fill(begin_, end_, val);
 		}
 
+	private:
 		template <class InputIterator>
-		vector(InputIterator first
-			, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
-			, const allocator_type& alloc = allocator_type())
-			: alloc_(alloc), begin_(NULL), end_(NULL), end_cap_(NULL)
+		void	range_constructor_impl(InputIterator first, InputIterator last, std::input_iterator_tag)
+		{
+			for(; first != last; ++first)
+				push_back(*first);
+		}
+
+		template <class ForwardIterator>
+		void	range_constructor_impl(ForwardIterator first, ForwardIterator last, std::forward_iterator_tag)
 		{
 			size_type	size = std::distance(first, last);
 			if (size == 0)
 				return;
 			allocate(size);
 			std::uninitialized_copy(first, last, begin_);
+		}
+
+	public:
+		template <class InputIterator>
+		vector(InputIterator first
+			, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
+			, const allocator_type& alloc = allocator_type())
+			: alloc_(alloc), begin_(NULL), end_(NULL), end_cap_(NULL)
+		{
+			range_constructor_impl(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 		}
 
 		vector(const vector& rhs)
@@ -172,9 +188,17 @@ class	vector
 		value_type*			data()			{ return (begin_); }
 		const value_type*	data() const	{ return (begin_); }
 
+	private:
 		template <class InputIterator>
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
-			assign(InputIterator first, InputIterator last)
+		void	assign_impl(InputIterator first, InputIterator last, std::input_iterator_tag)
+		{
+			clear();
+			for(; first != last; ++first)
+				push_back(*first);
+		}
+
+		template <class ForwardIterator>
+		void	assign_impl(ForwardIterator first, ForwardIterator last, std::forward_iterator_tag)
 		{
 			size_type	new_size = std::distance(first, last);
 			if (new_size <= capacity())
@@ -194,6 +218,14 @@ class	vector
 				allocate(new_size);
 				std::uninitialized_copy(first, last, begin_);
 			}
+		}
+
+	public:
+		template <class InputIterator>
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
+			assign(InputIterator first, InputIterator last)
+		{
+			assign_impl(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 		}
 
 		void	assign(size_type n, const value_type& val)
@@ -254,9 +286,18 @@ class	vector
 			end_ = new_end;
 		}
 
+	private:
 		template <class InputIterator>
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
-			insert(iterator position, InputIterator first, InputIterator last)
+		void	insert_impl(iterator position,
+			InputIterator first, InputIterator last, std::input_iterator_tag)
+		{
+			for(; first != last; ++first, ++position)
+				position = insert(position, *first);
+		}
+
+		template <class ForwardIterator>
+		void	insert_impl(iterator position,
+			ForwardIterator first, ForwardIterator last, std::forward_iterator_tag)
 		{
 			size_type		n = std::distance(first, last);
 			difference_type	pos_dist = std::distance(begin(), position);
@@ -271,6 +312,14 @@ class	vector
 			std::copy_backward(position, end(), new_end);
 			std::copy(first, last, position);
 			end_ = new_end;
+		}
+
+	public:
+		template <class InputIterator>
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
+			insert(iterator position, InputIterator first, InputIterator last)
+		{
+			insert_impl(position, first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 		}
 
 		iterator	erase(iterator position)
@@ -307,6 +356,7 @@ class	vector
 			return (alloc_);
 		}
 
+	private:
 		 void	construct_range(pointer first, pointer last)
 		 {
 			for (pointer p = first; p < last; p++)

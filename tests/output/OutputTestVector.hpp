@@ -56,6 +56,7 @@ class OutputTestVector
 		void	OpeGreater();
 		void	OpeGreaterEqual();
 		void	NonMemberSwap();
+		void	InputIterator();
 
 	private:
 		static const int		nums_[5];

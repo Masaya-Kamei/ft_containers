@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "OutputTestVector.hpp"
 #include "Put.hpp"
 
@@ -445,4 +446,25 @@ void OutputTestVector::NonMemberSwap()
 	swap(v_, v0_);
 	PutSizeCapElem(v_);
 	PutSizeCapElem(v0_);
+}
+
+void OutputTestVector::InputIterator()
+{
+	std::istream_iterator<int>	first;
+	std::istream_iterator<int>	last;
+
+	std::stringstream ss1;	ss1 << 1 << std::endl << 2 << std::endl << 3;
+	first = ss1;
+	ft::vector<Fixed>	v(first, last);
+	PutSizeCapElem(v);
+
+	std::stringstream ss2;	ss2 << 1 << std::endl << 2 << std::endl << 3;
+	first = ss2;
+	v_.assign(first, last);
+	PutSizeCapElem(v_);
+
+	std::stringstream ss3;	ss3 << 1 << std::endl << 2 << std::endl << 3;
+	first = ss3;
+	v_.insert(v_.begin(), first, last);
+	PutSizeCapElem(v_);
 }
