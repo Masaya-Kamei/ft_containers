@@ -236,3 +236,17 @@ TEST_F(StackTest, OpeGreaterEqualTest)
 	EXPECT_EQ(st_stack_ >= st_more_,	ft_stack_ >= ft_more_);
 	EXPECT_EQ(st_stack_ >= st_less_,	ft_stack_ >= ft_less_);
 }
+
+TEST_F(StackTest, OtherContainerTest)
+{
+	std::stack<int, std::deque<int> >	st_stack;
+	ft::stack<int, std::deque<int> >	ft_stack;
+
+	st_stack.push(1);
+	ft_stack.push(1);
+	st_stack.push(2);
+	ft_stack.push(2);
+	st_stack.pop();
+	ft_stack.pop();
+	CompareSizeTop(st_stack, ft_stack);
+}
