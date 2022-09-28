@@ -46,14 +46,14 @@ class map
 
 		class value_compare
 		{
+			friend class map;
 			protected:
 				Compare	comp_;
+				explicit value_compare(Compare c) : comp_(c) {}
 			public:
 				typedef bool		result_type;
 				typedef value_type	first_argument_type;
 				typedef value_type	second_argument_type;
-
-				explicit value_compare(Compare c) : comp_(c) {}
 
 				bool operator()(const value_type& x, const value_type& y) const
 				{

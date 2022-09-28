@@ -144,7 +144,7 @@ class	vector
 		void	resize(size_type n, value_type val = value_type())
 		{
 			if (n < size())
-				erase(begin() + n, end());
+				erase(iterator(begin_ + n), end());
 			else
 				insert(end(), n - size(), val);
 		}
@@ -265,14 +265,14 @@ class	vector
 
 		iterator	insert(iterator position, const value_type& val)
 		{
-			difference_type	pos_dist = std::distance(begin(), position);
+			difference_type	pos_dist = std::distance(begin_, position.base());
 			insert(position, 1, val);
-			return (begin() + pos_dist);
+			return (iterator(begin_ + pos_dist));
 		}
 
 		void	insert(iterator position, size_type n, const value_type& val)
 		{
-			difference_type	pos_dist = std::distance(begin(), position);
+			difference_type	pos_dist = std::distance(begin_, position.base());
 			size_type		new_size = size() + n;
 			if (capacity() < new_size)
 			{
@@ -281,8 +281,8 @@ class	vector
 			}
 			pointer		new_end = end_ + n;
 			construct_range(end_, new_end);
-			std::copy_backward(position, end(), new_end);
-			std::fill(position, position + n, val);
+			std::copy_backward(position.base(), end_, new_end);
+			std::fill(position.base(), position.base() + n, val);
 			end_ = new_end;
 		}
 
@@ -300,7 +300,7 @@ class	vector
 			ForwardIterator first, ForwardIterator last, std::forward_iterator_tag)
 		{
 			size_type		n = std::distance(first, last);
-			difference_type	pos_dist = std::distance(begin(), position);
+			difference_type	pos_dist = std::distance(begin_, position.base());
 			size_type		new_size = size() + n;
 			if (capacity() < new_size)
 			{
@@ -309,8 +309,8 @@ class	vector
 			}
 			pointer		new_end = end_ + n;
 			construct_range(end_, new_end);
-			std::copy_backward(position, end(), new_end);
-			std::copy(first, last, position);
+			std::copy_backward(position.base(), end_, new_end);
+			std::copy(first, last, position.base());
 			end_ = new_end;
 		}
 
@@ -324,14 +324,16 @@ class	vector
 
 		iterator	erase(iterator position)
 		{
-			return (erase(position, position + 1));
+			std::copy(position.base() + 1, end_, position.base());
+			pop_back();
+			return (position);
 		}
 
 		iterator	erase(iterator first, iterator last)
 		{
-			size_type	erase_size = std::distance(first, last);
+			size_type	erase_size = std::distance(first.base(), last.base());
 			pointer		new_end = end_ - erase_size;
-			std::copy(last, end(), first);
+			std::copy(last.base(), end_, first.base());
 			destroy_range(new_end, end_);
 			end_ = new_end;
 			return (first);
