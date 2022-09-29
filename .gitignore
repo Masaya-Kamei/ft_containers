@@ -13,3 +13,5 @@ result_std.txt
 result.txt
 output_ft
 output_std
+gtest
+googletest-release-1.11.0

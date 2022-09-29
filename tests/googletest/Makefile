@@ -63,4 +63,16 @@ testlib		:
 					-o unit_test testlib/testlib_main.cpp
 				@./$(NAME) || :
 
-.PHONY		:	all clean fclean re leak test testlib
+GTESTSRCS	=	gtest googletest-release-1.11.0
+$(GTESTSRCS):
+				curl -OL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz
+				tar -xvzf release-1.11.0.tar.gz googletest-release-1.11.0
+				rm -rf release-1.11.0.tar.gz
+				python googletest-release-1.11.0/googletest/scripts/fuse_gtest_files.py ./
+fusedtest	:	$(GTESTSRCS)
+				c++ -Wall -Wextra -Werror -g -fsanitize=address -std=c++11 \
+					-I../../includes -I./ -o unit_test $(SRCS) \
+					googletest-release-1.11.0/googletest/src/gtest_main.cc gtest/gtest-all.cc
+				@./$(NAME) || :
+
+.PHONY		:	all clean fclean re leak test testlib fusedtest
