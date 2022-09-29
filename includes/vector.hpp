@@ -50,7 +50,7 @@ class	vector
 			if (n == 0)
 				return;
 			allocate(n);
-			std::uninitialized_fill(begin_, end_, val);
+			construct_range(begin_, end_, val);
 		}
 
 	private:
@@ -68,7 +68,7 @@ class	vector
 			if (size == 0)
 				return;
 			allocate(size);
-			std::uninitialized_copy(first, last, begin_);
+			construct_range(begin_, end_, first);
 		}
 
 	public:
@@ -88,7 +88,7 @@ class	vector
 			if (size == 0)
 				return;
 			allocate(size);
-			std::uninitialized_copy(rhs.begin_, rhs.end_, begin_);
+			construct_range(begin_, end_, rhs.begin_);
 		}
 
 		~vector()
@@ -361,8 +361,22 @@ class	vector
 	private:
 		 void	construct_range(pointer first, pointer last)
 		 {
-			for (pointer p = first; p < last; p++)
-				alloc_.construct(p);
+			for (pointer p = first; p < last; ++p)
+				alloc_.construct(p, value_type());
+		 }
+
+		 void	construct_range(pointer first, pointer last, const value_type& val)
+		 {
+			for (pointer p = first; p < last; ++p)
+				alloc_.construct(p, val);
+		 }
+
+		template <class ForwardIterator>
+		typename ft::enable_if<!ft::is_integral<ForwardIterator>::value, void>::type
+			construct_range(pointer first, pointer last, ForwardIterator val_itr)
+		 {
+			for (pointer p = first; p < last; ++p, ++val_itr)
+				alloc_.construct(p, *val_itr);
 		 }
 
 		 void	destroy_range(pointer first, pointer last)

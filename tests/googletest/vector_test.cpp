@@ -648,3 +648,23 @@ TEST_F(VectorTest, InputIteratorTest)
 	ft_vec_.insert(ft_vec_.begin(), ft_first, ft_last);
 	CompareSizeCapElem(st_vec_, ft_vec_);
 }
+
+TEST_F(VectorTest, ConstIntTest)
+{
+	std::vector<const int>	st_vec1(nums_, nums_ + 3);
+	ft::vector<const int>	ft_vec1(nums_, nums_ + 3);
+	CompareSizeCapElem(st_vec1, ft_vec1);
+
+	std::vector<const int>	st_vec2(10, 42);
+	ft::vector<const int>	ft_vec2(10, 42);
+	CompareSizeCapElem(st_vec2, ft_vec2);
+
+	std::vector<const int>	st_vec3(st_vec1);
+	ft::vector<const int>	ft_vec3(ft_vec1);
+	CompareSizeCapElem(st_vec3, ft_vec3);
+
+	// st_vec1 = st_vec_;
+	// ft_vec1 = ft_vec_;
+	// st_vec1.assign(100, 42);
+	// ft_vec1.assign(100, 42);
+}
